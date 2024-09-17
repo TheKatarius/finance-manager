@@ -1,0 +1,10 @@
+<aside class="sidebar">
+  <nav class="sidebarNav">
+    <finance-manager-menu-section
+      *ngFor="let sectionClassName of sectionClassNames"
+      [menuSectionClassName]="sectionClassName"
+      [isActive]="activeSection === sectionClassName"
+      (sectionClicked)="onSectionClick($event)"
+    ></finance-manager-menu-section>
+  </nav>
+</aside>

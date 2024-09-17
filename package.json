@@ -1,14 +1,15 @@
 {
   "name": "finance-manager",
   "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
   "private": true,
+  "scripts": {
+    "start": "ng serve",
+    "lint": "npm run lint:format && npm run lint:styles",
+    "lint:format": "prettier --check .",
+    "format-fix": "prettier --check --write .",
+    "styles-fix": "stylelint --fix \"client/src/shared/css\" \"client/src/shared/app/controls/css\" \"client/src/documentation-app/css\"",
+    "lint:staged": "npx lint-staged"
+  },
   "dependencies": {
     "@angular/animations": "^17.1.0",
     "@angular/common": "^17.1.0",
@@ -33,6 +34,10 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "prettier": "~2.7.0",
+    "stylelint": "^13.9.0",
+    "stylelint-config-recess-order": "^2.3.0",
+    "stylelint-config-sass-guidelines": "^7.1.0",
     "typescript": "~5.3.2"
   }
 }

@@ -1,0 +1,42 @@
+<div class="branch">
+  <div
+    class="branch-radius-line"
+    [ngClass]="{
+      'branch-radius-line-highlighted':
+        (subsectionNameHovered !== '' &&
+          subsectionName === subsectionNameHovered) ||
+        subsectionName === subsectionNameClicked,
+      'branch-radius-line-change-layer': highlightMainLine
+    }"
+  ></div>
+
+  <div
+    class="branch-main-line"
+    [ngClass]="{
+      'branch-main-line-highlighted':
+        isSubsectionHovered || isSubsectionActive || highlightMainLine
+    }"
+  ></div>
+
+  <a
+    routerLink=""
+    class="menu-subsection-item"
+    [ngClass]="{
+      'menu-subsection-item-highlighted':
+        isSubsectionHovered || isSubsectionActive
+    }"
+    (mouseenter)="onSubsectionMouseEnter(subsectionName)"
+    (mouseleave)="onSubsectionMouseLeave()"
+    (click)="onSubsectionClick(subsectionName)"
+  >
+    {{ subsectionName | kebabToTitle }}
+  </a>
+
+  <div
+    *ngIf="!lastSubsection"
+    class="branch-side-line"
+    [ngClass]="{
+      'branch-side-line-highlighted': highlightMainLine
+    }"
+  ></div>
+</div>

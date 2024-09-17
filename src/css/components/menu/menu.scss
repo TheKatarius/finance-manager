@@ -1,0 +1,23 @@
+@use "../../variables/dimensions" as dimensions;
+@use "../../variables/colors" as colors;
+@use "../../variables/typography" as typography;
+
+.sidebar {
+  background-color: colors.$background-panel;
+  border-radius: 0 dimensions.$border-radius-large
+    dimensions.$border-radius-large 0;
+  color: colors.$text-main;
+
+  font-size: typography.$font-size-lg;
+  font-weight: typography.$font-weight-bold;
+
+  width: dimensions.$sidebar-menu-width;
+  height: dimensions.$sidebar-menu-height;
+  padding: dimensions.$padding-large;
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  gap: dimensions.$sidebar-nav-gap;
+}

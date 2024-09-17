@@ -1,0 +1,78 @@
+@use "../../../../variables/dimensions" as dimensions;
+@use "../../../../variables/colors" as colors;
+@use "../../../../variables/typography" as typography;
+
+.branch {
+  width: dimensions.$branch-width-and-height;
+  height: dimensions.$branch-width-and-height;
+
+  position: relative;
+
+  .branch-radius-line {
+    border-left: dimensions.$border-curve;
+    border-bottom: dimensions.$border-curve;
+    border-radius: 0 0 0 dimensions.$border-radius-large;
+    width: dimensions.$branch-width-and-height;
+    height: dimensions.$branch-width-and-height;
+
+    position: absolute;
+    z-index: 1;
+
+    &-highlighted {
+      border-left-color: colors.$text-link;
+      border-bottom-color: colors.$text-link;
+    }
+
+    &-change-layer {
+      z-index: 0;
+    }
+  }
+
+  .branch-main-line {
+    background-color: colors.$text-secondary;
+    width: dimensions.$border-curve-width;
+    height: 25px;
+
+    position: absolute;
+    z-index: 2;
+
+    &-highlighted {
+      background-color: colors.$text-link;
+    }
+  }
+
+  .menu-subsection-item {
+    border-radius: dimensions.$border-radius-medium;
+    color: colors.$text-secondary;
+    font-size: typography.$font-size-base;
+    padding: dimensions.$padding-xs;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+
+    width: dimensions.$branch-item-width;
+    height: dimensions.$branch-item-height;
+
+    position: absolute;
+    left: 50px;
+    top: 21px;
+
+    &-highlighted {
+      background-color: colors.$background-main;
+      color: colors.$text-link;
+    }
+  }
+
+  .branch-side-line {
+    background-color: colors.$text-secondary;
+    width: dimensions.$border-curve-width;
+    height: 25px;
+
+    position: absolute;
+    top: 20px;
+    z-index: 0;
+
+    &-highlighted {
+      background-color: colors.$text-link;
+    }
+  }
+}

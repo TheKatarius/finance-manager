@@ -1,14 +1,23 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "target": "ES2022",
+    "module": "ES2022",
+    "strict": true,
+    // Setting this to true prevents TypeScript from inferring the any type. This ensures that all types are explicitly declared, which aids in maintaining type safety across your application.
+    "noImplicitAny": true,
+    // When enabled, TypeScript will be more stringent about null and undefined checks, which helps prevent common JavaScript bugs associated with null referencing.
+    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@env/*": ["src/environments/*"]
+    },
+    "esModuleInterop": true
   },
-  "files": [
-    "src/main.ts"
-  ],
-  "include": [
-    "src/**/*.d.ts"
-  ]
+  "exclude": ["test.ts", "**/*.spec.ts"]
 }

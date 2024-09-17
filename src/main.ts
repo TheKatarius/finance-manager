@@ -1,6 +1,15 @@
-import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
+import { AppModule } from '@app/app.module';
+import { enableProdMode, ViewEncapsulation } from '@angular/core';
 
-bootstrapApplication(AppComponent, appConfig)
+import { environment } from '@env/environment';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+if (environment.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic()
+  .bootstrapModule(AppModule, {
+    defaultEncapsulation: ViewEncapsulation.None,
+  })
   .catch((err) => console.error(err));

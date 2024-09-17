@@ -1,33 +1,60 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-  "compileOnSave": false,
+  "compileOnSave": true,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "sourceMap": true,
-    "declaration": false,
-    "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
+    "rootDir": "./",
+    "outDir": "./dist/tsc-out",
     "target": "ES2022",
     "module": "ES2022",
-    "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    "lib": ["ES2022", "dom"],
+    "moduleResolution": "node",
+    "paths": {
+      "common/*": ["./src/app/common/*"],
+      "directives/*": ["./src/app/common/directives/*"],
+      "pipes/*": ["./src/app/common//pipes/*"],
+      "constants/*": ["./src/app/core/constants/*"],
+      "data/*": ["./src/app/core/data/*"],
+      "interfaces/*": ["./src/app/core/interfaces/*"],
+      "services/*": ["./src/app/core/services/*"],
+      "utils/*": ["./src/app/core/utils/*"],
+      "config": ["./src/config"],
+      "assets": ["./src/img/*"]
+    },
+    // ensures that the casing of filenames matches exactly when referenced in the code
+    "forceConsistentCasingInFileNames": true,
+    // more strict types
+    "strict": true,
+    // explicitly use the override keyword when extending a class and overriding a method
+    "noImplicitOverride": true,
+    // all functions explicitly return a value or do not return at all
+    "noImplicitReturns": true,
+    // checks for any case clauses in a switch statement that fall through to the next case without a break, return, or throw
+    "noFallthroughCasesInSwitch": true,
+    // TypeScript skips type checking of declaration files (*.d.ts)
+    "skipLibCheck": true,
+    // generates source map files - important for debugging because they map the compiled JavaScript back to the original TypeScript source code.
+    "sourceMap": true,
+    // When set to true, this tells TypeScript to generate .d.ts files along with JavaScript files. These files are useful for other projects that may use your project as a dependency, allowing them to leverage type information without the source TypeScript files.
+    "declaration": false,
+    // when enabled, allows TypeScript to use helper functions from the tslib package once per project
+    "importHelpers": true,
+    // When set to false, this ensures that TypeScript uses traditional JavaScript semantics for initializing class fields, rather than the newer semantics defined in the ECMAScript standard.
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
+    // checks that all dependency injections in the constructor of a directive, component, or service are of valid types. This helps in avoiding issues related to dependency injection at runtime.
     "strictInjectionParameters": true,
+    // makes sure that data bound input properties in directives are correctly typed as public on the class
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    // activates the strictest type checking for your templates
+    "strictTemplates": true,
+    // stricter type checking in your Angular templates
+    "fullTemplateTypeCheck": true,
+    // Ensuring this is set to true (which is the default in Angular 9 and later) provides faster recompilation, better debugging, and smaller bundle sizes.
+    "enableIvy": true,
+    // When set to true, this option disallows literals (like object literals and array literals) in expressions written in Angular templates that would require type narrowing when assigned to a variable in TypeScript.
+    "strictLiteralTypes": true,
+    // Angular checks if your project's TypeScript version is compatible with the version required by Angular
+    "disableTypeScriptVersionCheck": true
   }
 }

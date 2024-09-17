@@ -1,0 +1,29 @@
+@use "./colors" as colors;
+
+// **SideBar Menu**
+$sidebar-menu-width: 320px;
+$sidebar-menu-height: 100vh;
+$sidebar-nav-gap: 10px;
+
+// **Menu Section**
+$menu-section-height: 50px;
+
+// **Branch**
+$branch-width-and-height: 40px;
+$branch-item-width: 210px;
+$branch-item-height: 35px;
+
+// **Padding**
+$padding-large: 20px;
+$padding-small: 10px;
+$padding-xs: 7.5px;
+
+// **Margins**
+
+// **Borders**
+$border-curve: 2.5px solid colors.$text-secondary;
+$border-curve-width: 2.5px;
+
+// **Border Radius**
+$border-radius-large: 15px;
+$border-radius-medium: 10px;
