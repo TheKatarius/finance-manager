@@ -1,0 +1,33 @@
+<div class="input-wrapper">
+  <label *ngIf="label" class="input-label" [for]="controlId">{{ label }}</label>
+  <!-- || null bcs required when is false it treats it as true -->
+  <input
+    class="input"
+    [ngClass]="{ 'input-error': isError }"
+    [id]="controlId"
+    [type]="type"
+    [formControl]="control"
+    [attr.placeholder]="placeholder"
+    [attr.required]="required || null"
+    [attr.disabled]="disabled || null"
+    [attr.readonly]="readonly || null"
+    [attr.min]="min"
+    [attr.max]="max"
+    [attr.minlength]="minlength"
+    [attr.maxlength]="maxlength"
+    [attr.pattern]="pattern"
+    [attr.aria-label]="label"
+    [attr.aria-required]="required"
+    [attr.aria-invalid]="isError"
+    [attr.aria-describedby]="isError ? errorId : null"
+    (input)="input.emit($event)"
+  />
+  <em *ngIf="iconClassName" class="icon input-icon" [ngClass]="iconClassName"></em>
+
+  <div *ngIf="isError" class="error-container" [id]="errorId">
+    <div>
+      <em class="icon alert-icon"></em>
+    </div>
+    <span class="error-message">{{ errorMessages[0] }}</span>
+  </div>
+</div>

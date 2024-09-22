@@ -11,8 +11,8 @@
         }
       },
       "prefix": "finance-manager",
-      "root": "src/app",
-      "sourceRoot": "src/app",
+      "root": "src",
+      "sourceRoot": "src",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -24,7 +24,12 @@
             "tsConfig": "tsconfig.app.json",
             "styles": ["src/css/index.scss"],
             "scripts": [],
-            "optimization": true
+            "optimization": true,
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./src/css/variables"
+              ]
+            }
           },
           "configurations": {
             "production": {

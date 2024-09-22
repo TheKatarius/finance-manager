@@ -1,4 +1,4 @@
-@use "./colors" as colors;
+@use './colors' as colors;
 
 // **SideBar Menu**
 $sidebar-menu-width: 320px;
@@ -7,6 +7,10 @@ $sidebar-nav-gap: 10px;
 
 // **Menu Section**
 $menu-section-height: 50px;
+
+// **Shared Components**
+$input-height: 40px;
+$input-icon-size: 20px;
 
 // **Branch**
 $branch-width-and-height: 40px;
@@ -19,6 +23,11 @@ $padding-small: 10px;
 $padding-xs: 7.5px;
 
 // **Margins**
+$margin-xl: 30px;
+$margin-large: 20px;
+$margin-small: 10px;
+$margin-xs: 7.5px;
+$margin-xxs: 5px;
 
 // **Borders**
 $border-curve: 2.5px solid colors.$text-secondary;
@@ -27,3 +36,4 @@ $border-curve-width: 2.5px;
 // **Border Radius**
 $border-radius-large: 15px;
 $border-radius-medium: 10px;
+$border-radius-small: 5px;

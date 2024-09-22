@@ -1,6 +1,6 @@
-@use "../../../../variables/dimensions" as dimensions;
-@use "../../../../variables/colors" as colors;
-@use "../../../../variables/typography" as typography;
+@use 'dimensions' as dimensions;
+@use 'colors' as colors;
+@use 'typography' as typography;
 
 .branch {
   width: dimensions.$branch-width-and-height;

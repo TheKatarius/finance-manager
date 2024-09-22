@@ -8,17 +8,13 @@
     "module": "ES2022",
     "lib": ["ES2022", "dom"],
     "moduleResolution": "node",
+    "baseUrl": "./src",
     "paths": {
-      "common/*": ["./src/app/common/*"],
-      "directives/*": ["./src/app/common/directives/*"],
-      "pipes/*": ["./src/app/common//pipes/*"],
-      "constants/*": ["./src/app/core/constants/*"],
-      "data/*": ["./src/app/core/data/*"],
-      "interfaces/*": ["./src/app/core/interfaces/*"],
-      "services/*": ["./src/app/core/services/*"],
-      "utils/*": ["./src/app/core/utils/*"],
-      "config": ["./src/config"],
-      "assets": ["./src/img/*"]
+      "@app/*": ["app/*"],
+      "@env/*": ["environments/*"],
+      "@common/*": ["app/common/*"],
+      "@img/*": ["img/*"],
+      "@css/*": ["css/*"],
     },
     // ensures that the casing of filenames matches exactly when referenced in the code
     "forceConsistentCasingInFileNames": true,

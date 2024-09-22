@@ -1,0 +1,56 @@
+<div class="main-container">
+  <div class="form-container">
+    <header class="form-header">
+      <h2>Create Account</h2>
+    </header>
+
+    <form [formGroup]="registerFormGroup">
+      <fin-man-input
+        [label]="'Username'"
+        [control]="registerFormGroup.controls.username"
+        [placeholder]="'Username'"
+        [iconClassName]="'username-icon'"
+        [required]="true"
+        [minlength]="VALIDATION.MID_NAME.MIN_LENGTH"
+        [maxlength]="VALIDATION.MID_NAME.MAX_LENGTH"
+        [pattern]="'^[a-zA-Z0-9._-]+$'"
+      ></fin-man-input>
+
+      <fin-man-input
+        [label]="'E-mail'"
+        [type]="'email'"
+        [control]="registerFormGroup.controls.email"
+        [placeholder]="'E-mail'"
+        [iconClassName]="'email-icon'"
+        [required]="true"
+        [minlength]="VALIDATION.EMAIL.MIN_LENGTH"
+        [maxlength]="VALIDATION.EMAIL.MAX_LENGTH"
+        [pattern]="VALIDATION.EMAIL.PATTERN"
+      ></fin-man-input>
+
+      <fin-man-input
+        [label]="'Password'"
+        [type]="'password'"
+        [control]="registerFormGroup.controls.password"
+        [placeholder]="'Password'"
+        [iconClassName]="'password-icon'"
+        [required]="true"
+        [minlength]="VALIDATION.PASSWORD.MIN_LENGTH"
+        [maxlength]="VALIDATION.PASSWORD.MAX_LENGTH"
+        (input)="confirmPasswordValidator(this.registerFormGroup)"
+      ></fin-man-input>
+
+      <fin-man-input
+        [label]="'Confirm Password'"
+        [type]="'password'"
+        [control]="registerFormGroup.controls.confirmPassword"
+        [placeholder]="'Confirm Password'"
+        [iconClassName]="'password-icon'"
+        [required]="true"
+        (input)="confirmPasswordValidator(this.registerFormGroup)"
+      ></fin-man-input>
+    </form>
+
+    <button class="register-button" (click)="registerUser()">Get Started</button>
+  </div>
+</div>

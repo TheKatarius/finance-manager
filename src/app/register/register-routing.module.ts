@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MenuComponent } from '@app/menu/menu.component';
+import { RegisterComponent } from '@app/register/register.component';
 
 const PRIMARY_ROUTES: Routes = [
   {
     path: '',
-    component: MenuComponent,
+    component: RegisterComponent,
   },
 ];
 
@@ -14,4 +14,4 @@ const PRIMARY_ROUTES: Routes = [
   imports: [RouterModule.forChild(PRIMARY_ROUTES)],
   exports: [RouterModule],
 })
-export class MenuRoutingModule {}
+export class RegisterRoutingModule {}

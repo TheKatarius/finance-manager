@@ -1,0 +1,46 @@
+@use 'colors' as colors;
+@use 'dimensions' as dimensions;
+@use 'typography' as typography;
+
+.main-container {
+  margin: dimensions.$margin-large;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .form-container {
+    background-color: colors.$background-panel;
+    border-radius: dimensions.$border-radius-medium;
+    padding: dimensions.$padding-large;
+    text-align: center;
+    width: 400px;
+
+    .form-header {
+      margin-bottom: dimensions.$margin-large;
+
+      h2 {
+        color: colors.$accent-blue;
+        font-size: typography.$font-size-header;
+      }
+    }
+
+    .register-button {
+      background-color: colors.$accent-blue;
+      border: none;
+      border-radius: dimensions.$border-radius-small;
+      color: colors.$text-main;
+      font-size: typography.$font-size-lg;
+      font-weight: typography.$font-weight-semibold;
+      margin-top: dimensions.$margin-xl;
+      width: 100%;
+      height: 50px;
+
+      &:hover {
+        background-color: colors.$accent-blue-hover;
+        cursor: pointer;
+      }
+    }
+  }
+}

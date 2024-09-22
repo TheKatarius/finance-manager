@@ -12,11 +12,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
-    "baseUrl": "./",
-    "paths": {
-      "@app/*": ["src/app/*"],
-      "@env/*": ["src/environments/*"]
-    },
     "esModuleInterop": true
   },
   "exclude": ["test.ts", "**/*.spec.ts"]

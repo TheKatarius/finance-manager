@@ -1,5 +1,5 @@
-@use "../../../variables/dimensions" as dimensions;
-@use "../../../variables/colors" as colors;
+@use 'dimensions' as dimensions;
+@use 'colors' as colors;
 
 .menu-section {
   border-radius: dimensions.$border-radius-medium;
@@ -33,6 +33,11 @@
 
     position: relative;
     text-decoration: none;
+
+    &-expanded-highlight {
+      background-color: colors.$background-main;
+      border-radius: dimensions.$border-radius-medium;
+    }
 
     .menu-item-position {
       height: 100%;

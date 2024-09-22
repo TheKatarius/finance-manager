@@ -1,13 +1,14 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { menuSubsectionClassNames } from '@app/menu/menu.utils';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+
 import { GetStringService } from '@app/core/services/get-string.service';
+import { menuSubsectionClassNames } from '@app/menu/menu.utils';
 
 @Component({
   selector: 'finance-manager-menu-section',
   templateUrl: './menu-section.component.html',
   styleUrl: '../../../css/components/menu/menu-section/menu-section.scss',
 })
-export class MenuSectionComponent {
+export class MenuSectionComponent implements OnInit {
   // Current section
   @Input() menuSectionClassName!: string;
 
@@ -18,14 +19,13 @@ export class MenuSectionComponent {
   private getStringService = inject(GetStringService);
 
   // Get all subsectionNames in className format
-  subsectionClassNames: string[] = menuSubsectionClassNames(
-    (...code: string[]) => this.getStringService.get(...code)
+  subsectionClassNames: string[] = menuSubsectionClassNames((...code: string[]) =>
+    this.getStringService.get(...code),
   );
 
   // All sections that are expandable in className format
-  expandableClassNames: string[] = [
-    this.getStringService.get('personalFinance', 'lowerCaseTitle'),
-  ];
+  expandableClassNames: string[] = [this.getStringService.get('personalFinance', 'lowerCaseTitle')];
+  isExpandable!: boolean;
 
   // If sections was hovered over
   isHovered: boolean = false;
@@ -39,8 +39,19 @@ export class MenuSectionComponent {
   // Highlight lines above hovered over subsection
   highlightAboveSubsections: number[] = [];
 
-  isExpandable(): boolean {
-    return this.expandableClassNames.includes(this.menuSectionClassName);
+  ngOnInit(): void {
+    this.setIsExpandable();
+    this.setSubsectionClassNames();
+  }
+
+  private setIsExpandable(): void {
+    this.isExpandable = this.expandableClassNames.includes(this.menuSectionClassName);
+  }
+
+  private setSubsectionClassNames(): void {
+    this.subsectionClassNames = menuSubsectionClassNames((...code: string[]) =>
+      this.getStringService.get(...code),
+    );
   }
 
   onMouseEnter(): void {
@@ -51,18 +62,17 @@ export class MenuSectionComponent {
     this.isHovered = false;
   }
 
-  onClick(sectionName: string): void {
-    this.sectionClicked.emit(sectionName);
+  onClick(): void {
+    // Emit the sectionClicked event to notify the parent component
+    this.sectionClicked.emit(this.menuSectionClassName);
 
-    // Undo highlighting lines
     this.subsectionNameClicked = '';
     this.highlightAboveSubsectionsClicked = [];
   }
 
   onSubsectionClick(subsectionName: string): void {
     this.subsectionNameClicked = subsectionName;
-    this.highlightAboveSubsectionsClicked =
-      this.getIndexesAbove(subsectionName);
+    this.highlightAboveSubsectionsClicked = this.getIndexesAbove(subsectionName);
   }
 
   onSubsectionHover(subsectionName: string): void {
@@ -72,7 +82,7 @@ export class MenuSectionComponent {
 
   getIndexesAbove(subsectionName: string): number[] {
     const index = this.subsectionClassNames.findIndex(
-      (subsection) => subsection === subsectionName
+      (subsection) => subsection === subsectionName,
     );
     return Array.from({ length: index }, (_, i) => i);
   }

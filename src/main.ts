@@ -1,8 +1,8 @@
-import { AppModule } from '@app/app.module';
 import { enableProdMode, ViewEncapsulation } from '@angular/core';
-
-import { environment } from '@env/environment';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { AppModule } from '@app/app.module';
+import { environment } from '@env/environment';
 
 if (environment.production) {
   enableProdMode();

@@ -1,49 +1,48 @@
 <section
   class="menu-section"
   [ngClass]="{
-    'menu-section-clicked': !isExpandable() && isActive,
-    'menu-section-expanded': isExpandable() && isActive
+    'menu-section-clicked': !isExpandable && isActive,
+    'menu-section-expanded': isExpandable && isActive
   }"
 >
   <a
     routerLink=""
     class="menu-item"
+    [ngClass]="{
+      'menu-item-expanded-highlight': isExpandable && isActive && !subsectionNameClicked
+    }"
     (mouseenter)="onMouseEnter()"
     (mouseleave)="onMouseLeave()"
-    (click)="onClick(menuSectionClassName)"
+    (click)="onClick()"
   >
     <div class="menu-item-position">
       <em
         class="icon"
         [ngClass]="[
           menuSectionClassName + '-icon-basic',
-          this.isHovered || this.isActive
-            ? menuSectionClassName + '-icon-highlighted'
-            : ''
+          this.isHovered || this.isActive ? menuSectionClassName + '-icon-highlighted' : ''
         ]"
       ></em>
       <!-- Use ngClass bcs we want to highlight it when mouse is inside the section, not only on the text -->
-      <span
-        [ngClass]="{ 'menu-name-hovered': this.isHovered || this.isActive }"
-        >{{ menuSectionClassName | kebabToTitle }}</span
-      >
+      <span [ngClass]="{ 'menu-name-hovered': this.isHovered || this.isActive }">{{
+        menuSectionClassName | kebabToTitle
+      }}</span>
     </div>
 
     <em
-      *ngIf="isExpandable()"
+      *ngIf="isExpandable"
       class="icon vector-icon-basic"
       [ngClass]="{ 'vector-icon-highlighted': this.isHovered || this.isActive }"
     ></em>
   </a>
 
-  <div *ngIf="isExpandable() && isActive" class="tree">
+  <div *ngIf="isExpandable && isActive" class="tree">
     <finance-manager-menu-subsection
       *ngFor="let subsection of subsectionClassNames; let i = index"
       [subsectionName]="subsection"
       [lastSubsection]="i === subsectionClassNames.length - 1"
       [highlightMainLine]="
-        highlightAboveSubsections.includes(i) ||
-        highlightAboveSubsectionsClicked.includes(i)
+        highlightAboveSubsections.includes(i) || highlightAboveSubsectionsClicked.includes(i)
       "
       [subsectionNameClicked]="subsectionNameClicked"
       [subsectionNameHovered]="subsectionNameHovered"

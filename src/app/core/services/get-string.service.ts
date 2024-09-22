@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { StringsDataConst } from '@app/core/data/strings-data.const';
 
 @Injectable({

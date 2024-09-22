@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { EntryComponent } from '@app/entry/entry.component';
+
 import { EntryRoutingModule } from '@app/entry/entry-routing.module';
+import { EntryComponent } from '@app/entry/entry.component';
 
 @NgModule({
   declarations: [EntryComponent],

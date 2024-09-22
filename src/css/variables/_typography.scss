@@ -1,8 +1,10 @@
 // **Font Families**
-$font-serif: "Noto Serif Kannada", serif; // Primary serif font for headings and descriptive texts
-$font-sans: "Metrophobic", sans-serif; // Sans-serif font for numbers, tables, and data
+$font-serif: 'Noto Serif Kannada', serif; // Primary serif font for headings and descriptive texts
+$font-sans: 'Metrophobic', sans-serif; // Sans-serif font for numbers, tables, and data
 
 // **Font Sizes**
+
+$font-size-header: 32px; // For main headings (e.g., "Welcome", "Your Portfolio")
 $font-size-xl: 24px; // For large headings (e.g., "Money Saved", "Total Expenses")
 $font-size-lg: 20px; // For section titles (e.g., "Accounts", "Current Prices")
 $font-size-md: 18px; // For table headers (e.g., "Name", "Purchase Price")
@@ -11,6 +13,7 @@ $font-size-sm: 14px; // For secondary text, table details, and descriptions
 $font-size-xs: 12px; // For tooltips and small labels (e.g., chart labels)
 
 // **Font Weights**
+$font-weight-thin: 300; // Thin weight for small details and error messages
 $font-weight-regular: 400; // Regular weight for body text and less prominent elements
 $font-weight-medium: 500; // Medium weight for table headers and small details
 $font-weight-semibold: 600; // Semi-bold weight for section titles and buttons
