@@ -1,5 +1,22 @@
 <div class="main-container">
   <div class="form-container">
+    <div class="tab">
+      <div
+        class="inner-tab"
+        [ngClass]="{ 'inner-tab-clicked': isLeftActive }"
+        (click)="setActiveTab(true)"
+      >
+        <p>Register</p>
+      </div>
+      <div
+        class="inner-tab"
+        [ngClass]="{ 'inner-tab-clicked': !isLeftActive }"
+        (click)="setActiveTab(false)"
+      >
+        <p>Sign In</p>
+      </div>
+    </div>
+
     <header class="form-header">
       <h2>Create Account</h2>
     </header>

@@ -1,4 +1,4 @@
-import { ViewEncapsulation, Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'finance-manager-entry',

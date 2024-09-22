@@ -3,8 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'finance-manager-menu-subsection',
   templateUrl: './menu-subsection.component.html',
-  styleUrl:
-    '../../../../css/components/menu/menu-section/menu-subsection/menu-subsection.scss',
+  styleUrl: '../../../../css/components/menu/menu-section/menu-subsection/menu-subsection.scss',
 })
 export class MenuSubsectionComponent {
   @Input() subsectionName!: string;

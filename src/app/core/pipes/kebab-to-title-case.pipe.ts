@@ -11,7 +11,7 @@ export class KebabToTitlePipe implements PipeTransform {
 
     // First letter of the word must be capitalized
     const titleCasedWords = words.map(
-      (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
     );
 
     return titleCasedWords.join(' ');

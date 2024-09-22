@@ -21,6 +21,8 @@ export class RegisterComponent implements OnInit {
 
   registerFormGroup!: RegisterFormGroup;
 
+  isLeftActive: boolean = true;
+
   ngOnInit(): void {
     this.registerFormGroup = this.registerFormGroupService.createRegisterForm();
   }
@@ -31,5 +33,9 @@ export class RegisterComponent implements OnInit {
     } else {
       console.error('Form is invalid');
     }
+  }
+
+  setActiveTab(leftTab: boolean): void {
+    this.isLeftActive = leftTab;
   }
 }

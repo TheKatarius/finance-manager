@@ -1,6 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, ValidationErrors, Validators } from '@angular/forms';
-import { loadEsmModuleFromMemory } from '@angular-devkit/build-angular/src/utils/server-rendering/load-esm-from-memory';
 
 @Component({
   selector: 'fin-man-input',

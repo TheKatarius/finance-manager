@@ -1,11 +1,11 @@
-import { FormGroup, ValidationErrors } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
-export function confirmPasswordValidator(formGroup: FormGroup): ValidationErrors | null {
+export function confirmPasswordValidator(formGroup: FormGroup): void {
   const password = formGroup.get('password')?.value;
   const confirmPassword = formGroup?.get('confirmPassword')?.value;
 
   if (!password || !confirmPassword) {
-    return null; // Don't validate if fields are empty
+    return; // Don't validate if fields are empty
   }
 
   if (password !== confirmPassword) {
@@ -18,6 +18,4 @@ export function confirmPasswordValidator(formGroup: FormGroup): ValidationErrors
     formGroup.get('password')?.setErrors(validationErrors);
     formGroup.get('confirmPassword')?.setErrors(validationErrors);
   }
-
-  return null;
 }
