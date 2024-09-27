@@ -3,9 +3,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 @Component({
   selector: 'finance-manager-menu-subsection',
   templateUrl: './menu-subsection.component.html',
-  styleUrl: '../../../../css/components/menu/menu-section/menu-subsection/menu-subsection.scss',
+  styleUrls: ['../../../../css/components/menu/menu-section/menu-subsection/menu-subsection.scss'],
 })
 export class MenuSubsectionComponent {
+  @Input() sectionClassName!: string;
   @Input() subsectionName!: string;
 
   // Remove unwanted lines at the last subsection

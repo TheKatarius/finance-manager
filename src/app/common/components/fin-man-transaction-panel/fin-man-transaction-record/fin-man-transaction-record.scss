@@ -1,0 +1,44 @@
+@use './colors' as colors;
+@use './typography' as typography;
+@use './dimensions' as dimensions;
+
+.transaction-item {
+  color: colors.$text-main;
+  border-radius: dimensions.$border-radius-small;
+  background-color: colors.$background-table-row;
+  font-size: typography.$font-size-sm;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 10px;
+  padding: 5px 15px 5px 10px;
+
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  .transaction-details {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+    .date-amount-container {
+      display: flex;
+      justify-content: space-between;
+
+      .transaction-date {
+        color: colors.$text-secondary;
+      }
+
+      .transaction-amount {
+        &-positive {
+          color: colors.$accent-green;
+        }
+
+        &-negative {
+          color: colors.$accent-red;
+        }
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@ import { RegisterFormGroupService } from '@app/register/register-form-group.serv
 @Component({
   selector: 'finance-manager-register',
   templateUrl: './register.component.html',
-  styleUrl: '../../css/components/register/register.scss',
+  styleUrls: ['../../css/components/register/register.scss'],
   providers: [RegisterFormGroupService],
 })
 export class RegisterComponent implements OnInit {
@@ -25,6 +25,14 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerFormGroup = this.registerFormGroupService.createRegisterForm();
+  }
+
+  get title(): string {
+    return this.isLeftActive ? 'Create Account' : 'Welcome!';
+  }
+
+  get buttonTitle(): string {
+    return this.isLeftActive ? 'Get Started' : 'Sign In';
   }
 
   registerUser(): void {

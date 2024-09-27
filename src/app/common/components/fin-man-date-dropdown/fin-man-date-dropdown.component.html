@@ -1,0 +1,8 @@
+<mat-form-field>
+  <mat-label>Year</mat-label>
+  <mat-select [(value)]="selectedYear" disableRipple>
+    <mat-option *ngFor="let year of years" [value]="year">
+      {{ year }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

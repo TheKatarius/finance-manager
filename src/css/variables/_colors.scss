@@ -5,6 +5,7 @@ $background-hover-element: #0c111a; // Hover background for sort/filter/search e
 $background-inner-panel: #334155; // Inner panel background (e.g., user info, forms)
 $background-inner-panel-hover: #4a5568; // Hover state for inner panels
 $background-table-row: #151d2c; // Table row and filter/search elements background
+$background-table-row-hover: darken($background-table-row, 3%); // Hover state for table rows
 
 // **Text Colors**
 $text-main: #ffffff; // Main text color (headings, table data)

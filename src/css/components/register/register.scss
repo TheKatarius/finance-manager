@@ -15,11 +15,12 @@
     border-radius: dimensions.$border-radius-medium;
     padding: dimensions.$padding-xl;
     text-align: center;
-    width: 400px;
+    width: dimensions.$register-window-width;
 
     .tab {
       background-color: colors.$background-inner-panel;
       border-radius: dimensions.$border-radius-small;
+      font-size: typography.$font-size-md;
       margin-bottom: 80px;
       width: 100%;
       height: dimensions.$register-tab-height;
@@ -60,7 +61,12 @@
 
       h2 {
         color: colors.$accent-blue;
-        font-size: typography.$font-size-header;
+        font-size: typography.$font-size-h2;
+      }
+
+      h3 {
+        color: colors.$text-main;
+        font-size: typography.$font-size-h4;
       }
     }
 

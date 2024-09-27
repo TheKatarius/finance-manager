@@ -6,7 +6,7 @@ import { menuSubsectionClassNames } from '@app/menu/menu.utils';
 @Component({
   selector: 'finance-manager-menu-section',
   templateUrl: './menu-section.component.html',
-  styleUrl: '../../../css/components/menu/menu-section/menu-section.scss',
+  styleUrls: ['../../../css/components/menu/menu-section/menu-section.scss'],
 })
 export class MenuSectionComponent implements OnInit {
   // Current section

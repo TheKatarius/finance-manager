@@ -3,8 +3,7 @@
     class="branch-radius-line"
     [ngClass]="{
       'branch-radius-line-highlighted':
-        (subsectionNameHovered !== '' &&
-          subsectionName === subsectionNameHovered) ||
+        (subsectionNameHovered !== '' && subsectionName === subsectionNameHovered) ||
         subsectionName === subsectionNameClicked,
       'branch-radius-line-change-layer': highlightMainLine
     }"
@@ -13,17 +12,15 @@
   <div
     class="branch-main-line"
     [ngClass]="{
-      'branch-main-line-highlighted':
-        isSubsectionHovered || isSubsectionActive || highlightMainLine
+      'branch-main-line-highlighted': isSubsectionHovered || isSubsectionActive || highlightMainLine
     }"
   ></div>
 
   <a
-    routerLink=""
     class="menu-subsection-item"
+    [routerLink]="['/', sectionClassName, subsectionName]"
     [ngClass]="{
-      'menu-subsection-item-highlighted':
-        isSubsectionHovered || isSubsectionActive
+      'menu-subsection-item-highlighted': isSubsectionHovered || isSubsectionActive
     }"
     (mouseenter)="onSubsectionMouseEnter(subsectionName)"
     (mouseleave)="onSubsectionMouseLeave()"

@@ -1,6 +1,6 @@
-@use 'dimensions' as dimensions;
-@use 'colors' as colors;
-@use 'typography' as typography;
+@use 'css/variables/dimensions' as dimensions;
+@use 'css/variables/colors' as colors;
+@use 'css/variables/typography' as typography;
 
 @mixin input-border($color) {
   border: 1px solid $color;
@@ -71,4 +71,14 @@
     right: 0;
     top: 34px;
   }
+}
+
+.search-input {
+  border: none !important;
+  background: transparent !important;
+  font-size: typography.$font-size-sm;
+  outline: none !important;
+  height: 100% !important;
+  padding: 0 !important;
+  transform: translateY(10px);
 }

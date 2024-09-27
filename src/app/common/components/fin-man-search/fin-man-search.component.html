@@ -1,0 +1,13 @@
+<div class="search-wrapper">
+  <em class="icon search-icon"></em>
+
+  <fin-man-input
+    class="search-input"
+    [type]="'text'"
+    [control]="control"
+    [placeholder]="'Search transactions...'"
+    [componentClassName]="FinManInputTypes.SEARCH"
+    [maxlength]="VALIDATION.SEARCH.MAX_LENGTH"
+    [pattern]="'^[a-zA-Z0-9._-]+$'"
+  ></fin-man-input>
+</div>

@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, ValidationErrors, Validators } from '@angular/forms';
 
+import { FinManInputTypes } from '@common/components/fin-man-input/fin-man-input-types';
+
 @Component({
   selector: 'fin-man-input',
   templateUrl: './fin-man-input.component.html',
-  styleUrl: '../../css/fin-man-input/fin-man-input.scss',
+  styleUrls: ['./fin-man-input.scss'],
 })
 export class FinManInputComponent implements OnInit {
   @Input() type: string = 'text';
@@ -17,13 +19,16 @@ export class FinManInputComponent implements OnInit {
   @Input() maxlength?: number;
   @Input() min?: number;
   @Input() max?: number;
-  @Input() pattern?: string | RegExp;
+  @Input() pattern?: string;
   @Input() tooltip: string = '';
   @Input() iconClassName?: string;
+  @Input() componentClassName: FinManInputTypes = FinManInputTypes.DEFAULT;
 
   @Input({ required: true }) control!: FormControl;
 
   @Output() input = new EventEmitter<Event>();
+
+  private regExpPattern?: RegExp;
 
   // Set unique IDs for each input
   private static nextId = 0;
@@ -34,6 +39,11 @@ export class FinManInputComponent implements OnInit {
     if (!this.control) {
       throw new Error('FormControl is required for FinManInputComponent');
     }
+
+    if (this.pattern) {
+      this.regExpPattern = new RegExp(this.pattern);
+    }
+
     this.setValidators();
   }
 
@@ -110,7 +120,26 @@ export class FinManInputComponent implements OnInit {
     return messages;
   }
 
+  sanitizeInput(): void {
+    const currentValue = this.control.value;
+
+    // Filter out invalid characters by checking each character
+    let filteredValue = '';
+    for (const char of currentValue) {
+      if (this.regExpPattern?.test(char)) {
+        filteredValue += char;
+      }
+    }
+
+    // Set the filtered value back to the input control
+    if (currentValue !== filteredValue) {
+      this.control.setValue(filteredValue, { emitEvent: false });
+    }
+  }
+
   get isError(): boolean {
     return this.control.invalid && (this.control.dirty || this.control.touched);
   }
+
+  protected readonly FinManInputTypes = FinManInputTypes;
 }

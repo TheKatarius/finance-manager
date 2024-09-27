@@ -6,8 +6,8 @@
   }"
 >
   <a
-    routerLink=""
     class="menu-item"
+    [routerLink]="!isExpandable ? ['/', menuSectionClassName] : null"
     [ngClass]="{
       'menu-item-expanded-highlight': isExpandable && isActive && !subsectionNameClicked
     }"
@@ -39,6 +39,7 @@
   <div *ngIf="isExpandable && isActive" class="tree">
     <finance-manager-menu-subsection
       *ngFor="let subsection of subsectionClassNames; let i = index"
+      [sectionClassName]="menuSectionClassName"
       [subsectionName]="subsection"
       [lastSubsection]="i === subsectionClassNames.length - 1"
       [highlightMainLine]="

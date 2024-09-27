@@ -14,7 +14,7 @@
       "@env/*": ["environments/*"],
       "@common/*": ["app/common/*"],
       "@img/*": ["img/*"],
-      "@css/*": ["css/*"],
+      "@css/*": ["css/*"]
     },
     // ensures that the casing of filenames matches exactly when referenced in the code
     "forceConsistentCasingInFileNames": true,
@@ -37,6 +37,10 @@
     // When set to false, this ensures that TypeScript uses traditional JavaScript semantics for initializing class fields, rather than the newer semantics defined in the ECMAScript standard.
     "useDefineForClassFields": false
   },
+  "include": [
+    "src/**/*.ts",        // Include all TypeScript files
+    "src/**/*.html"       // Include all HTML files (if necessary for linting templates)
+  ],
   "angularCompilerOptions": {
     // checks that all dependency injections in the constructor of a directive, component, or service are of valid types. This helps in avoiding issues related to dependency injection at runtime.
     "strictInjectionParameters": true,

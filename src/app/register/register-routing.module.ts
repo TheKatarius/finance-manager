@@ -8,6 +8,10 @@ const PRIMARY_ROUTES: Routes = [
     path: '',
     component: RegisterComponent,
   },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
 
 @NgModule({

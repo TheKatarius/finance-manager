@@ -1,0 +1,27 @@
+@use './colors' as colors;
+@use './dimensions' as dimensions;
+@use './typography' as typography;
+@use './mixins' as mixins;
+
+.transaction-container {
+  background-color: colors.$background-panel;
+  border-radius: dimensions.$border-radius-medium;
+  width: 500px;
+  height: 800px;
+  padding: 15px;
+
+  display: flex;
+  flex-direction: column;
+
+  .transaction-header {
+    font-size: typography.$font-size-h4;
+    color: colors.$accent-blue;
+  }
+
+  .transactions-list {
+    @include mixins.scrollbar;
+
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+}

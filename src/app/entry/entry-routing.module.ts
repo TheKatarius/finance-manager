@@ -18,12 +18,19 @@ const PRIMARY_ROUTES: Routes = [
         loadChildren: () => import('../common/common.module').then((m) => m.CommonModule),
       },
       {
-        path: 'register',
+        path: 'login',
         loadChildren: () => import('../register/register.module').then((m) => m.RegisterModule),
       },
       {
         path: 'home',
         loadChildren: () => import('@app/menu/menu.module').then((m) => m.MenuModule),
+      },
+      {
+        path: 'personal-finance',
+        loadChildren: () =>
+          import('@app/personal-finance/personal-finance.module').then(
+            (m) => m.PersonalFinanceModule,
+          ),
       },
       {
         path: '**',

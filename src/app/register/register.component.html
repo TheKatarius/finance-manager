@@ -18,11 +18,13 @@
     </div>
 
     <header class="form-header">
-      <h2>Create Account</h2>
+      <h2>{{ title }}</h2>
+      <h3 *ngIf="!isLeftActive">Sign in to your account</h3>
     </header>
 
     <form [formGroup]="registerFormGroup">
       <fin-man-input
+        *ngIf="isLeftActive"
         [label]="'Username'"
         [control]="registerFormGroup.controls.username"
         [placeholder]="'Username'"
@@ -58,6 +60,7 @@
       ></fin-man-input>
 
       <fin-man-input
+        *ngIf="isLeftActive"
         [label]="'Confirm Password'"
         [type]="'password'"
         [control]="registerFormGroup.controls.confirmPassword"
@@ -68,6 +71,6 @@
       ></fin-man-input>
     </form>
 
-    <button class="register-button" (click)="registerUser()">Get Started</button>
+    <button class="register-button" (click)="registerUser()">{{ buttonTitle }}</button>
   </div>
 </div>

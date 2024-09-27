@@ -3,12 +3,14 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": ["./tsconfig.json"],
-    "tsconfigRootDir": "./"
+    "tsconfigRootDir": "./",
+    "extraFileExtensions": [".html", ".scss"]
   },
   "plugins": [
     "@typescript-eslint",
     "import"
   ],
+  "ignorePatterns": ["**/*.html"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",

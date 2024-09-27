@@ -8,6 +8,10 @@ const PRIMARY_ROUTES: Routes = [
     path: '',
     component: MenuComponent,
   },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
 
 @NgModule({

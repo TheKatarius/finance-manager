@@ -24,10 +24,12 @@
             "tsConfig": "tsconfig.app.json",
             "styles": ["src/css/index.scss"],
             "scripts": [],
+            "assets": ["src/img"],
             "optimization": true,
             "stylePreprocessorOptions": {
               "includePaths": [
-                "./src/css/variables"
+                "src/css/variables",
+                "src/img"
               ]
             }
           },

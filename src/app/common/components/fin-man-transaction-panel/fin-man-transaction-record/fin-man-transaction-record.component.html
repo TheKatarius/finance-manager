@@ -1,0 +1,20 @@
+<div *ngFor="let transaction of transactions" class="transaction-item">
+  <div class="transaction-icon">
+    <em class="icon" [ngClass]="transaction.icon + '-icon'"></em>
+  </div>
+
+  <div class="transaction-details">
+    <span class="transaction-name">{{ transaction.name }}</span>
+
+    <div class="date-amount-container">
+      <span class="transaction-date">{{ transaction.date }}</span>
+      <span
+        [ngClass]="{
+          'transaction-amount-positive': parseInt(transaction.amount) > 0,
+          'transaction-amount-negative': parseInt(transaction.amount) < 0
+        }"
+        >{{ transaction.amount }}</span
+      >
+    </div>
+  </div>
+</div>

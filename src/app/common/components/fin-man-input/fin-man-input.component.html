@@ -3,10 +3,14 @@
   <!-- || null bcs required when is false it treats it as true -->
   <input
     class="input"
-    [ngClass]="{ 'input-error': isError }"
+    [ngClass]="{
+      'input-error': isError,
+      'search-input': componentClassName === FinManInputTypes.SEARCH
+    }"
     [id]="controlId"
     [type]="type"
     [formControl]="control"
+    [attr.autocomplete]="componentClassName === FinManInputTypes.DEFAULT ? 'on' : 'off'"
     [attr.placeholder]="placeholder"
     [attr.required]="required || null"
     [attr.disabled]="disabled || null"
@@ -20,7 +24,7 @@
     [attr.aria-required]="required"
     [attr.aria-invalid]="isError"
     [attr.aria-describedby]="isError ? errorId : null"
-    (input)="input.emit($event)"
+    (input)="sanitizeInput(); input.emit($event)"
   />
   <em *ngIf="iconClassName" class="icon input-icon" [ngClass]="iconClassName"></em>
 

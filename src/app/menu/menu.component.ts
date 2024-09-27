@@ -6,7 +6,7 @@ import { menuSectionClassNames } from '@app/menu/menu.utils';
 @Component({
   selector: 'finance-manager-menu',
   templateUrl: './menu.component.html',
-  styleUrl: '../../css/components/menu/menu.scss',
+  styleUrls: ['../../css/components/menu/menu.scss'],
 })
 export class MenuComponent implements OnInit {
   private getStringService = inject(GetStringService);
