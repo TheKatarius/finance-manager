@@ -1,5 +1,10 @@
-<div class="dashboard-card">
+<div class="chart-wrapper">
   <fin-man-date-dropdown></fin-man-date-dropdown>
+
+  <div class="title-container">
+    <span class="title">Money Flow In This Year</span>
+    <span class="subtitle">Your expenses in the last 30 days</span>
+  </div>
 
   <div class="chart-container">
     <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType">

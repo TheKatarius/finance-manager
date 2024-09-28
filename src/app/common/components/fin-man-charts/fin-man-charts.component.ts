@@ -27,19 +27,19 @@ export class FinManChartsComponent implements OnInit, AfterViewInit {
 
   @Input() dataSets: ChartDataset<'line', (number | Point | null)[]>[] = [];
 
-  @Input() chartsColorType: ChartsColorType = ChartsColorType.BLUE;
+  chartColorType?: ChartsColorType;
+
+  lineChartOptions: ChartOptions = LINES_CHART_OPTIONS;
+
+  // Dane wykresu
+  lineChartData: ChartData<'line'> = LINE_CHART_DATA;
+
+  // Typ wykresu
+  lineChartType: ChartType = 'line';
 
   constructor() {
     Chart.register(...registerables);
   }
-
-  public lineChartOptions: ChartOptions = LINES_CHART_OPTIONS;
-
-  // Dane wykresu
-  public lineChartData: ChartData<'line'> = LINE_CHART_DATA;
-
-  // Typ wykresu
-  public lineChartType: ChartType = 'line';
 
   ngOnInit(): void {
     this.lineChartData.datasets = this.dataSets;
@@ -47,10 +47,13 @@ export class FinManChartsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     // Set gradient when there is only one dataset
-    if (this.lineChartData.datasets.length === 1) this.setGradientBackground(this.chartsColorType);
+    if (this.lineChartData.datasets.length === 1) {
+      this.chartColorType = this.dataSets[0].borderColor as ChartsColorType;
+      this.setGradientBackground(this.chartColorType);
+    }
   }
 
-  setGradientBackground(charTypeColor: ChartsColorType): void {
+  private setGradientBackground(charTypeColor: ChartsColorType): void {
     const gradient = setGradientBackground(this.chart, charTypeColor);
     console.log(gradient);
 

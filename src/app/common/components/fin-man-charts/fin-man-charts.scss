@@ -1,14 +1,22 @@
 @use './colors' as colors;
 @use './dimensions' as dimensions;
 
-.dashboard-card {
+.chart-wrapper {
   background-color: colors.$background-panel;
   border-radius: dimensions.$border-radius-medium;
   color: colors.$text-main;
   width: 900px;
+  height: 600px;
   padding: 0 dimensions.$padding-large dimensions.$padding-large;
 
+  position: relative;
+
+  .title-container {
+    width: 100%;
+    height: 25%;
+  }
+
   .chart-container {
-    height: 450px;
+    height: 75%;
   }
 }

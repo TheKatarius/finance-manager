@@ -1,8 +1,6 @@
-import { NgClass, NgForOf, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatOption, MatSelect } from '@angular/material/select';
 import { RouterModule } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
 
@@ -37,10 +35,7 @@ const COMMON_COMPONENTS = [
     NgClass,
     BaseChartDirective,
     FormsModule,
-    MatFormField,
-    MatSelect,
-    MatOption,
-    MatLabel,
+    DatePipe,
   ],
   exports: [...COMMON_COMPONENTS],
 })

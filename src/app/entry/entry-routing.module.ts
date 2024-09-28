@@ -11,7 +11,7 @@ const PRIMARY_ROUTES: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'home',
+        redirectTo: 'dashboard',
       },
       {
         path: 'common',
@@ -22,8 +22,9 @@ const PRIMARY_ROUTES: Routes = [
         loadChildren: () => import('../register/register.module').then((m) => m.RegisterModule),
       },
       {
-        path: 'home',
-        loadChildren: () => import('@app/menu/menu.module').then((m) => m.MenuModule),
+        path: 'dashboard',
+        loadChildren: () =>
+          import('@app/dashboard/dashboard.module').then((m) => m.DashboardModule),
       },
       {
         path: 'personal-finance',
@@ -34,7 +35,7 @@ const PRIMARY_ROUTES: Routes = [
       },
       {
         path: '**',
-        redirectTo: 'home',
+        redirectTo: 'dashboard',
       },
     ],
   },

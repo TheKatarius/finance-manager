@@ -1,24 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { DashboardComponent } from '@app/dashboard/dashboard.component';
 import { MenuComponent } from '@app/menu/menu.component';
-import { ExpensesComponent } from '@app/personal-finance/expenses/expenses.component';
-import { PersonalFinanceComponent } from '@app/personal-finance/personal-finance.component';
 
 const PRIMARY_ROUTES: Routes = [
   {
     path: '',
-    component: PersonalFinanceComponent,
+    component: DashboardComponent,
     outlet: 'primary',
     children: [
       {
         path: '',
         component: MenuComponent,
         outlet: 'menu',
-      },
-      {
-        path: 'expenses',
-        component: ExpensesComponent,
       },
     ],
   },
@@ -32,4 +27,4 @@ const PRIMARY_ROUTES: Routes = [
   imports: [RouterModule.forChild(PRIMARY_ROUTES)],
   exports: [RouterModule],
 })
-export class PersonalFinanceRoutingModule {}
+export class DashboardRoutingModule {}

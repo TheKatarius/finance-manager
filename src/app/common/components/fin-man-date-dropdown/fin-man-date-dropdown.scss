@@ -1,0 +1,26 @@
+@use './colors' as colors;
+@use './typography' as typography;
+@use './dimensions' as dimensions;
+
+.dropdown {
+  background-color: colors.$background-table-row;
+  border: none;
+  border-radius: dimensions.$border-radius-small;
+  color: colors.$text-main;
+  cursor: pointer;
+  font-size: typography.$font-size-base;
+  font-weight: typography.$font-weight-semibold;
+  width: 75px;
+  height: 30px;
+  outline: none;
+  padding-left: dimensions.$padding-xs;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  position: absolute;
+  top: 20px;
+  right: 30px;
+
+  &:hover {
+    background-color: colors.$background-table-row-hover;
+  }
+}

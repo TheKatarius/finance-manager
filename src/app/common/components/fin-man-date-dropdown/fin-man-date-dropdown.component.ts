@@ -24,7 +24,8 @@ export class FinManDateDropdownComponent implements OnInit {
     }
   }
 
-  onYearChange(year: number): void {
-    this.selectedYearChange.emit(year);
+  onYearChange(selectedYear: number): void {
+    this.selectedYear = selectedYear;
+    this.selectedYearChange.emit(selectedYear);
   }
 }

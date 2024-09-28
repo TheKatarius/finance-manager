@@ -1,4 +1,4 @@
-import { ChartData, ChartOptions } from 'chart.js';
+import { Chart, ChartData, ChartOptions, Color, LegendItem } from 'chart.js';
 
 const FONT_FAMILY: string = 'Noto Serif Kannada, sans-serif';
 
@@ -7,30 +7,29 @@ export const LINES_CHART_OPTIONS: ChartOptions = {
   maintainAspectRatio: false,
   plugins: {
     title: {
-      display: true,
-      text: 'Money Generated In This Year',
-      color: '#ffffff',
-      font: {
-        size: 28,
-        family: FONT_FAMILY,
-      },
-      position: 'top',
-      align: 'start',
-      padding: 20,
+      display: false,
     },
     legend: {
-      display: true,
+      display: false,
       position: 'right',
       labels: {
         usePointStyle: true,
         pointStyle: 'circle',
         boxHeight: 6,
-        color: '#ffffff',
         font: {
-          size: 14,
+          size: 15,
           family: FONT_FAMILY,
+          weight: 'bold',
         },
-        padding: 10,
+        padding: 5,
+        generateLabels: (chart: Chart): LegendItem[] => {
+          return chart.data.datasets.map((dataset) => ({
+            text: dataset.label ?? '',
+            fontColor: dataset.borderColor as Color,
+            strokeStyle: dataset.borderColor as Color,
+            fillStyle: dataset.borderColor as Color,
+          }));
+        },
       },
     },
     tooltip: {
@@ -87,8 +86,8 @@ export const LINES_CHART_OPTIONS: ChartOptions = {
   elements: {
     line: {
       borderWidth: 5,
-      tension: 0.4,
       fill: true,
+      tension: 0.35,
     },
     point: {
       radius: 0,

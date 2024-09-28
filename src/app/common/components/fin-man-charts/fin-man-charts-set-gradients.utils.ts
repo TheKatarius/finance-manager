@@ -1,5 +1,6 @@
 import { BaseChartDirective } from 'ng2-charts';
 
+import { CHART_COLORS } from '@app/core/data/chart-colors.const';
 import { ChartsColorType } from '@common/components/fin-man-charts/fin-man-charts-color-types.schema';
 
 export function setGradientBackground(
@@ -12,13 +13,19 @@ export function setGradientBackground(
     let rgbaColor: string;
     switch (color) {
       case ChartsColorType.BLUE:
-        rgbaColor = 'rgba(2, 245, 255, 0.3)';
+        rgbaColor = CHART_COLORS.BLUE.RGBA;
         break;
       case ChartsColorType.GREEN:
-        rgbaColor = 'rgb(0, 255, 170, 0.3)';
+        rgbaColor = CHART_COLORS.GREEN.RGBA;
         break;
       case ChartsColorType.RED:
-        rgbaColor = 'rgb(255, 61, 61, 0.3)';
+        rgbaColor = CHART_COLORS.RED.RGBA;
+        break;
+      case ChartsColorType.AMBER:
+        rgbaColor = CHART_COLORS.AMBER.RGBA;
+        break;
+      case ChartsColorType.PURPLE:
+        rgbaColor = CHART_COLORS.PURPLE.RGBA;
         break;
     }
 

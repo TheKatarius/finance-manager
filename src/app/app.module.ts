@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
 
-import { MenuModule } from './menu/menu.module';
-
 @NgModule({
   declarations: [AppComponent],
-  imports: [AppRoutingModule, BrowserModule, MenuModule],
+  imports: [AppRoutingModule, BrowserModule, BrowserAnimationsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

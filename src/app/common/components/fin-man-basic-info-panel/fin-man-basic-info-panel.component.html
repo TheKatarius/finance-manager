@@ -1,1 +1,10 @@
-<h1>Basic Info Panel</h1>
+<div class="panel-wrapper">
+  <div class="icon-container">
+    <em class="icon-panel" [ngClass]="iconName + '-panel-icon'"></em>
+  </div>
+
+  <div class="content-container">
+    <span class="panel-name">{{ panelName }}</span>
+    <span class="panel-value">{{ panelValue }}</span>
+  </div>
+</div>

@@ -1,22 +1,23 @@
 // **Background Colors**
-$background-main: #141a29; // Main background color (for the whole app)
-$background-panel: #222d41; // Panel background (e.g., charts, lists)
+$background-main: #141414; // Main background color (for the whole app)
+$background-panel: #242424; // Panel background (e.g., charts, lists)
 $background-hover-element: #0c111a; // Hover background for sort/filter/search elements
 $background-inner-panel: #334155; // Inner panel background (e.g., user info, forms)
 $background-inner-panel-hover: #4a5568; // Hover state for inner panels
-$background-table-row: #151d2c; // Table row and filter/search elements background
+$background-table-row: #343434; // Table row and filter/search elements background
 $background-table-row-hover: darken($background-table-row, 3%); // Hover state for table rows
 
 // **Text Colors**
 $text-main: #ffffff; // Main text color (headings, table data)
 $text-secondary: #878787; // Secondary text (for less important information)
 $text-secondary-hover: #b0b0b0; // Hover state for secondary text (e.g., placeholders)
-$text-link: #02f5ff; // Link text color (also for CTA buttons)
+$text-link: #1e90ff; // Link text color (also for CTA buttons)
 $text-link-hover: #00d1e0; // Hover state for links (slightly darker blue)
 
 // **Accent Colors**
-$accent-blue: #02f5ff; // Bright blue for interactive elements, headings, CTA buttons
+$accent-blue: #1e90ff; // Bright blue for interactive elements, headings, CTA buttons
 $accent-blue-hover: #00d1e0; // Darker blue for hover state on interactive elements
 $accent-green: #00ffaa; // Green for positive values (profits, income, stock gains)
 $accent-red: #ff3d3d; // Red for negative values (losses, expenses, stock declines)
-$accent-yellow: #ffd700; // Yellow for warnings or neutral values (stock updates)
+$accent-yellow: #ffb74d; // Yellow for warnings or neutral values (stock updates)
+$accent-purple: #8e44ad;

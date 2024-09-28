@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { ChartDataset, Point } from 'chart.js';
 
-import { revenueData, revenueData2 } from '@app/core/mocks/dashboard-charts.mocks';
-import { TransactionsMocks } from '@app/core/mocks/transactions.mocks';
-import { ChartsColorType } from '@common/components/fin-man-charts/fin-man-charts-color-types.schema';
+import {
+  expensesMockData,
+  incomeMockData,
+  savingsMockData,
+} from '@app/core/mocks/dashboard-charts.mocks';
 
 @Component({
   selector: 'finance-manager-expenses',
@@ -13,19 +15,18 @@ export class ExpensesComponent {
   dataSets: ChartDataset<'line', (number | Point | null)[]>[] = [
     {
       label: 'Expenses',
-      data: revenueData,
+      data: expensesMockData,
       borderColor: '#ff3d3d',
-      pointBackgroundColor: '#ff3d3d',
     },
-    // {
-    //   label: 'Income',
-    //   data: revenueData2,
-    //   borderColor: '#00ffaa',
-    //   pointBackgroundColor: '#00ffaa',
-    // },
+    {
+      label: 'Income',
+      data: incomeMockData,
+      borderColor: '#00ffaa',
+    },
+    {
+      label: 'Savings',
+      data: savingsMockData,
+      borderColor: '#02f5ff',
+    },
   ];
-
-  color: ChartsColorType = ChartsColorType.RED;
-
-  transactions = TransactionsMocks;
 }

@@ -9,6 +9,17 @@
   background-position: center;
 }
 
+.icon-panel {
+  display: inline-block; // Ensures the element has dimensions
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .dashboard-icon {
   &-basic {
     background-image: url('../../img/home-menu/basic/DashboardIcon.svg');
@@ -244,4 +255,8 @@
 
 .sort-icon {
   background-image: url('../../img/common/SortIcon.svg');
+}
+
+.savings-panel-icon {
+  background-image: url('../../img/panels/SavingsPanelIcon.svg');
 }
