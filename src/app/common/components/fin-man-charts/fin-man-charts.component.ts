@@ -16,6 +16,10 @@ import {
   LINES_CHART_OPTIONS,
 } from '@common/components/fin-man-charts/fin-man-charts-configuration.const';
 import { setGradientBackground } from '@common/components/fin-man-charts/fin-man-charts-set-gradients.utils';
+import annotationPlugin from 'chartjs-plugin-annotation';
+import { calculateAverage } from '@app/core/utils/calculate-average.utils';
+import { AnnotationOptions } from 'chartjs-plugin-annotation/types/options';
+import { COLORS } from '@app/core/constants/colors.const';
 
 @Component({
   selector: 'fin-man-charts',
@@ -23,11 +27,17 @@ import { setGradientBackground } from '@common/components/fin-man-charts/fin-man
   styleUrls: ['./fin-man-charts.scss'],
 })
 export class FinManChartsComponent implements OnInit, AfterViewInit {
-  @ViewChild(BaseChartDirective) chart!: BaseChartDirective; // Umożliwia dostęp do wykresu
+  @ViewChild(BaseChartDirective) chart!: BaseChartDirective;
 
   @Input() dataSets: ChartDataset<'line', (number | Point | null)[]>[] = [];
 
+  borderColors?: string[];
+
   chartColorType?: ChartsColorType;
+
+  directValueDifference: number[] = [];
+
+  percentageValueDifference: number[] = [];
 
   lineChartOptions: ChartOptions = LINES_CHART_OPTIONS;
 
@@ -38,11 +48,26 @@ export class FinManChartsComponent implements OnInit, AfterViewInit {
   lineChartType: ChartType = 'line';
 
   constructor() {
-    Chart.register(...registerables);
+    Chart.register(...registerables, annotationPlugin);
   }
 
   ngOnInit(): void {
+    this.borderColors = this.dataSets.map((dataSet) => dataSet.borderColor as string);
+
     this.lineChartData.datasets = this.dataSets;
+
+    this.dataSets.map((dataSet) => {
+      const data: number[] = dataSet.data as number[];
+      const value: number = this.calculateDifference(data);
+      this.directValueDifference.push(value);
+
+      const percentageValue = this.calculatePercentageDifference(data);
+      this.percentageValueDifference.push(percentageValue);
+    });
+
+    if (this.lineChartData.datasets.length === 1) {
+      this.addAverageLine();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -55,7 +80,6 @@ export class FinManChartsComponent implements OnInit, AfterViewInit {
 
   private setGradientBackground(charTypeColor: ChartsColorType): void {
     const gradient = setGradientBackground(this.chart, charTypeColor);
-    console.log(gradient);
 
     if (gradient) {
       this.lineChartData.datasets[0].backgroundColor = gradient;
@@ -63,4 +87,49 @@ export class FinManChartsComponent implements OnInit, AfterViewInit {
       this.chart.update();
     }
   }
+
+  private calculateDifference(data: number[]): number {
+    if (data && data.length > 1) {
+      const firstValue = data[0] ?? 0;
+      const lastValue = data[data.length - 1] ?? 0;
+      return lastValue - firstValue;
+    }
+
+    return 0;
+  }
+
+  private calculatePercentageDifference(data: number[]): number {
+    if (data && data.length > 1) {
+      const firstValue = data[0] ?? 0;
+      const lastValue = data[data.length - 1] ?? 0;
+
+      if (firstValue && lastValue) {
+        return Math.round(((lastValue - firstValue) / firstValue) * 1000) / 10;
+      }
+
+      return 0;
+    }
+
+    return 0;
+  }
+
+  private addAverageLine(): void {
+    const average = calculateAverage(this.dataSets[0].data as number[]);
+
+    const existingAnnotations = this.lineChartOptions.plugins?.annotation?.annotations ?? {};
+
+    const averageLineAnnotation: AnnotationOptions = {
+      ...(existingAnnotations as Record<string, AnnotationOptions>)['averageLine'],
+      display: true,
+      yMin: average,
+      yMax: average,
+    };
+
+    this.lineChartOptions.plugins!.annotation!.annotations = {
+      ...this.lineChartOptions.plugins!.annotation!.annotations,
+      averageLine: averageLineAnnotation,
+    };
+  }
+
+  protected readonly COLORS = COLORS;
 }

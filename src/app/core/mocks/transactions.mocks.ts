@@ -1,4 +1,4 @@
-export const TransactionsMocks = [
+export const TransactionsMockData = [
   {
     name: 'Water Bill',
     date: '2023-02-20',

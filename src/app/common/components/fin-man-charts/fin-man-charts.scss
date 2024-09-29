@@ -1,22 +1,60 @@
 @use './colors' as colors;
 @use './dimensions' as dimensions;
+@use './typography' as typography;
 
 .chart-wrapper {
   background-color: colors.$background-panel;
   border-radius: dimensions.$border-radius-medium;
   color: colors.$text-main;
-  width: 900px;
-  height: 600px;
-  padding: 0 dimensions.$padding-large dimensions.$padding-large;
+  height: 750px;
+  padding: dimensions.$padding-large;
 
   position: relative;
 
   .title-container {
     width: 100%;
     height: 25%;
+
+    .title {
+      color: colors.$accent-blue;
+      font-size: typography.$font-size-h3;
+      font-weight: typography.$font-weight-semibold;
+      margin-bottom: dimensions.$margin-large;
+
+      display: inline-block;
+    }
+
+    .multiple-legends-container {
+      display: flex;
+      justify-content: space-between;
+
+      .legend-container {
+        border: 1px solid colors.$background-table-row;
+        border-bottom: 3px solid colors.$background-table-row;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); // Dodanie cienia
+        padding: dimensions.$padding-small;
+
+        display: flex;
+        flex-direction: column;
+
+        .legend-description {
+          color: colors.$text-secondary;
+          margin-bottom: dimensions.$margin-xs;
+        }
+
+        .direct-value {
+          font-size: typography.$font-size-xl;
+        }
+
+        .difference {
+          color: colors.$accent-green;
+        }
+      }
+    }
   }
 
   .chart-container {
     height: 75%;
+    margin-right: -10px;
   }
 }

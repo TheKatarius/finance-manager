@@ -1,4 +1,4 @@
-import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgForOf, NgIf, NgStyle } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -13,6 +13,7 @@ import { FinManDateDropdownComponent } from '@common/components/fin-man-date-dro
 import { FinManSearchComponent } from '@common/components/fin-man-search/fin-man-search.component';
 import { FinManTransactionPanelComponent } from '@common/components/fin-man-transaction-panel/fin-man-transaction-panel.component';
 import { FinManTransactionRecordComponent } from '@common/components/fin-man-transaction-panel/fin-man-transaction-record/fin-man-transaction-record.component';
+import { FinManPieChartComponent } from '@common/components/fin-man-pie-chart/fin-man-pie-chart.component';
 
 const COMMON_COMPONENTS = [
   FinManBasicInfoPanelComponent,
@@ -22,6 +23,7 @@ const COMMON_COMPONENTS = [
   FinManSearchComponent,
   FinManChartsComponent,
   FinManDateDropdownComponent,
+  FinManPieChartComponent,
 ];
 
 @NgModule({
@@ -36,6 +38,7 @@ const COMMON_COMPONENTS = [
     BaseChartDirective,
     FormsModule,
     DatePipe,
+    NgStyle,
   ],
   exports: [...COMMON_COMPONENTS],
 })

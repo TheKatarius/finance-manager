@@ -1,0 +1,28 @@
+import { PieChartCategory } from '@app/core/interfaces/pie-chart-category.schema';
+
+export const CategoriesMockData: PieChartCategory[] = [
+  { category: 'Children', budget: 150, spent: 120 },
+  { category: 'Clothing', budget: 75, spent: 60 },
+  { category: 'EatingOut', budget: 250, spent: 230 },
+  { category: 'Education', budget: 120, spent: 100 },
+  { category: 'Electronics', budget: 400, spent: 390 },
+  { category: 'Entertainment', budget: 200, spent: 150 },
+  { category: 'Gifts', budget: 60, spent: 40 },
+  { category: 'Groceries', budget: 500, spent: 480 },
+  { category: 'Health', budget: 300, spent: 280 },
+  { category: 'Hobby', budget: 100, spent: 90 },
+  { category: 'Hygiene', budget: 50, spent: 45 },
+  { category: 'Insurance', budget: 120, spent: 120 },
+  { category: 'Investments', budget: 700, spent: 650 },
+  { category: 'Obligations', budget: 80, spent: 70 },
+  { category: 'Other', budget: 90, spent: 80 },
+  { category: 'Pets', budget: 130, spent: 110 },
+  { category: 'Rent', budget: 900, spent: 900 },
+  { category: 'Savings', budget: 400, spent: 350 },
+  { category: 'Sport', budget: 180, spent: 160 },
+  { category: 'Subscriptions', budget: 50, spent: 45 },
+  { category: 'Taxes', budget: 600, spent: 600 },
+  { category: 'Transport', budget: 200, spent: 180 },
+  { category: 'Travel', budget: 450, spent: 420 },
+  { category: 'Utility', budget: 220, spent: 210 },
+];

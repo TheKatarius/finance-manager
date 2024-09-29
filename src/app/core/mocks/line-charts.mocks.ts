@@ -1,4 +1,4 @@
-export const expensesMockData = [
+export const ExpensesMockData = [
   120000, // January
   90000, // February
   130000, // March
@@ -13,7 +13,7 @@ export const expensesMockData = [
   135000, // December
 ];
 
-export const incomeMockData = [
+export const IncomeMockData = [
   90000, // January
   70000, // February
   95000, // March
@@ -28,7 +28,7 @@ export const incomeMockData = [
   150000, // December
 ];
 
-export const savingsMockData = [
+export const SavingsMockData = [
   20000, // January
   15000, // February
   25000, // March

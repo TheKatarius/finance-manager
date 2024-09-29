@@ -11,7 +11,7 @@
   font-weight: typography.$font-weight-bold;
 
   width: dimensions.$sidebar-menu-width;
-  height: dimensions.$sidebar-menu-height;
+  height: max(100vh, 100%);
   padding: dimensions.$padding-large;
 }
 

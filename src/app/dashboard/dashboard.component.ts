@@ -2,7 +2,11 @@ import { Component } from '@angular/core';
 import { ChartDataset, Point } from 'chart.js';
 
 import { CHART_COLORS } from '@app/core/data/chart-colors.const';
-import { savingsMockData } from '@app/core/mocks/dashboard-charts.mocks';
+import {
+  ExpensesMockData,
+  IncomeMockData,
+  SavingsMockData,
+} from '@app/core/mocks/line-charts.mocks';
 
 @Component({
   selector: 'finance-manager-dashboard',
@@ -13,17 +17,17 @@ export class DashboardComponent {
   dataSets: ChartDataset<'line', (number | Point | null)[]>[] = [
     // {
     //   label: 'Expenses',
-    //   data: expensesMockData,
-    //   borderColor: '#ff3d3d',
+    //   data: ExpensesMockData,
+    //   borderColor: CHART_COLORS.RED.HEX,
     // },
     // {
     //   label: 'Income',
-    //   data: incomeMockData,
-    //   borderColor: '#00ffaa',
+    //   data: IncomeMockData,
+    //   borderColor: CHART_COLORS.GREEN.HEX,
     // },
     {
       label: 'Savings',
-      data: savingsMockData,
+      data: SavingsMockData,
       borderColor: CHART_COLORS.AMBER.HEX,
     },
   ];

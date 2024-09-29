@@ -8,7 +8,7 @@
   .dashboard-content-container {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 20px;
     padding: 25px;
     width: 100%;
 
@@ -31,13 +31,15 @@
 
     .panels-container {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 40px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
     }
 
     .chart-transactions-container {
-      display: flex;
-      gap: 40px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      width: 100%;
     }
   }
 }

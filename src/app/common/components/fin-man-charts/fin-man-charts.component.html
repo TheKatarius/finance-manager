@@ -2,8 +2,28 @@
   <fin-man-date-dropdown></fin-man-date-dropdown>
 
   <div class="title-container">
-    <span class="title">Money Flow In This Year</span>
-    <span class="subtitle">Your expenses in the last 30 days</span>
+    <span class="title">Money Flow</span>
+    <div class="multiple-legends-container">
+      <div
+        *ngFor="let dataSet of dataSets; let i = index"
+        class="legend-container"
+        [ngStyle]="{'border-bottom-color': borderColors?.[i]} "
+      >
+        <span class="legend-description">{{ dataSet.label }}</span>
+        <span class="direct-value">{{ directValueDifference[i] + ' PLN' }}</span>
+        <span
+          class="difference"
+          [ngStyle]="
+            percentageValueDifference[i] < 0
+              ? { color: COLORS.accentGreen }
+              : percentageValueDifference[i] === 0
+              ? { color: COLORS.textMain }
+              : {}
+          "
+          >{{ percentageValueDifference[i] + '%' }}</span
+        >
+      </div>
+    </div>
   </div>
 
   <div class="chart-container">

@@ -1,4 +1,5 @@
 import { Chart, ChartData, ChartOptions, Color, LegendItem } from 'chart.js';
+import { COLORS } from '@app/core/constants/colors.const';
 
 const FONT_FAMILY: string = 'Noto Serif Kannada, sans-serif';
 
@@ -8,6 +9,22 @@ export const LINES_CHART_OPTIONS: ChartOptions = {
   plugins: {
     title: {
       display: false,
+    },
+    annotation: {
+      annotations: {
+        averageLine: {
+          display: false,
+          type: 'line',
+          borderColor: COLORS.textSecondary,
+          borderWidth: 2,
+          borderDash: [10, 5],
+          label: {
+            content: 'Average',
+            position: 'center',
+            backgroundColor: COLORS.textSecondary,
+          },
+        },
+      },
     },
     legend: {
       display: false,
@@ -34,7 +51,7 @@ export const LINES_CHART_OPTIONS: ChartOptions = {
     },
     tooltip: {
       enabled: true,
-      backgroundColor: 'rgba(0, 0, 0, 0.9)',
+      backgroundColor: 'rgba(0, 0, 0, 1)',
       usePointStyle: true,
       boxHeight: 6,
       borderWidth: 6,
@@ -59,7 +76,7 @@ export const LINES_CHART_OPTIONS: ChartOptions = {
         display: false,
       },
       ticks: {
-        color: '#94a3b8', // Delikatne kolory etykiet osi X
+        color: COLORS.textSecondary, // Delikatne kolory etykiet osi X
         font: {
           size: 14,
           family: FONT_FAMILY,
@@ -74,7 +91,7 @@ export const LINES_CHART_OPTIONS: ChartOptions = {
       },
       ticks: {
         maxTicksLimit: 10, // Maksymalnie 10 stopni na osi Y
-        color: '#94a3b8', // Kolor tekstu na osi Y
+        color: COLORS.textSecondary, // Kolor tekstu na osi Y
         font: {
           size: 14,
           family: FONT_FAMILY,
@@ -87,7 +104,7 @@ export const LINES_CHART_OPTIONS: ChartOptions = {
     line: {
       borderWidth: 5,
       fill: true,
-      tension: 0.35,
+      tension: 0.0,
     },
     point: {
       radius: 0,

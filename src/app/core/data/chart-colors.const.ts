@@ -4,8 +4,8 @@ export const CHART_COLORS = {
     HEX: '#1e90ff',
   },
   GREEN: {
-    RGBA: 'rgb(0, 255, 170, 0.3)',
-    HEX: '#00ffaa',
+    RGBA: 'rgb(0, 255, 153, 0.3)',
+    HEX: '#00ff99',
   },
   RED: {
     RGBA: 'rgb(255, 61, 61, 0.3)',
