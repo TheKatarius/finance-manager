@@ -1,52 +1,78 @@
 import { ChartData, ChartOptions } from 'chart.js';
 
-const FONT_FAMILY: string = 'Noto Serif Kannada, sans-serif';
-
-export const POLAR_AREA_CHART_TYPE = 'polarArea' as const;
-export type PolarAreaChartTypeLiteral = typeof POLAR_AREA_CHART_TYPE;
+import { ExpenseCategoryBudgeting } from '@app/core/interfaces/category.schema';
+import {
+  categoryData,
+  generateColors,
+} from '@common/components/fin-man-pie-chart/fin-man-pie-chart.utils';
 
 export const PIE_CHART_TYPE = 'pie' as const;
 export type PieChartTypeLiteral = typeof PIE_CHART_TYPE;
 
-// Konfiguracja opcji wykresu
-export const EXPENDITURE_CHART_OPTIONS: ChartOptions<PolarAreaChartTypeLiteral> = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {},
-  animation: {
-    duration: 1000,
-    easing: 'easeInOutQuart',
-  },
-};
-
-// Funkcja generująca dane do wykresu
-export function generateExpenditureChartData(
-  categories: any[],
-  dataKey: 'budgetPercent' | 'spentPercent',
-): ChartData<PolarAreaChartTypeLiteral | PieChartTypeLiteral> {
-  const labels = categories.map((cat) => cat.name);
-  const data = categories.map((cat) => cat[dataKey]);
-  const backgroundColor = generateColors(categories.length);
+export const CHART_DATA = (
+  categories: ExpenseCategoryBudgeting[],
+): ChartData<PieChartTypeLiteral> => {
+  const categoriesData = categoryData(categories);
 
   return {
-    labels: labels,
+    labels: categoriesData.map((cat) => cat.category),
     datasets: [
       {
-        data: data,
-        backgroundColor: backgroundColor,
-        borderWidth: 1,
-        borderColor: '#fff',
+        data: categoriesData.map((cat) => cat.budgetPercent),
+        backgroundColor: generateColors(categoriesData.length),
+        borderWidth: 0,
       },
     ],
   };
-}
+};
 
-// Funkcja generująca kolory
-function generateColors(count: number): string[] {
-  const colors = [];
-  for (let i = 0; i < count; i++) {
-    const hue = (i * 360) / count;
-    colors.push(`hsl(${hue}, 70%, 50%)`);
-  }
-  return colors;
-}
+export const CHART_OPTIONS: ChartOptions<PieChartTypeLiteral> = {
+  responsive: true,
+  maintainAspectRatio: false,
+  layout: {
+    padding: {
+      top: 50, // Increase padding for better spacing
+      bottom: 50,
+      left: 150,
+      right: 150,
+    },
+  },
+  plugins: {
+    legend: {
+      display: false,
+    },
+    datalabels: {
+      formatter: (value, ctx) => {
+        const label = ctx.chart.data.labels![ctx.dataIndex];
+        return `${label}: ${value}%`;
+      },
+      color: '#fff',
+      borderRadius: 4,
+      padding: {
+        top: 6,
+        bottom: 6,
+        left: 8,
+        right: 8,
+      },
+      align: 'end', // Align outside of the slice
+      anchor: 'end', // Anchor the label outside
+      clamp: true, // Make sure it fits inside the canvas
+      font: {
+        size: 14,
+        weight: 'bold',
+      },
+    },
+    tooltip: {
+      callbacks: {
+        label: (context) => {
+          const value = context.raw || 0;
+          return `Category: ${context.label}, Budget: ${value}%`;
+        },
+      },
+      backgroundColor: 'rgba(0,0,0,0.9)',
+      titleFont: { size: 16, weight: 'bold' },
+      bodyFont: { size: 14 },
+      padding: 10,
+    },
+  },
+};

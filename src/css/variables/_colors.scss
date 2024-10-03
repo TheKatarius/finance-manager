@@ -14,9 +14,12 @@ $text-link: #1e90ff; // Link text color (also for CTA buttons)
 $text-link-hover: darken($text-link, 10%); // Hover state for links (slightly darker blue)
 
 // **Accent Colors**
+$light-accent-blue: #4d90fe; // Light blue for background elements (e.g., charts)
 $accent-blue: #1e90ff; // Bright blue for interactive elements, headings, CTA buttons
 $accent-blue-hover: darken($accent-blue, 10%); // Hover state for links (slightly darker blue)
+$light-accent-green: #33ffb2;
 $accent-green: #00ff99; // Green for positive values (profits, income, stock gains)
+$light-accent-red: #ff5050; // Light red for background elements (e.g., charts)
 $accent-red: #ff3d3d; // Red for negative values (losses, expenses, stock declines)
 $accent-yellow: #ffb74d; // Yellow for warnings or neutral values (stock updates)
 $accent-purple: #8e44ad;

@@ -1,6 +1,6 @@
 import { BaseChartDirective } from 'ng2-charts';
 
-import { CHART_COLORS } from '@app/core/data/chart-colors.const';
+import { CHART_COLORS } from '@app/core/constants/chart-colors.const';
 import { ChartsColorType } from '@common/components/fin-man-charts/fin-man-charts-color-types.schema';
 
 export function setGradientBackground(

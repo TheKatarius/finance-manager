@@ -1,0 +1,38 @@
+<div class="basic-balance-container">
+  <div class="title-wrapper">
+    <span class="title">Basic Balance</span>
+    <span class="period">November 2024</span>
+  </div>
+
+  <div class="balance-wrapper">
+    <div class="balance-section-wrapper">
+      <fin-man-progress-bar
+        [max]="1000"
+        [value]="750"
+        [gradientColor]="GRADIENT_PROGRESS_BARS.RED"
+        [iconClass]="'red-taxes'"
+        [tooltipDescription]="'Current Income Compared to Planned Income'"
+      ></fin-man-progress-bar>
+    </div>
+
+    <div class="balance-section-wrapper">
+      <fin-man-progress-bar
+        [max]="1000"
+        [value]="300"
+        [gradientColor]="GRADIENT_PROGRESS_BARS.GREEN"
+        [iconClass]="'green-salary'"
+        [tooltipDescription]="'Current Expenses Compared to Planned Expenses'"
+      ></fin-man-progress-bar>
+    </div>
+
+    <div class="balance-section-wrapper">
+      <fin-man-progress-bar
+        [max]="1000"
+        [value]="500"
+        [gradientColor]="GRADIENT_PROGRESS_BARS.BLUE"
+        [iconClass]="'blue-savings'"
+        [tooltipDescription]="'Current Savings Achieved'"
+      ></fin-man-progress-bar>
+    </div>
+  </div>
+</div>

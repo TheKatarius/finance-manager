@@ -1,8 +1,8 @@
-<div style="position: relative; display: inline-block">
-  <canvas
-    baseChart
-    [data]="outerChartData"
-    [options]="polarAreaChartOptions"
-    [type]="polarAreaChartType"
-  ></canvas>
+<div class="pie-chart-wrapper">
+  <span class="title">Budget Distribution</span>
+  <span class="subtitle">Share of the category budget in the total budget</span>
+
+  <div class="pie-chart">
+    <canvas baseChart [data]="chartData" [options]="chartOptions" [type]="pieChartType"></canvas>
+  </div>
 </div>

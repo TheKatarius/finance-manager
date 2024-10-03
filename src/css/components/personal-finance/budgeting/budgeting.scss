@@ -1,0 +1,16 @@
+.budgeting-container {
+  display: flex;
+
+  .budgeting-content-container {
+    display: flex;
+    gap: 20px;
+    padding: 25px;
+    width: 100%;
+
+    .balance-pie-chart-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+}

@@ -1,3 +1,7 @@
+@use 'colors' as colors;
+@use 'dimensions' as dimensions;
+@use 'typography' as typography;
+
 @mixin scrollbar() {
   &::-webkit-scrollbar {
     width: 10px;
@@ -21,5 +25,33 @@
 
   &::-webkit-scrollbar-corner {
     background-color: transparent; /* Keep corners transparent */
+  }
+}
+
+@mixin tab-styles {
+  width: 50%;
+  height: 50px;
+  transition: background-color 0.3s ease;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-clicked {
+    background: linear-gradient(45deg, colors.$accent-blue, colors.$accent-blue-hover);
+    color: colors.$text-main;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: colors.$background-inner-panel-hover;
+  }
+
+  &:first-child {
+    border-radius: dimensions.$border-radius-small 0 0 dimensions.$border-radius-small;
+  }
+
+  &:last-child {
+    border-radius: 0 dimensions.$border-radius-small dimensions.$border-radius-small 0;
   }
 }

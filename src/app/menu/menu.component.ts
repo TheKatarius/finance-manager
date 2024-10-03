@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 
 import { GetStringService } from '@app/core/services/get-string.service';
+import { MenuService } from '@app/menu/menu.service';
 import { menuSectionClassNames } from '@app/menu/menu.utils';
 
 @Component({
@@ -10,6 +11,8 @@ import { menuSectionClassNames } from '@app/menu/menu.utils';
 })
 export class MenuComponent implements OnInit {
   private getStringService = inject(GetStringService);
+
+  private menuService = inject(MenuService);
 
   // All available section in className format
   sectionClassNames!: string[];
@@ -22,10 +25,12 @@ export class MenuComponent implements OnInit {
       this.getStringService.get(...code),
     );
 
-    this.activeSection = this.sectionClassNames[0];
+    this.activeSection = this.menuService.clickedSectionSubject.getValue().section;
   }
 
   onSectionClick(sectionName: string): void {
+    this.menuService.setClickedSection(sectionName);
+
     this.activeSection = sectionName;
   }
 }

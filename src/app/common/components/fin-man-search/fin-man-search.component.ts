@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { VALIDATION } from '@app/core/data/validators.const';
+import { VALIDATION } from '@app/core/constants/validators.const';
 import { FinManInputTypes } from '@common/components/fin-man-input/fin-man-input-types';
 
 @Component({

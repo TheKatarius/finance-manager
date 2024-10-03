@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { StringsDataConst } from '@app/core/data/strings-data.const';
+import { StringsDataConst } from '@app/core/constants/strings-data.const';
 
 @Injectable({
   providedIn: 'root',

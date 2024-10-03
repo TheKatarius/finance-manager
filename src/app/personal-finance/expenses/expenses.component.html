@@ -1,9 +1,11 @@
-<fin-man-basic-info-panel
-  [iconName]="'savings'"
-  [panelName]="'Money Saved'"
-  [panelValue]="'12 534 PLN'"
-></fin-man-basic-info-panel>
-
 <main>
+  <router-outlet name="menu"></router-outlet>
+
+  <fin-man-basic-info-panel
+    [iconName]="'savings'"
+    [panelName]="'Money Saved'"
+    [panelValue]="'12 534 PLN'"
+  ></fin-man-basic-info-panel>
+
   <fin-man-transaction-panel></fin-man-transaction-panel>
 </main>

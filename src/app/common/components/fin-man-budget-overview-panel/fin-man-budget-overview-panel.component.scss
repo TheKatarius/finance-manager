@@ -1,0 +1,40 @@
+@use 'colors' as colors;
+@use 'dimensions' as dimensions;
+@use 'typography' as typography;
+@use './mixins' as mixins;
+
+.budget-overview-container {
+  min-width: 500px;
+  height: 800px;
+  background-color: colors.$background-panel;
+  padding: 15px;
+  border-radius: dimensions.$border-radius-medium;
+
+  display: flex;
+  flex-direction: column;
+
+  .tab-wrapper {
+    background-color: colors.$background-inner-panel;
+    border-radius: dimensions.$border-radius-small;
+    font-size: typography.$font-size-md;
+    margin-bottom: 20px;
+    width: 100%;
+    height: dimensions.$register-tab-height;
+
+    display: flex;
+
+    .tab {
+      @include mixins.tab-styles;
+    }
+  }
+
+  .category-wrapper {
+    @include mixins.scrollbar;
+
+    flex-grow: 1;
+    overflow-y: auto;
+
+    padding-right: 20px;
+    height: 100%;
+  }
+}

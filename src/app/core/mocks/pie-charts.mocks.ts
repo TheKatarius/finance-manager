@@ -1,28 +1,165 @@
-import { PieChartCategory } from '@app/core/interfaces/pie-chart-category.schema';
+import {
+  ExpenseCategoryNames,
+  IncomeCategoryNames,
+} from '@app/core/interfaces/category-names.schema';
+import {
+  ExpenseCategoryBudgeting,
+  IncomeCategoryBudgeting,
+} from '@app/core/interfaces/category.schema';
 
-export const CategoriesMockData: PieChartCategory[] = [
-  { category: 'Children', budget: 150, spent: 120 },
-  { category: 'Clothing', budget: 75, spent: 60 },
-  { category: 'EatingOut', budget: 250, spent: 230 },
-  { category: 'Education', budget: 120, spent: 100 },
-  { category: 'Electronics', budget: 400, spent: 390 },
-  { category: 'Entertainment', budget: 200, spent: 150 },
-  { category: 'Gifts', budget: 60, spent: 40 },
-  { category: 'Groceries', budget: 500, spent: 480 },
-  { category: 'Health', budget: 300, spent: 280 },
-  { category: 'Hobby', budget: 100, spent: 90 },
-  { category: 'Hygiene', budget: 50, spent: 45 },
-  { category: 'Insurance', budget: 120, spent: 120 },
-  { category: 'Investments', budget: 700, spent: 650 },
-  { category: 'Obligations', budget: 80, spent: 70 },
-  { category: 'Other', budget: 90, spent: 80 },
-  { category: 'Pets', budget: 130, spent: 110 },
-  { category: 'Rent', budget: 900, spent: 900 },
-  { category: 'Savings', budget: 400, spent: 350 },
-  { category: 'Sport', budget: 180, spent: 160 },
-  { category: 'Subscriptions', budget: 50, spent: 45 },
-  { category: 'Taxes', budget: 600, spent: 600 },
-  { category: 'Transport', budget: 200, spent: 180 },
-  { category: 'Travel', budget: 450, spent: 420 },
-  { category: 'Utility', budget: 220, spent: 210 },
+// Helper function to generate random numbers within a range
+function randomRange(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Generate random budget and spent values based on the category
+export const ExpenseCategoriesMockData: ExpenseCategoryBudgeting[] = [
+  {
+    category: ExpenseCategoryNames.Children,
+    budget: randomRange(100, 500),
+    spent: randomRange(80, 400),
+  },
+  {
+    category: ExpenseCategoryNames.Clothing,
+    budget: randomRange(50, 300),
+    spent: randomRange(30, 250),
+  },
+  {
+    category: ExpenseCategoryNames.EatingOut,
+    budget: randomRange(100, 600),
+    spent: randomRange(80, 550),
+  },
+  {
+    category: ExpenseCategoryNames.Education,
+    budget: randomRange(200, 800),
+    spent: randomRange(150, 700),
+  },
+  {
+    category: ExpenseCategoryNames.Electronics,
+    budget: randomRange(300, 1200),
+    spent: randomRange(250, 1000),
+  },
+  {
+    category: ExpenseCategoryNames.Entertainment,
+    budget: randomRange(100, 500),
+    spent: randomRange(50, 450),
+  },
+  {
+    category: ExpenseCategoryNames.Gifts,
+    budget: randomRange(20, 200),
+    spent: randomRange(10, 180),
+  },
+  {
+    category: ExpenseCategoryNames.Groceries,
+    budget: randomRange(200, 1000),
+    spent: randomRange(150, 950),
+  },
+  {
+    category: ExpenseCategoryNames.Health,
+    budget: randomRange(150, 700),
+    spent: randomRange(100, 650),
+  },
+  {
+    category: ExpenseCategoryNames.Hobby,
+    budget: randomRange(50, 300),
+    spent: randomRange(30, 250),
+  },
+  {
+    category: ExpenseCategoryNames.Hygiene,
+    budget: randomRange(20, 100),
+    spent: randomRange(10, 90),
+  },
+  {
+    category: ExpenseCategoryNames.Insurance,
+    budget: randomRange(100, 500),
+    spent: randomRange(100, 500),
+  }, // Likely to spend full budget on insurance
+  {
+    category: ExpenseCategoryNames.Investments,
+    budget: randomRange(500, 1500),
+    spent: randomRange(400, 1300),
+  },
+  {
+    category: ExpenseCategoryNames.Obligations,
+    budget: randomRange(50, 300),
+    spent: randomRange(40, 250),
+  },
+  {
+    category: ExpenseCategoryNames.Other,
+    budget: randomRange(50, 300),
+    spent: randomRange(40, 250),
+  },
+  {
+    category: ExpenseCategoryNames.Pets,
+    budget: randomRange(100, 400),
+    spent: randomRange(80, 350),
+  },
+  {
+    category: ExpenseCategoryNames.Rent,
+    budget: randomRange(700, 1500),
+    spent: randomRange(700, 1500),
+  }, // Usually exact spent equals budget for rent
+  {
+    category: ExpenseCategoryNames.Savings,
+    budget: randomRange(300, 1200),
+    spent: randomRange(250, 1100),
+  },
+  {
+    category: ExpenseCategoryNames.Sport,
+    budget: randomRange(50, 400),
+    spent: randomRange(40, 350),
+  },
+  {
+    category: ExpenseCategoryNames.Subscriptions,
+    budget: randomRange(10, 100),
+    spent: randomRange(10, 90),
+  },
+  {
+    category: ExpenseCategoryNames.Taxes,
+    budget: randomRange(500, 1500),
+    spent: randomRange(500, 1500),
+  }, // Exact spent equals budget for taxes
+  {
+    category: ExpenseCategoryNames.Transport,
+    budget: randomRange(100, 600),
+    spent: randomRange(80, 550),
+  },
+  {
+    category: ExpenseCategoryNames.Travel,
+    budget: randomRange(300, 1500),
+    spent: randomRange(250, 1400),
+  },
+  {
+    category: ExpenseCategoryNames.Utility,
+    budget: randomRange(100, 500),
+    spent: randomRange(80, 450),
+  },
+];
+
+export const IncomeSourcesMockData: IncomeCategoryBudgeting[] = [
+  {
+    category: IncomeCategoryNames.Bonus,
+    earned: randomRange(1000, 5000),
+    plannedEarnings: randomRange(1500, 6000),
+  },
+  {
+    category: IncomeCategoryNames.Gifts,
+    earned: randomRange(200, 1500),
+    plannedEarnings: randomRange(500, 1800),
+  },
+  {
+    category: IncomeCategoryNames.InvestmentsIncome,
+    earned: randomRange(500, 3000),
+    plannedEarnings: randomRange(1000, 4000),
+  },
+  {
+    category: IncomeCategoryNames.Salary,
+    earned: randomRange(3000, 10000),
+    plannedEarnings: randomRange(5000, 12000),
+  },
+  {
+    category: IncomeCategoryNames.SideGig,
+    earned: randomRange(500, 2500),
+    plannedEarnings: randomRange(1000, 3000),
+  },
 ];

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 
 import { GetStringService } from '@app/core/services/get-string.service';
+import { MenuService } from '@app/menu/menu.service';
 import { menuSubsectionClassNames } from '@app/menu/menu.utils';
 
 @Component({
@@ -17,6 +18,8 @@ export class MenuSectionComponent implements OnInit {
   @Output() sectionClicked = new EventEmitter<string>();
 
   private getStringService = inject(GetStringService);
+
+  private menuService = inject(MenuService);
 
   // Get all subsectionNames in className format
   subsectionClassNames: string[] = menuSubsectionClassNames((...code: string[]) =>
@@ -40,6 +43,11 @@ export class MenuSectionComponent implements OnInit {
   highlightAboveSubsections: number[] = [];
 
   ngOnInit(): void {
+    this.subsectionNameClicked = this.menuService.clickedSectionSubject.getValue().subsection || '';
+    if (this.subsectionNameClicked) {
+      this.highlightAboveSubsectionsClicked = this.getIndexesAbove(this.subsectionNameClicked);
+    }
+
     this.setIsExpandable();
     this.setSubsectionClassNames();
   }
@@ -71,6 +79,8 @@ export class MenuSectionComponent implements OnInit {
   }
 
   onSubsectionClick(subsectionName: string): void {
+    this.menuService.setClickedSubsection(subsectionName);
+
     this.subsectionNameClicked = subsectionName;
     this.highlightAboveSubsectionsClicked = this.getIndexesAbove(subsectionName);
   }

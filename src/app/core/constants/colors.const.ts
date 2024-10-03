@@ -18,4 +18,5 @@ export const COLORS = {
   accentRed: '#ff3d3d',
   accentYellow: '#ffb74d',
   accentPurple: '#8e44ad',
+  accentBlack: '#000000',
 };

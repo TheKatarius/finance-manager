@@ -1,0 +1,31 @@
+<div class="progress-bar-container">
+  <div>
+    <em class="icon" [ngClass]="iconClass + '-icon'"></em>
+  </div>
+
+  <div class="progress-container">
+    <div
+      class="progress-bar"
+      [ngStyle]="{ background: gradientColor }"
+      [style.width.%]="progressPercentage"
+    ></div>
+  </div>
+
+  <p class="progress-label" [ngClass]="{ 'progress-label-down': moveLabelBelowProgressBar }">
+    {{ value }} / {{ max }}
+  </p>
+
+  <span
+    *ngIf="isIconVisible"
+    class="icon info-icon info-tooltip-wrapper"
+    (mouseenter)="showTooltip = true"
+    (mouseleave)="showTooltip = false"
+  >
+    <span
+      *ngIf="showTooltip"
+      class="tooltip"
+      [ngClass]="{ 'tooltip-left': tooltipDisplayDirection === Directions.Left }"
+      >{{ tooltipDescription }}</span
+    >
+  </span>
+</div>

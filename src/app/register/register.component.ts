@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 
-import { VALIDATION } from '@app/core/data/validators.const';
+import { VALIDATION } from '@app/core/constants/validators.const';
 import { confirmPasswordValidator } from '@app/core/validators/confirm-password-validator.utils';
 import { validateFormGroup } from '@app/core/validators/validate-form-group.utils';
 import { RegisterFormGroup } from '@app/register/register-form-group.schema';

@@ -8,18 +8,17 @@ import {
   Point,
   registerables,
 } from 'chart.js';
+import annotationPlugin, { AnnotationOptions } from 'chartjs-plugin-annotation';
 import { BaseChartDirective } from 'ng2-charts';
 
+import { COLORS } from '@app/core/constants/colors.const';
+import { calculateAverage } from '@app/core/utils/calculate-average.utils';
 import { ChartsColorType } from '@common/components/fin-man-charts/fin-man-charts-color-types.schema';
 import {
   LINE_CHART_DATA,
   LINES_CHART_OPTIONS,
 } from '@common/components/fin-man-charts/fin-man-charts-configuration.const';
 import { setGradientBackground } from '@common/components/fin-man-charts/fin-man-charts-set-gradients.utils';
-import annotationPlugin from 'chartjs-plugin-annotation';
-import { calculateAverage } from '@app/core/utils/calculate-average.utils';
-import { AnnotationOptions } from 'chartjs-plugin-annotation/types/options';
-import { COLORS } from '@app/core/constants/colors.const';
 
 @Component({
   selector: 'fin-man-charts',
@@ -30,6 +29,8 @@ export class FinManChartsComponent implements OnInit, AfterViewInit {
   @ViewChild(BaseChartDirective) chart!: BaseChartDirective;
 
   @Input() dataSets: ChartDataset<'line', (number | Point | null)[]>[] = [];
+
+  readonly COLORS = COLORS;
 
   borderColors?: string[];
 
@@ -130,6 +131,4 @@ export class FinManChartsComponent implements OnInit, AfterViewInit {
       averageLine: averageLineAnnotation,
     };
   }
-
-  protected readonly COLORS = COLORS;
 }

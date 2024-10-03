@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ChartDataset, Point } from 'chart.js';
 
-import { CHART_COLORS } from '@app/core/data/chart-colors.const';
+import { CHART_COLORS } from '@app/core/constants/chart-colors.const';
 import {
   ExpensesMockData,
   IncomeMockData,

@@ -1,4 +1,4 @@
-export const CHART_COLORS = {
+export const CHART_COLORS: Record<string, Record<'RGBA' | 'HEX', string>> = {
   BLUE: {
     RGBA: 'rgb(30, 144, 255, 0.3)',
     HEX: '#1e90ff',

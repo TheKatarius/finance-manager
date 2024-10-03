@@ -1,0 +1,62 @@
+<div class="budget-overview-container">
+  <div class="title-wrapper">
+    <span class="">Budget Overview</span>
+  </div>
+
+  <div class="tab-wrapper">
+    <div
+      class="tab"
+      [ngStyle]="{ background: isLeftActive ? GRADIENT_PROGRESS_BARS.RED : '' }"
+      [ngClass]="{ 'tab-clicked': isLeftActive }"
+      (click)="setActiveTab(true)"
+    >
+      <p>Expenses</p>
+    </div>
+    <div
+      class="tab"
+      [ngStyle]="{
+        background: !isLeftActive ? GRADIENT_PROGRESS_BARS.GREEN : ''
+      }"
+      [ngClass]="{ 'tab-clicked': !isLeftActive }"
+      (click)="setActiveTab(false)"
+    >
+      <p [ngStyle]="{ color: COLORS.accentBlack }">Incomes</p>
+    </div>
+  </div>
+
+  <div *ngIf="isLeftActive; else rightActive" class="category-wrapper">
+    <div *ngFor="let category of expenseCategories">
+      <div>
+        <em class="icon"></em>
+      </div>
+      <span class="category-name"></span>
+      <fin-man-progress-bar
+        [max]="category.budget"
+        [value]="category.spent"
+        [gradientColor]="GRADIENT_PROGRESS_BARS.RED"
+        [iconClass]="category.category | pascalToKebabCase"
+        [tooltipDescription]="'Current Expenses Compared to Planned Expenses'"
+        [tooltipDisplayDirection]="Directions.Left"
+        [moveLabelBelowProgressBar]="true"
+      ></fin-man-progress-bar>
+    </div>
+  </div>
+
+  <ng-template #rightActive>
+    <div *ngFor="let category of incomeCategories">
+      <div>
+        <em class="icon"></em>
+      </div>
+      <span class="category-name"></span>
+      <fin-man-progress-bar
+        [max]="category.plannedEarnings"
+        [value]="category.earned"
+        [gradientColor]="GRADIENT_PROGRESS_BARS.GREEN"
+        [iconClass]="category.category | pascalToKebabCase"
+        [tooltipDescription]="'Current Expenses Compared to Planned Expenses'"
+        [tooltipDisplayDirection]="Directions.Left"
+        [moveLabelBelowProgressBar]="true"
+      ></fin-man-progress-bar>
+    </div>
+  </ng-template>
+</div>
