@@ -1,0 +1,82 @@
+<div class="main-container">
+  <div class="form-container">
+    <div class="tab">
+      <div
+        class="inner-tab"
+        [ngClass]="{ 'inner-tab-clicked': isLeftActive }"
+        (click)="setActiveTab(true)"
+      >
+        <p>Register</p>
+      </div>
+      <div
+        class="inner-tab"
+        [ngClass]="{ 'inner-tab-clicked': !isLeftActive }"
+        (click)="setActiveTab(false)"
+      >
+        <p>Sign In</p>
+      </div>
+    </div>
+
+    <header class="form-header">
+      <h2>{{ title }}</h2>
+      <h3 *ngIf="!isLeftActive">Sign in to your account</h3>
+    </header>
+
+    <form [formGroup]="registerFormGroup">
+      <fin-man-input
+        *ngIf="isLeftActive"
+        [label]="'Username'"
+        [control]="registerFormGroup.controls.login"
+        [placeholder]="'Username'"
+        [iconClassName]="'username-icon'"
+        [required]="true"
+        [minlength]="VALIDATION.MID_NAME.MIN_LENGTH"
+        [maxlength]="VALIDATION.MID_NAME.MAX_LENGTH"
+        [pattern]="'^[a-zA-Z0-9._-]+$'"
+        [allowedCharsPattern]="'[a-zA-Z0-9._-]'"
+      ></fin-man-input>
+
+      <fin-man-input
+        [label]="'E-mail'"
+        [type]="'email'"
+        [control]="registerFormGroup.controls.email"
+        [placeholder]="'E-mail'"
+        [iconClassName]="'email-icon'"
+        [required]="true"
+        [minlength]="VALIDATION.EMAIL.MIN_LENGTH"
+        [maxlength]="VALIDATION.EMAIL.MAX_LENGTH"
+        [pattern]="VALIDATION.EMAIL.PATTERN"
+        [allowedCharsPattern]="'[a-zA-Z0-9@._-]'"
+      ></fin-man-input>
+
+      <fin-man-input
+        [label]="'Password'"
+        [type]="'password'"
+        [control]="registerFormGroup.controls.password"
+        [placeholder]="'Password'"
+        [iconClassName]="'password-icon'"
+        [required]="true"
+        [minlength]="VALIDATION.PASSWORD.MIN_LENGTH"
+        [maxlength]="VALIDATION.PASSWORD.MAX_LENGTH"
+        [allowedCharsPattern]="'[a-zA-Z0-9!@#$%^&*()]'"
+        (input)="confirmPasswordValidator(this.registerFormGroup)"
+      ></fin-man-input>
+
+      <fin-man-input
+        *ngIf="isLeftActive"
+        [label]="'Confirm Password'"
+        [type]="'password'"
+        [control]="registerFormGroup.controls.confirmPassword"
+        [placeholder]="'Confirm Password'"
+        [iconClassName]="'password-icon'"
+        [required]="true"
+        [allowedCharsPattern]="'[a-zA-Z0-9!@#$%^&*()]'"
+        (input)="confirmPasswordValidator(this.registerFormGroup)"
+      ></fin-man-input>
+    </form>
+
+    <button class="register-button" (click)="isLeftActive ? registerUser() : loginUser()">
+      {{ buttonTitle }}
+    </button>
+  </div>
+</div>

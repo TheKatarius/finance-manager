@@ -55,3 +55,58 @@
     border-radius: 0 dimensions.$border-radius-small dimensions.$border-radius-small 0;
   }
 }
+
+@mixin panel-title($margin: 0, $font-size: typography.$font-size-h3) {
+  color: colors.$accent-blue;
+  font-size: $font-size;
+  font-weight: typography.$font-weight-semibold;
+  margin-bottom: $margin;
+
+  display: inline-block;
+}
+
+@mixin add-button {
+  .add-button-wrapper {
+    background-color: colors.$background-inner-panel;
+    border-radius: dimensions.$border-radius-small;
+    height: 35px;
+    padding: 7.5px;
+
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background-color: colors.$background-inner-panel-hover;
+      cursor: pointer;
+    }
+
+    .icon-wrapper {
+      width: 30px;
+      transform: translateY(2px);
+    }
+
+    .add-button {
+      color: colors.$darker-text-main;
+      font-size: typography.$font-size-md;
+    }
+  }
+}
+
+@mixin module-title {
+  .title-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+
+    .title {
+      font-size: typography.$font-size-h2;
+      font-weight: typography.$font-weight-bold;
+      color: colors.$text-main;
+    }
+
+    .subtitle {
+      font-size: typography.$font-size-base;
+      color: colors.$text-link;
+    }
+  }
+}

@@ -13,6 +13,19 @@
   display: flex;
   flex-direction: column;
 
+  .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: dimensions.$margin-large;
+
+    .title {
+      @include mixins.panel-title(0, typography.$font-size-h4);
+    }
+
+    @include mixins.add-button;
+  }
+
   .tab-wrapper {
     background-color: colors.$background-inner-panel;
     border-radius: dimensions.$border-radius-small;

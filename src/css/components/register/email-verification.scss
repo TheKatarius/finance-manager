@@ -1,0 +1,8 @@
+@use 'colors' as colors;
+@use 'dimensions' as dimensions;
+@use 'typography' as typography;
+
+.subtitle {
+  color: colors.$text-main;
+  font-size: typography.$font-size-base;
+}

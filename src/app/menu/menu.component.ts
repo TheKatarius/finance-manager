@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GetStringService } from '@app/core/services/get-string.service';
 import { MenuService } from '@app/menu/menu.service';
@@ -19,6 +20,7 @@ export class MenuComponent implements OnInit {
 
   // Dashboard is default active section
   activeSection!: string;
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.sectionClassNames = menuSectionClassNames((...code: string[]) =>
@@ -26,6 +28,7 @@ export class MenuComponent implements OnInit {
     );
 
     this.activeSection = this.menuService.clickedSectionSubject.getValue().section;
+    console.log(this.router.url.split('/'));
   }
 
   onSectionClick(sectionName: string): void {

@@ -20,6 +20,7 @@ export class FinManInputComponent implements OnInit {
   @Input() min?: number;
   @Input() max?: number;
   @Input() pattern?: string;
+  @Input() allowedCharsPattern?: string;
   @Input() tooltip: string = '';
   @Input() iconClassName?: string;
   @Input() componentClassName: FinManInputTypes = FinManInputTypes.DEFAULT;
@@ -27,6 +28,8 @@ export class FinManInputComponent implements OnInit {
   @Input({ required: true }) control!: FormControl;
 
   @Output() input = new EventEmitter<Event>();
+
+  readonly FinManInputTypes = FinManInputTypes;
 
   private regExpPattern?: RegExp;
 
@@ -40,8 +43,8 @@ export class FinManInputComponent implements OnInit {
       throw new Error('FormControl is required for FinManInputComponent');
     }
 
-    if (this.pattern) {
-      this.regExpPattern = new RegExp(this.pattern);
+    if (this.allowedCharsPattern) {
+      this.regExpPattern = new RegExp(this.allowedCharsPattern);
     }
 
     this.setValidators();
@@ -140,6 +143,4 @@ export class FinManInputComponent implements OnInit {
   get isError(): boolean {
     return this.control.invalid && (this.control.dirty || this.control.touched);
   }
-
-  protected readonly FinManInputTypes = FinManInputTypes;
 }

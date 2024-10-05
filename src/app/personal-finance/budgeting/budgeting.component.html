@@ -3,11 +3,22 @@
 
   <div class="budgeting-content-container">
     <div class="balance-pie-chart-wrapper">
+      <div class="title-container">
+        <span class="title">Dashboard</span>
+        <span class="subtitle">All your finance in one place</span>
+      </div>
+
       <fin-man-basic-balance-panel></fin-man-basic-balance-panel>
 
       <fin-man-pie-chart></fin-man-pie-chart>
     </div>
 
-    <fin-man-budget-overview-panel></fin-man-budget-overview-panel>
+    <fin-man-budget-overview-panel (openModal)="openModal()"></fin-man-budget-overview-panel>
   </div>
 </main>
+
+<finance-manager-plan-budget-category-modal
+  [isVisible]="isModalVisible"
+  (close)="closeModal()"
+  (budgetAdded)="handleBudgetAdded($event)"
+></finance-manager-plan-budget-category-modal>

@@ -1,6 +1,12 @@
 <div class="budget-overview-container">
-  <div class="title-wrapper">
-    <span class="">Budget Overview</span>
+  <div class="header-wrapper">
+    <span class="title">Budget Overview</span>
+    <div class="add-button-wrapper" (click)="openModal.emit()">
+      <div class="icon-wrapper">
+        <em class="icon add-icon"></em>
+      </div>
+      <div class="add-button">Add</div>
+    </div>
   </div>
 
   <div class="tab-wrapper">

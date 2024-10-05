@@ -9,8 +9,9 @@ export function confirmPasswordValidator(formGroup: FormGroup): void {
   }
 
   if (password !== confirmPassword) {
-    formGroup.get('password')?.setErrors({ passwordMismatch: true });
-    formGroup.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+    const errors = formGroup.get('password')?.errors || {};
+    formGroup.get('password')?.setErrors({ ...errors, passwordMismatch: true });
+    formGroup.get('confirmPassword')?.setErrors({ ...errors, passwordMismatch: true });
   } else {
     const { passwordMismatch, ...errors } = formGroup.get('password')?.errors || {};
     const validationErrors = Object.keys(errors).length ? errors : null;

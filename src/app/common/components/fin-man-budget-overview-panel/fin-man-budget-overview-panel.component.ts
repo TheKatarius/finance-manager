@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 import { COLORS } from '@app/core/constants/colors.const';
 import { Directions } from '@app/core/constants/directions.const';
@@ -11,6 +11,8 @@ import { ExpenseCategoriesMockData, IncomeSourcesMockData } from '@app/core/mock
   styleUrls: ['./fin-man-budget-overview-panel.component.scss'],
 })
 export class FinManBudgetOverviewPanelComponent {
+  @Output() openModal = new EventEmitter<void>();
+
   readonly GRADIENT_PROGRESS_BARS = GRADIENT_PROGRESS_BARS;
 
   readonly Directions = Directions;

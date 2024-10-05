@@ -1,0 +1,36 @@
+<div class="main-container">
+  <div class="form-container">
+    <header class="form-header">
+      <h2>E-mail Verification</h2>
+      <p class="subtitle">Enter verification code that was sent on your e-mail address</p>
+    </header>
+
+    <form [formGroup]="emailVerificationFormGroup">
+      <fin-man-input
+        [label]="'E-mail'"
+        [type]="'email'"
+        [control]="emailVerificationFormGroup.controls.email"
+        [placeholder]="'E-mail'"
+        [iconClassName]="'email-icon'"
+        [required]="true"
+        [minlength]="VALIDATION.EMAIL.MIN_LENGTH"
+        [maxlength]="VALIDATION.EMAIL.MAX_LENGTH"
+        [pattern]="VALIDATION.EMAIL.PATTERN"
+        [allowedCharsPattern]="'[a-zA-Z0-9@._-]'"
+      ></fin-man-input>
+
+      <fin-man-input
+        [label]="'Verification Code'"
+        [type]="'text'"
+        [control]="emailVerificationFormGroup.controls.code"
+        [placeholder]="'XXXXXX'"
+        [required]="true"
+        [minlength]="6"
+        [maxlength]="6"
+        [allowedCharsPattern]="'[0-9]'"
+      ></fin-man-input>
+    </form>
+
+    <button class="register-button" (click)="verifyAccount()">Verify Account</button>
+  </div>
+</div>
