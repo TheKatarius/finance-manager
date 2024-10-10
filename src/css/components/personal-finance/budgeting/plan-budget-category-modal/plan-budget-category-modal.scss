@@ -4,42 +4,10 @@
 @use 'mixins' as mixins;
 
 .modal-overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
+  @include mixins.modal-overlay;
 
   .modal {
-    background-color: colors.$background-panel;
-    border-radius: dimensions.$border-radius-small;
-    color: colors.$text-main;
-    padding: dimensions.$padding-large;
-    width: 550px;
-    max-width: 90%;
-
-    .modal-header {
-      @include mixins.panel-title(dimensions.$margin-md, typography.$font-size-lg);
-
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .close-button {
-        background: none;
-        border: none;
-        color: colors.$text-main;
-        cursor: pointer;
-        font-size: 1.5em;
-      }
-    }
+    @include mixins.modal;
 
     .modal-body {
       .form-group {

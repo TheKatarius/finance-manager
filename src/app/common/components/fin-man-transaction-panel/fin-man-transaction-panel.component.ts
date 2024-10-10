@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { TransactionsMockData } from '@app/core/mocks/transactions.mocks';
@@ -9,6 +9,8 @@ import { TransactionsMockData } from '@app/core/mocks/transactions.mocks';
   styleUrls: ['./fin-man-transaction-panel.scss'],
 })
 export class FinManTransactionPanelComponent {
+  @Output() openModal = new EventEmitter<void>();
+
   control = new FormControl('');
 
   transactions = TransactionsMockData;

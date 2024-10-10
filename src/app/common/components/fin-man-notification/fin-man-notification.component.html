@@ -1,0 +1,19 @@
+<div class="notification-wrapper">
+  <div *ngFor="let notification of notifications; let i = index" class="notification-container">
+    <div class="title-wrapper" [ngClass]="notification.type">
+      <span class="notification-title">{{ getNotificationTitle(notification.type) }}</span>
+      <button (click)="close(notification)">&#10005;</button>
+    </div>
+
+    <div class="notification-content" [ngClass]="notification.type + '-message'">
+      <div *ngIf="notification.status">
+        status:
+        <span class="notification-content-value">{{ notification.status }}</span>
+      </div>
+      <div>
+        message:
+        <span class="notification-content-value">{{ notification.message }}</span>
+      </div>
+    </div>
+  </div>
+</div>

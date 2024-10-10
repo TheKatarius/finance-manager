@@ -36,7 +36,13 @@
     <div class="chart-transactions-container">
       <fin-man-charts [dataSets]="dataSets"></fin-man-charts>
 
-      <fin-man-transaction-panel></fin-man-transaction-panel>
+      <fin-man-transaction-panel (openModal)="openModal()"></fin-man-transaction-panel>
     </div>
   </div>
 </main>
+
+<finance-manager-add-transaction-modal
+  [isVisible]="isModalVisible"
+  (close)="closeModal()"
+  (transactionAdded)="handleTransactionAdded($event)"
+></finance-manager-add-transaction-modal>

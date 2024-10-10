@@ -14,6 +14,8 @@ import {
   styleUrls: ['../../css/components/dashboard/dashboard.scss'],
 })
 export class DashboardComponent {
+  isModalVisible: boolean = true;
+
   dataSets: ChartDataset<'line', (number | Point | null)[]>[] = [
     // {
     //   label: 'Expenses',
@@ -31,4 +33,18 @@ export class DashboardComponent {
       borderColor: CHART_COLORS.AMBER.HEX,
     },
   ];
+
+  openModal(): void {
+    this.isModalVisible = true;
+  }
+
+  closeModal(): void {
+    this.isModalVisible = false;
+  }
+
+  handleTransactionAdded(transactionData: any): void {
+    // Tutaj obsłuż dodanie nowego planowanego budżetu
+    console.log('Nowy planowany budżet:', transactionData);
+    // Możesz np. wysłać dane do serwisu API lub zaktualizować stan aplikacji
+  }
 }

@@ -13,6 +13,8 @@ import { ExpenseCategoriesMockData, IncomeSourcesMockData } from '@app/core/mock
 export class FinManBudgetOverviewPanelComponent {
   @Output() openModal = new EventEmitter<void>();
 
+  readonly COLORS = COLORS;
+
   readonly GRADIENT_PROGRESS_BARS = GRADIENT_PROGRESS_BARS;
 
   readonly Directions = Directions;
@@ -26,6 +28,4 @@ export class FinManBudgetOverviewPanelComponent {
   setActiveTab(leftTab: boolean): void {
     this.isLeftActive = leftTab;
   }
-
-  protected readonly COLORS = COLORS;
 }

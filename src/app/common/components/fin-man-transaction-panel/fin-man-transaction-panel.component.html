@@ -1,5 +1,14 @@
 <div class="transaction-container">
-  <h4 class="transaction-header">Transactions</h4>
+  <div class="header-wrapper">
+    <h4 class="transaction-header">Transactions</h4>
+    <div class="add-button-wrapper" (click)="openModal.emit()">
+      <div class="icon-wrapper">
+        <em class="icon add-icon"></em>
+      </div>
+      <div class="add-button">Add</div>
+    </div>
+  </div>
+
   <fin-man-search [control]="control"></fin-man-search>
 
   <div class="transactions-list">

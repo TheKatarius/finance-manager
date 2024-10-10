@@ -18,4 +18,8 @@ export const VALIDATION = {
   SEARCH: {
     MAX_LENGTH: 100,
   },
+
+  ALLOWED_CHARS_PATTERNS: {
+    BASIC_NAME_INPUT: '[a-zA-Z0-9%-_.:; ]',
+  },
 };

@@ -12,9 +12,17 @@
   display: flex;
   flex-direction: column;
 
-  .transaction-header {
-    font-size: typography.$font-size-h4;
-    color: colors.$accent-blue;
+  .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: dimensions.$margin-small;
+
+    .transaction-header {
+      font-size: typography.$font-size-h4;
+      color: colors.$accent-blue;
+    }
+    @include mixins.add-button;
   }
 
   .transactions-list {

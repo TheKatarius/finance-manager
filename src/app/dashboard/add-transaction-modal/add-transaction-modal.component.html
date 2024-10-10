@@ -1,0 +1,93 @@
+<div class="modal-overlay" *ngIf="isVisible">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Add Transaction</h2>
+      <button class="close-button" (click)="closeModal()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="extendedTransactionForm">
+        <div class="form-group">
+          <fin-man-input
+            [label]="'Transaction Name'"
+            [type]="'text'"
+            [placeholder]="'Enter transaction name'"
+            [control]="extendedTransactionForm.controls.name"
+            [minlength]="3"
+            [maxlength]="50"
+            [required]="true"
+            [allowedCharsPattern]="VALIDATION.ALLOWED_CHARS_PATTERNS.BASIC_NAME_INPUT"
+          ></fin-man-input>
+        </div>
+
+        <div class="horizontal-form-groups">
+          <div class="form-group">
+            <label for="category-kind">Category Kind</label>
+
+            <select
+              class="dropdown"
+              id="category-kind"
+              (change)="selectedExpenseCategoryChange($event)"
+            >
+              <option>Income</option>
+              <option>Expense</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="category">Category</label>
+
+            <select
+              class="dropdown"
+              id="category"
+              [formControl]="extendedTransactionForm.controls.category"
+            >
+              <option value="" [disabled]="true" [selected]="true" [hidden]="true">
+                Select the category
+              </option>
+              <option *ngFor="let category of categories" [value]="category">
+                {{ category }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input type="number" id="amount" formControlName="amount" placeholder="Enter amount" />
+        </div>
+
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="date" id="date" formControlName="date" />
+        </div>
+
+        <div class="form-group">
+          <label for="time">Time</label>
+          <input type="time" id="time" formControlName="time" />
+        </div>
+
+        <div class="form-group">
+          <label for="currencyIsoCode">Currency Code</label>
+          <input type="text" id="currencyIsoCode" formControlName="currencyIsoCode" />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            rows="3"
+            placeholder="Enter description"
+          ></textarea>
+        </div>
+
+        <div class="add-button-wrapper">
+          <button type="submit" class="add-button" [disabled]="extendedTransactionForm.invalid">
+            Add Transaction
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

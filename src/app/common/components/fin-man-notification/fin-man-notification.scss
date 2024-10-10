@@ -1,0 +1,100 @@
+@use 'colors' as colors;
+@use 'dimensions' as dimensions;
+@use 'typography' as typography;
+
+.notification-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: slideIn 1s;
+
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+
+  .notification-container {
+    border-radius: dimensions.$border-radius-small;
+    color: colors.$text-main;
+    width: 325px;
+    height: auto;
+    animation: fadeOut 15s;
+
+    .title-wrapper {
+      border-radius: dimensions.$border-radius-small dimensions.$border-radius-small 0 0;
+      width: 100%;
+      height: 30px;
+      padding: dimensions.$padding-md;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      & button {
+        background: none;
+        border: none;
+        color: colors.$text-main;
+        cursor: pointer;
+        font-size: typography.$font-size-base;
+        margin-left: dimensions.$margin-md;
+      }
+    }
+
+    .notification-content {
+      border-radius: 0 0 dimensions.$border-radius-small dimensions.$border-radius-small;
+      color: #000;
+      font-size: typography.$font-size-sm;
+      font-weight: typography.$font-weight-medium;
+      padding: dimensions.$padding-md;
+      width: 100%;
+
+      &-value {
+        font-weight: typography.$font-weight-regular;
+      }
+    }
+  }
+}
+
+.success {
+  background-color: darken(colors.$accent-green, 20%);
+}
+
+.success-message {
+  background-color: lighten(colors.$accent-green, 35%);
+}
+
+.error {
+  background-color: colors.$accent-red;
+}
+
+.error-message {
+  background-color: lighten(colors.$accent-red, 35%);
+}
+
+.info {
+  background-color: colors.$accent-blue;
+}
+
+.info-message {
+  background-color: lighten(colors.$accent-blue, 35%);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
