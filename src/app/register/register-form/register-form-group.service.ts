@@ -22,7 +22,7 @@ export class RegisterFormGroupService {
 
   createLoginForm(registerFormGroup: RegisterFormGroup): LoginFormGroup {
     return this.formBuilder.group({
-      email: registerFormGroup.controls.email,
+      email_or_login: registerFormGroup.controls.email,
       password: registerFormGroup.controls.password,
     }) as LoginFormGroup;
   }

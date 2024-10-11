@@ -12,13 +12,13 @@ import { FinManBasicBalancePanelComponent } from '@common/components/fin-man-bas
 import { FinManBasicInfoPanelComponent } from '@common/components/fin-man-basic-info-panel/fin-man-basic-info-panel.component';
 import { FinManBudgetOverviewPanelComponent } from '@common/components/fin-man-budget-overview-panel/fin-man-budget-overview-panel.component';
 import { FinManChartsComponent } from '@common/components/fin-man-charts/fin-man-charts.component';
-import { FinManDateDropdownComponent } from '@common/components/fin-man-date-dropdown/fin-man-date-dropdown.component';
+import { FinManCustomDropdownComponent } from '@common/components/fin-man-custom-dropdown/fin-man-custom-dropdown.component';
+import { FinManNotificationComponent } from '@common/components/fin-man-notification/fin-man-notification.component';
 import { FinManPieChartComponent } from '@common/components/fin-man-pie-chart/fin-man-pie-chart.component';
 import { FinManProgressBarComponent } from '@common/components/fin-man-progress-bar/fin-man-progress-bar.component';
 import { FinManSearchComponent } from '@common/components/fin-man-search/fin-man-search.component';
 import { FinManTransactionPanelComponent } from '@common/components/fin-man-transaction-panel/fin-man-transaction-panel.component';
 import { FinManTransactionRecordComponent } from '@common/components/fin-man-transaction-panel/fin-man-transaction-record/fin-man-transaction-record.component';
-import { FinManNotificationComponent } from '@common/components/fin-man-notification/fin-man-notification.component';
 
 const COMMON_COMPONENTS = [
   FinManBasicInfoPanelComponent,
@@ -27,12 +27,12 @@ const COMMON_COMPONENTS = [
   FinManTransactionPanelComponent,
   FinManSearchComponent,
   FinManChartsComponent,
-  FinManDateDropdownComponent,
   FinManPieChartComponent,
   FinManBasicBalancePanelComponent,
   FinManProgressBarComponent,
   FinManBudgetOverviewPanelComponent,
   FinManNotificationComponent,
+  FinManCustomDropdownComponent,
 ];
 
 @NgModule({

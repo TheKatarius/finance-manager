@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { VALIDATION } from '@app/core/constants/validators.const';
 import { AuthService } from '@app/core/data/auth.service';
+import { NotificationService } from '@app/core/services/notifications.service';
 import { validateFormGroup } from '@app/core/validators/validate-form-group.utils';
 import { EmailVerificationFormGroup } from '@app/register/email-verification/email-verification-form-group.schema';
 import { EmailVerificationFormGroupService } from '@app/register/email-verification/email-verification-form-group.service';
@@ -25,6 +26,8 @@ export class EmailVerificationComponent implements OnInit {
 
   private router = inject(Router);
 
+  private notificationService = inject(NotificationService);
+
   emailVerificationFormGroup!: EmailVerificationFormGroup;
 
   ngOnInit(): void {
@@ -38,16 +41,29 @@ export class EmailVerificationComponent implements OnInit {
 
       this.authService.verifyEmail(email as string, code as string).subscribe({
         next: (response) => {
-          if (response.status === 'success') {
-            this.router.navigate(['/login']);
+          if (response.status >= 200 && response.status < 300) {
+            this.router.navigate(['/login']).then(() => {
+              this.notificationService.addNotification({
+                type: 'success',
+                status: response.status,
+                message: response?.message || 'Account was verified successfully',
+              });
+            });
           }
         },
         error: (error) => {
-          console.error('Failed to verify email: ', error);
+          this.notificationService.addNotification({
+            type: 'error',
+            status: error.status,
+            message: error.error?.message || 'Failed to verify user',
+          });
         },
       });
     } else {
-      console.error('Form is invalid');
+      this.notificationService.addNotification({
+        type: 'error',
+        message: 'Form is invalid',
+      });
     }
   }
 }

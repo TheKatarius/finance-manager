@@ -3,6 +3,7 @@ export interface PopUpNotification {
   type: 'success' | 'error' | 'info';
   status?: number;
   message: string;
+  timeoutId?: number;
 }
 
 export enum NotificationTitle {

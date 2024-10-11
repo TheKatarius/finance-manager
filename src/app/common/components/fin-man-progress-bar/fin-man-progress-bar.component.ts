@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 
-import { Directions } from '@app/core/constants/directions.const';
+import { Directions } from '@app/core/interfaces/common-enums.schema';
 
 @Component({
   selector: 'fin-man-progress-bar',

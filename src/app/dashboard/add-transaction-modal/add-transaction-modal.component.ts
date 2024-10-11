@@ -1,13 +1,14 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { VALIDATION } from '@app/core/constants/validators.const';
 import {
   ExpenseCategoryNames,
   IncomeCategoryNames,
 } from '@app/core/interfaces/category-names.schema';
-import { ExpenseCategoriesMockData, IncomeSourcesMockData } from '@app/core/mocks/pie-charts.mocks';
+import { CategoryKind } from '@app/core/interfaces/common-enums.schema';
 import { ExtendedTransactionFormControls } from '@app/core/interfaces/transaction.schema';
-import { VALIDATION } from '@app/core/constants/validators.const';
+import { ExpenseCategoriesMockData, IncomeSourcesMockData } from '@app/core/mocks/pie-charts.mocks';
 
 @Component({
   selector: 'finance-manager-add-transaction-modal',
@@ -21,16 +22,18 @@ export class AddTransactionModalComponent implements OnInit {
 
   readonly VALIDATION = VALIDATION;
 
+  readonly CategoryKind = CategoryKind;
+
   private formBuilder = inject(FormBuilder);
 
-  categories: (ExpenseCategoryNames | IncomeCategoryNames)[] = IncomeSourcesMockData.map(
+  categories: (ExpenseCategoryNames | IncomeCategoryNames)[] = ExpenseCategoriesMockData.map(
     (category) => category.category,
   );
 
-  extendedTransactionForm!: FormGroup<ExtendedTransactionFormControls>;
+  extendedTransactionFormGroup!: FormGroup<ExtendedTransactionFormControls>;
 
   ngOnInit(): void {
-    this.extendedTransactionForm = this.formBuilder.group({
+    this.extendedTransactionFormGroup = this.formBuilder.group({
       name: ['', Validators.required],
       category: ['', Validators.required],
       amount: [0, [Validators.required, Validators.min(0.01)]],
@@ -47,20 +50,20 @@ export class AddTransactionModalComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.extendedTransactionForm.valid) {
-      const transactionData = this.extendedTransactionForm.value;
+    if (this.extendedTransactionFormGroup.valid) {
+      const transactionData = this.extendedTransactionFormGroup.value;
       this.transactionAdded.emit(transactionData);
-      this.extendedTransactionForm.reset();
+      this.extendedTransactionFormGroup.reset();
       this.closeModal();
     }
   }
 
-  selectedExpenseCategoryChange(event: Event): void {
-    if ((event.target as HTMLSelectElement).value === 'Expense') {
+  changeCategoryKind(categoryKind: string): void {
+    if (categoryKind === CategoryKind.Expense) {
       this.categories = ExpenseCategoriesMockData.map((category) => category.category);
     } else {
       this.categories = IncomeSourcesMockData.map((category) => category.category);
     }
-    this.extendedTransactionForm.controls.category.setValue('');
+    this.extendedTransactionFormGroup.controls.category.reset();
   }
 }

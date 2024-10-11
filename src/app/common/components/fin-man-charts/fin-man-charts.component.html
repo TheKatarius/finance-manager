@@ -1,5 +1,9 @@
 <div class="chart-wrapper">
-  <fin-man-date-dropdown></fin-man-date-dropdown>
+  <fin-man-custom-dropdown
+    class="custom-dropdown-container"
+    [options]="yearsMocks"
+    [placeholder]="'Select year:'"
+  ></fin-man-custom-dropdown>
 
   <div class="title-container">
     <span class="title">Money Flow</span>

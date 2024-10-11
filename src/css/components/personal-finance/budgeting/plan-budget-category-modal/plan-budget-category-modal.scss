@@ -46,28 +46,6 @@
       }
     }
 
-    .add-button-wrapper {
-      width: 100%;
-
-      display: flex;
-      justify-content: flex-end;
-
-      .add-button {
-        border-radius: dimensions.$border-radius-small;
-        background-color: colors.$accent-blue;
-        width: 40%;
-        height: 40px;
-        transition: background-color 0.3s ease;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        &:hover {
-          background-color: colors.$accent-blue-hover;
-          cursor: pointer;
-        }
-      }
-    }
+    @include mixins.add-button-modal;
   }
 }

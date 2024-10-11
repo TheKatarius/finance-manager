@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+
 import { PopUpNotification } from '@app/core/interfaces/notifications.schema';
 
 @Injectable({
@@ -13,29 +14,48 @@ export class NotificationService {
   id: number = 0;
 
   addNotification(notification: PopUpNotification): void {
-    this.id += 1;
-
-    const notificationWithId = { ...notification, id: this.id };
-    const currentNotifications = this.notificationsSubject.value;
-    this.notificationsSubject.next([...currentNotifications, notificationWithId]);
+    const notificationWithId = { ...notification, id: this.id++ };
+    this.notificationsSubject.next([...this.notificationsSubject.value, notificationWithId]);
 
     this.startFading(notificationWithId);
   }
 
   clearNotification(notification: PopUpNotification): void {
-    const updatedNotifications = this.notificationsSubject.value.filter(
-      (n) => n.id !== notification.id,
-    );
+    const removedNotificationIndex = this.findNotificationIndex(notification);
+    this.notificationsSubject.value.splice(removedNotificationIndex, 1);
+    const updatedNotifications = this.notificationsSubject.value.map((n) =>
+      n.id && n.id > removedNotificationIndex ? { ...n, id: n.id - 1 } : n,
+    ) as PopUpNotification[];
+
     this.notificationsSubject.next(updatedNotifications);
   }
 
   private startFading(notification: PopUpNotification): void {
     const notifications = this.notificationsSubject.value;
-    const notificationIndex = notifications.findIndex((n) => n.id === notification.id);
+    const notificationIndex = this.findNotificationIndex(notification);
+
     if (notificationIndex !== -1) {
-      setTimeout(() => {
-        this.clearNotification(notifications[notificationIndex]);
-      }, 15000);
+      notifications[notificationIndex].timeoutId = window.setTimeout(() => {
+        if (notifications?.[notificationIndex]) {
+          this.clearNotification(notifications?.[notificationIndex]);
+        } else {
+          this.clearNotification(notifications?.[notificationIndex - 1]);
+        }
+      }, 10000);
+      // When changed time, change it also in scss
     }
+  }
+
+  restartTimeout(notification: PopUpNotification): void {
+    const foundNotification = this.notificationsSubject.value.find((n) => n.id === notification.id);
+
+    if (foundNotification) {
+      clearTimeout(foundNotification?.timeoutId);
+      this.startFading(notification);
+    }
+  }
+
+  private findNotificationIndex(notification: PopUpNotification): number {
+    return this.notificationsSubject.value.findIndex((n) => n.id === notification.id);
   }
 }

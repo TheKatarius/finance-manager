@@ -135,7 +135,7 @@ export class FinManInputComponent implements OnInit {
     }
 
     // Set the filtered value back to the input control
-    if (currentValue !== filteredValue) {
+    if (currentValue !== filteredValue && this.type !== 'date') {
       this.control.setValue(filteredValue, { emitEvent: false });
     }
   }

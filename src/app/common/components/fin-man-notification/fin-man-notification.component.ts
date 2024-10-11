@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
+
+import { PopUpNotification, NotificationTitle } from '@app/core/interfaces/notifications.schema';
 import { NotificationService } from '@app/core/services/notifications.service';
-import { NotificationTitle, PopUpNotification } from '@app/core/interfaces/notifications.schema';
 
 @Component({
   selector: 'fin-man-notification',
@@ -8,13 +9,13 @@ import { NotificationTitle, PopUpNotification } from '@app/core/interfaces/notif
   styleUrls: ['./fin-man-notification.scss'],
 })
 export class FinManNotificationComponent implements OnInit {
-  private notificationService = inject(NotificationService);
+  notificationService = inject(NotificationService);
 
   notifications: PopUpNotification[] = [];
 
   ngOnInit(): void {
     this.notificationService.notifications$.subscribe((notifications) => {
-      this.notifications = notifications;
+      this.notifications = notifications; // zaktualizuj stan komponentu po zmianach
     });
   }
 
@@ -24,5 +25,16 @@ export class FinManNotificationComponent implements OnInit {
 
   close(notification: PopUpNotification): void {
     this.notificationService.clearNotification(notification);
+  }
+
+  restartTimeout(notification: PopUpNotification): void {
+    this.notificationService.restartTimeout(notification);
+
+    const element = document.getElementById(`notification-${notification.id}`);
+    if (element) {
+      element.classList.remove('fade-out');
+      void element.offsetWidth;
+      element.classList.add('fade-out');
+    }
   }
 }

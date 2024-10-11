@@ -8,6 +8,6 @@ export type RegisterFormGroup = FormGroup<{
 }>;
 
 export type LoginFormGroup = FormGroup<{
-  email: FormControl<string | null>;
+  email_or_login: FormControl<string | null>;
   password: FormControl<string | null>;
 }>;

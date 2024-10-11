@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 
 import { COLORS } from '@app/core/constants/colors.const';
-import { Directions } from '@app/core/constants/directions.const';
 import { GRADIENT_PROGRESS_BARS } from '@app/core/constants/gradient-progress-bars.const';
+import { Directions } from '@app/core/interfaces/common-enums.schema';
 import { ExpenseCategoriesMockData, IncomeSourcesMockData } from '@app/core/mocks/pie-charts.mocks';
 
 @Component({

@@ -1,0 +1,26 @@
+<div class="custom-dropdown-wrapper">
+  <label [ngClass]="{ 'dropdown-label': label }">{{ label }}</label>
+
+  <div class="custom-dropdown-select-wrapper" [ngClass]="{ active: isOpen }">
+    <div
+      class="custom-dropdown-select"
+      [ngClass]="{ 'custom-dropdown-select-clicked': isOpen }"
+      (click)="toggleDropdown()"
+    >
+      {{ (selected ?? defaultOption) || placeholder }}
+      <div>
+        <span class="icon common-vector-icon" [ngClass]="{ up: isOpen }"></span>
+      </div>
+    </div>
+
+    <ul *ngIf="isOpen" class="custom-dropdown-option-wrapper">
+      <li
+        *ngFor="let option of options"
+        class="custom-dropdown-option"
+        (click)="selectOption(option)"
+      >
+        {{ option }}
+      </li>
+    </ul>
+  </div>
+</div>

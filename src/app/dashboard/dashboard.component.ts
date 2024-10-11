@@ -14,7 +14,7 @@ import {
   styleUrls: ['../../css/components/dashboard/dashboard.scss'],
 })
 export class DashboardComponent {
-  isModalVisible: boolean = true;
+  isModalVisible: boolean = false;
 
   dataSets: ChartDataset<'line', (number | Point | null)[]>[] = [
     // {

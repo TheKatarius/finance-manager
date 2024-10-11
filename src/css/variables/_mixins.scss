@@ -150,3 +150,37 @@
     }
   }
 }
+
+@mixin add-button-modal {
+  .add-button-wrapper {
+    width: 100%;
+
+    display: flex;
+    justify-content: flex-end;
+
+    .add-button {
+      border-radius: dimensions.$border-radius-small;
+      background-color: colors.$accent-blue;
+      color: colors.$text-main;
+      font-size: typography.$font-size-base;
+      font-weight: typography.$font-weight-semibold;
+      height: 40px;
+      padding: 0 dimensions.$padding-large;
+      transition: background-color 0.3s ease;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        background-color: colors.$accent-blue-hover;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@mixin input-border($color) {
+  border: 1px solid $color;
+  outline: 1px solid $color;
+}

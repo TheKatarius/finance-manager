@@ -18,7 +18,6 @@
     color: colors.$text-main;
     width: 325px;
     height: auto;
-    animation: fadeOut 15s;
 
     .title-wrapper {
       border-radius: dimensions.$border-radius-small dimensions.$border-radius-small 0 0;
@@ -77,6 +76,11 @@
 
 .info-message {
   background-color: lighten(colors.$accent-blue, 35%);
+}
+
+// When change time, change it also in service
+.fade-out {
+  animation: fadeOut 10s;
 }
 
 @keyframes slideIn {

@@ -5,6 +5,7 @@ import {
   ExpenseCategoryNames,
   IncomeCategoryNames,
 } from '@app/core/interfaces/category-names.schema';
+import { CategoryKind } from '@app/core/interfaces/common-enums.schema';
 import { ExpenseCategoriesMockData, IncomeSourcesMockData } from '@app/core/mocks/pie-charts.mocks';
 
 @Component({
@@ -51,7 +52,7 @@ export class PlanBudgetCategoryModalComponent implements OnInit {
   }
 
   selectedExpenseCategoryChange(event: Event): void {
-    if ((event.target as HTMLSelectElement).value === 'Expense') {
+    if ((event.target as HTMLSelectElement).value === CategoryKind.Expense) {
       this.categories = ExpenseCategoriesMockData.map((category) => category.category);
     } else {
       this.categories = IncomeSourcesMockData.map((category) => category.category);

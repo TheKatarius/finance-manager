@@ -1,5 +1,10 @@
 <div class="notification-wrapper">
-  <div *ngFor="let notification of notifications; let i = index" class="notification-container">
+  <div
+    *ngFor="let notification of notifications; let i = index"
+    class="notification-container fade-out"
+    [id]="'notification-' + i"
+    (mousemove)="restartTimeout(notification)"
+  >
     <div class="title-wrapper" [ngClass]="notification.type">
       <span class="notification-title">{{ getNotificationTitle(notification.type) }}</span>
       <button (click)="close(notification)">&#10005;</button>

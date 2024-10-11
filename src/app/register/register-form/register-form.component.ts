@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { VALIDATION } from '@app/core/constants/validators.const';
 import { AuthService } from '@app/core/data/auth.service';
+import { NotificationService } from '@app/core/services/notifications.service';
 import { confirmPasswordValidator } from '@app/core/validators/confirm-password-validator.utils';
 import { validateFormGroup } from '@app/core/validators/validate-form-group.utils';
 import {
@@ -28,6 +29,8 @@ export class RegisterFormComponent implements OnInit {
 
   private router = inject(Router);
 
+  private notificationService = inject(NotificationService);
+
   registerFormGroup!: RegisterFormGroup;
 
   isLeftActive: boolean = true;
@@ -50,16 +53,29 @@ export class RegisterFormComponent implements OnInit {
 
       this.authService.register(email as string, login as string, password as string).subscribe({
         next: (response) => {
-          if (response.status === 'success') {
-            this.router.navigate(['/login/authorization']);
+          if (response.status >= 200 && response.status < 300) {
+            this.router.navigate(['/login/authorization']).then(() => {
+              this.notificationService.addNotification({
+                type: 'success',
+                status: response.status,
+                message: response?.message || 'User registered successfully',
+              });
+            });
           }
         },
         error: (error) => {
-          console.error('Failed to register user: ', error);
+          this.notificationService.addNotification({
+            type: 'error',
+            status: error.status,
+            message: error.error?.message || 'Failed to register user',
+          });
         },
       });
     } else {
-      console.error('Form is invalid');
+      this.notificationService.addNotification({
+        type: 'error',
+        message: 'Form is invalid',
+      });
     }
   }
 
@@ -69,20 +85,31 @@ export class RegisterFormComponent implements OnInit {
     );
 
     if (validateFormGroup(loginFormGroup)) {
-      const { email, password } = loginFormGroup.value;
+      const { email_or_login, password } = loginFormGroup.value;
 
-      this.authService.login(email as string, password as string).subscribe({
+      this.authService.login(email_or_login as string, password as string).subscribe({
         next: (response) => {
-          if (response.status === 'success') {
-            console.log('User logged in');
+          if (response.status >= 200 && response.status < 300) {
+            this.notificationService.addNotification({
+              type: 'success',
+              status: response.status,
+              message: response?.message || 'User logged in successfully',
+            });
           }
         },
         error: (error) => {
-          console.error('Failed to register user: ', error);
+          this.notificationService.addNotification({
+            type: 'error',
+            status: error.status,
+            message: error.error?.message || 'Failed to login user',
+          });
         },
       });
     } else {
-      console.error('Form is invalid');
+      this.notificationService.addNotification({
+        type: 'error',
+        message: 'Form is invalid',
+      });
     }
   }
 
