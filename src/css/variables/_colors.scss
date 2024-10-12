@@ -1,5 +1,6 @@
 // **Background Colors**
 $background-main: #141414; // Main background color (for the whole app)
+$light-background-main: lighten($background-main, 2%); // Lighter version of the main background
 $background-panel: #242424; // Panel background (e.g., charts, lists)
 $background-table-row: #343434; // Table row and filter/search elements background
 $background-table-row-hover: darken($background-table-row, 3%); // Hover state for table rows

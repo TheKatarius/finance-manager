@@ -9,8 +9,9 @@ export interface Transaction {
 }
 
 export interface ExtendedTransaction extends Transaction {
+  paymentType: string;
   currencyFullName: string;
-  description: string;
+  description?: string;
   time: string;
 }
 
@@ -19,8 +20,8 @@ export interface ExtendedTransactionFormControls {
   date: FormControl<string | null>;
   amount: FormControl<number | null>;
   currencyIsoCode: FormControl<string | null>;
+  paymentType: FormControl<string | null>;
   category: FormControl<string | null>;
-  currencyFullName: FormControl<string | null>;
   description: FormControl<string | null>;
   time: FormControl<string | null>;
 }

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Transaction } from '@app/core/interfaces/transaction.schema';
+import { ExtendedTransaction, Transaction } from '@app/core/interfaces/transaction.schema';
 
 @Component({
   selector: 'fin-man-transaction-record',
@@ -8,7 +8,19 @@ import { Transaction } from '@app/core/interfaces/transaction.schema';
   styleUrls: ['./fin-man-transaction-record.scss'],
 })
 export class FinManTransactionRecordComponent {
-  @Input() transactions?: Transaction[];
+  @Input() transactions!: (Transaction | ExtendedTransaction)[];
+  @Input() extendedRecord: boolean = false;
 
-  readonly parseInt = parseInt;
+  // TODO: To remove
+  ngOnInit(): void {
+    this.transactions = this.transactions.map((transaction) =>
+      transaction.amount > 0 ? { ...transaction, amount: -transaction.amount } : transaction,
+    );
+  }
+
+  isExtendedTransaction(
+    transaction: Transaction | ExtendedTransaction,
+  ): transaction is ExtendedTransaction {
+    return this.extendedRecord;
+  }
 }

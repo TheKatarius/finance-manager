@@ -31,10 +31,7 @@ export class FinManCustomDropdownComponent implements OnChanges {
   selected: string | null = null;
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes: ', this.control);
-
-    if (this.control?.value) {
-      console.log('if');
+    if (this.control) {
       this.selected = this.control.value;
     }
   }
@@ -54,7 +51,6 @@ export class FinManCustomDropdownComponent implements OnChanges {
     this.selected = option;
     this.isOpen = false;
     this.control?.setValue(option);
-    console.log(this.control);
     this.onChange.emit(option);
   }
 }

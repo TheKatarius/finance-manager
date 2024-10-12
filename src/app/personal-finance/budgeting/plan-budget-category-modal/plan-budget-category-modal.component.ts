@@ -20,19 +20,21 @@ export class PlanBudgetCategoryModalComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
   @Output() budgetAdded = new EventEmitter<any>();
 
+  readonly CategoryKind = CategoryKind;
+
   private formBuilder = inject(FormBuilder);
 
   categories: (ExpenseCategoryNames | IncomeCategoryNames)[] = IncomeSourcesMockData.map(
     (category) => category.category,
   );
 
-  budgetForm!: FormGroup<{
+  budgetFormGroup!: FormGroup<{
     category: FormControl<string | null>;
     amount: FormControl<number | null>;
   }>;
 
   ngOnInit(): void {
-    this.budgetForm = this.formBuilder.group({
+    this.budgetFormGroup = this.formBuilder.group({
       category: ['', Validators.required],
       amount: 0,
     });
@@ -43,20 +45,20 @@ export class PlanBudgetCategoryModalComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.budgetForm.valid) {
-      const budgetData = this.budgetForm.value;
+    if (this.budgetFormGroup.valid) {
+      const budgetData = this.budgetFormGroup.value;
       this.budgetAdded.emit(budgetData);
-      this.budgetForm.reset();
+      this.budgetFormGroup.reset();
       this.closeModal();
     }
   }
 
-  selectedExpenseCategoryChange(event: Event): void {
-    if ((event.target as HTMLSelectElement).value === CategoryKind.Expense) {
+  changeCategoryKind(categoryKind: string): void {
+    if (categoryKind === CategoryKind.Expense) {
       this.categories = ExpenseCategoriesMockData.map((category) => category.category);
     } else {
       this.categories = IncomeSourcesMockData.map((category) => category.category);
     }
-    this.budgetForm.controls.category.setValue('');
+    this.budgetFormGroup.controls.category.reset();
   }
 }

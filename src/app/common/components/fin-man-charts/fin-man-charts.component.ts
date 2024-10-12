@@ -12,7 +12,7 @@ import annotationPlugin, { AnnotationOptions } from 'chartjs-plugin-annotation';
 import { BaseChartDirective } from 'ng2-charts';
 
 import { COLORS } from '@app/core/constants/colors.const';
-import { yearsMocks } from '@app/core/mocks/dates.mocks';
+import { YearsMocks } from '@app/core/mocks/dates.mocks';
 import { calculateAverage } from '@app/core/utils/calculate-average.utils';
 import { ChartsColorType } from '@common/components/fin-man-charts/fin-man-charts-color-types.schema';
 import {
@@ -33,7 +33,7 @@ export class FinManChartsComponent implements OnInit, AfterViewInit {
 
   readonly COLORS = COLORS;
 
-  readonly yearsMocks = yearsMocks;
+  readonly yearsMocks = YearsMocks;
 
   borderColors?: string[];
 

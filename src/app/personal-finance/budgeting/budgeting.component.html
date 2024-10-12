@@ -2,18 +2,20 @@
   <router-outlet name="menu"></router-outlet>
 
   <div class="budgeting-content-container">
-    <div class="balance-pie-chart-wrapper">
-      <div class="title-container">
-        <span class="title">Dashboard</span>
-        <span class="subtitle">All your finance in one place</span>
-      </div>
-
-      <fin-man-basic-balance-panel></fin-man-basic-balance-panel>
-
-      <fin-man-pie-chart></fin-man-pie-chart>
+    <div class="title-container">
+      <span class="title">Budgeting</span>
+      <span class="subtitle">Plan every purchase you want</span>
     </div>
 
-    <fin-man-budget-overview-panel (openModal)="openModal()"></fin-man-budget-overview-panel>
+    <div class="data-container">
+      <div class="balance-pie-chart-wrapper">
+        <fin-man-basic-balance-panel></fin-man-basic-balance-panel>
+
+        <fin-man-pie-chart></fin-man-pie-chart>
+      </div>
+
+      <fin-man-budget-overview-panel (openModal)="openModal()"></fin-man-budget-overview-panel>
+    </div>
   </div>
 </main>
 

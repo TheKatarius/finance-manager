@@ -1,0 +1,19 @@
+@use 'colors' as colors;
+@use 'dimensions' as dimensions;
+@use 'typography' as typography;
+@use 'mixins' as mixins;
+
+.expense-container {
+  display: flex;
+
+  .expense-content-container {
+    padding: dimensions.$padding-large;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    @include mixins.title-container;
+  }
+}

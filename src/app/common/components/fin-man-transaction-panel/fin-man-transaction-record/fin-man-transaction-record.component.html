@@ -6,15 +6,27 @@
   <div class="transaction-details">
     <span class="transaction-name">{{ transaction.name }}</span>
 
-    <div class="date-amount-container">
-      <span class="transaction-date">{{ transaction.date | date: 'dd-MM-yyyy' }}</span>
-      <span
-        [ngClass]="{
-          'transaction-amount-positive': transaction.amount > 0,
-          'transaction-amount-negative': transaction.amount < 0
-        }"
-        >{{ transaction.amount + transaction.currencyIsoCode }}
-      </span>
+    <span class="transaction-date">{{ transaction.date | date: 'dd-MM-yyyy' }}</span>
+
+    <span *ngIf="isExtendedTransaction(transaction)" class="transaction-time">{{
+      transaction.time
+    }}</span>
+
+    <span *ngIf="isExtendedTransaction(transaction)">
+      {{ transaction.category | kebabToTitle }}</span
+    >
+
+    <span *ngIf="isExtendedTransaction(transaction)"> {{ transaction.paymentType }}</span>
+
+    <span
+      [ngClass]="{
+        'transaction-amount-positive': transaction.amount > 0,
+        'transaction-amount-negative': transaction.amount < 0
+      }"
+      >{{ transaction.amount + transaction.currencyIsoCode }}
+    </span>
+    <div *ngIf="extendedRecord">
+      <span class="icon kebab-menu-icon"></span>
     </div>
   </div>
 </div>

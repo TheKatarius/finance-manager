@@ -32,3 +32,27 @@
     overflow-y: auto;
   }
 }
+
+.transactions-table-header {
+  background-color: colors.$light-background-main;
+  padding: dimensions.$padding-small dimensions.$padding-md;
+  border-bottom: 2px solid colors.$accent-red;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+
+  .header-cell {
+    font-size: typography.$font-size-sm;
+    font-weight: typography.$font-weight-bold;
+    color: colors.$text-secondary; // Lekkie przyciemnienie tekstu
+    cursor: pointer;
+    text-transform: uppercase;
+
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      color: colors.$text-secondary-hover; // Podświetlenie kolumny po najechaniu myszką
+    }
+  }
+}

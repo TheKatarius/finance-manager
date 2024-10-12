@@ -184,3 +184,22 @@
   border: 1px solid $color;
   outline: 1px solid $color;
 }
+
+@mixin title-container {
+  .title-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+
+    .title {
+      font-size: typography.$font-size-h2;
+      font-weight: typography.$font-weight-bold;
+      color: colors.$text-main;
+    }
+
+    .subtitle {
+      font-size: typography.$font-size-base;
+      color: colors.$text-link;
+    }
+  }
+}

@@ -13,6 +13,7 @@
 
   .custom-dropdown-select-wrapper {
     font-size: typography.$font-size-sm;
+    font-weight: typography.$font-weight-regular;
     position: relative;
     user-select: none;
 
@@ -29,11 +30,11 @@
       gap: 20px;
 
       position: relative;
-      z-index: 101;
 
       &-clicked {
         border-radius: dimensions.$border-radius-small dimensions.$border-radius-small 0 0;
         outline: 2px solid colors.$accent-blue;
+        z-index: 101;
 
         .common-vector-icon {
           transform: rotateZ(90deg) !important;
