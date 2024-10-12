@@ -8,6 +8,7 @@ import { ExtendedTransaction, Transaction } from '@app/core/interfaces/transacti
   styleUrls: ['./fin-man-transaction-record.scss'],
 })
 export class FinManTransactionRecordComponent {
+  // TODO: Use isExtendedTransaction to assign boolean to extendedRecord, and change extendedRecord to property
   @Input() transactions!: (Transaction | ExtendedTransaction)[];
   @Input() extendedRecord: boolean = false;
 
