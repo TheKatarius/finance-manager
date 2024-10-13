@@ -1,8 +1,8 @@
-<div class="pie-chart-wrapper">
-  <span class="title">Budget Distribution</span>
-  <span class="subtitle">Share of the category budget in the total budget</span>
+<div class="pie-chart-wrapper" [ngClass]="{ 'pie-chart-wrapper-small': smallChart }">
+  <span class="title">{{ title }}</span>
+  <span class="subtitle">{{ subtitle }}</span>
 
-  <div class="pie-chart">
+  <div class="pie-chart" [ngClass]="{ 'pie-chart-small': smallChart }">
     <canvas baseChart [data]="chartData" [options]="chartOptions" [type]="pieChartType"></canvas>
   </div>
 </div>

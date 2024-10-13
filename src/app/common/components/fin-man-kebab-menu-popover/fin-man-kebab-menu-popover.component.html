@@ -1,0 +1,14 @@
+<div class="kebab-menu-wrapper" (click)="toggleKebabMenu()">
+  <span class="icon kebab-menu-icon"></span>
+
+  <div *ngIf="isOpen" class="kebab-menu-popover-wrapper">
+    <div
+      *ngFor="let option of options"
+      class="kebab-menu-popover"
+      [ngClass]="{ 'delete-option': option }"
+      (click)="selectOption(option)"
+    >
+      {{ option }}
+    </div>
+  </div>
+</div>

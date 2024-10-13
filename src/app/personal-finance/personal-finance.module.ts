@@ -8,6 +8,8 @@ import { ExpensesComponent } from '@app/personal-finance/expenses/expenses.compo
 import { PersonalFinanceRoutingModule } from '@app/personal-finance/personal-finance-routing.module';
 import { PersonalFinanceComponent } from '@app/personal-finance/personal-finance.component';
 import { CommonModule } from '@common/common.module';
+import { DashboardModule } from '@app/dashboard/dashboard.module';
+import { AddTransactionModalComponent } from '@app/dashboard/add-transaction-modal/add-transaction-modal.component';
 
 const EXPORTED_COMPONENTS = [
   PersonalFinanceComponent,
@@ -26,6 +28,7 @@ const EXPORTED_COMPONENTS = [
     NgIf,
     NgClass,
     FormsModule,
+    AddTransactionModalComponent,
   ],
   exports: [...EXPORTED_COMPONENTS],
 })

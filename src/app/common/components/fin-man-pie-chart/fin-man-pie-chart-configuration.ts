@@ -58,7 +58,7 @@ export const CHART_OPTIONS: ChartOptions<PieChartTypeLiteral> = {
       anchor: 'end', // Anchor the label outside
       clamp: true, // Make sure it fits inside the canvas
       font: {
-        size: 14,
+        size: 10,
         weight: 'bold',
       },
     },

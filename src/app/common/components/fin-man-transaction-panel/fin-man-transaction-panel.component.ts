@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { CrudOperations } from '@app/core/interfaces/crud-operations-enum.schema';
 
 import { ExtendedTransaction, Transaction } from '@app/core/interfaces/transaction.schema';
 import { ExtendedTransactionsMocks, TransactionsMocks } from '@app/core/mocks/transactions.mocks';
@@ -19,8 +20,6 @@ export class FinManTransactionPanelComponent implements OnInit {
   transactions!: Transaction[] | ExtendedTransaction[];
 
   ngOnInit(): void {
-    console.log('extendedPanel', this.extendedPanel);
-
     this.transactions = this.extendedPanel ? ExtendedTransactionsMocks : TransactionsMocks;
   }
 }

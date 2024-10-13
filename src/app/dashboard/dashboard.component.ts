@@ -17,20 +17,10 @@ export class DashboardComponent {
   isModalVisible: boolean = false;
 
   dataSets: ChartDataset<'line', (number | Point | null)[]>[] = [
-    // {
-    //   label: 'Expenses',
-    //   data: ExpensesMockData,
-    //   borderColor: CHART_COLORS.RED.HEX,
-    // },
-    // {
-    //   label: 'Income',
-    //   data: IncomeMockData,
-    //   borderColor: CHART_COLORS.GREEN.HEX,
-    // },
     {
-      label: 'Savings',
-      data: SavingsMockData,
-      borderColor: CHART_COLORS.AMBER.HEX,
+      label: 'Expenses',
+      data: ExpensesMockData,
+      borderColor: CHART_COLORS.RED.HEX,
     },
   ];
 
@@ -43,8 +33,6 @@ export class DashboardComponent {
   }
 
   handleTransactionAdded(transactionData: any): void {
-    // Tutaj obsłuż dodanie nowego planowanego budżetu
-    console.log('Nowy planowany budżet:', transactionData);
-    // Możesz np. wysłać dane do serwisu API lub zaktualizować stan aplikacji
+    // TODO: Integrate with API
   }
 }

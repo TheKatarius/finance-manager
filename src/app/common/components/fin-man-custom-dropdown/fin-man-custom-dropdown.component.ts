@@ -22,6 +22,7 @@ export class FinManCustomDropdownComponent implements OnChanges {
   @Input() placeholder: string = 'Select an option';
   @Input() label: string = '';
   @Input() control?: FormControl;
+  @Input() backgroundStyleColor: string = '';
 
   @Output() onChange = new EventEmitter<string>();
 

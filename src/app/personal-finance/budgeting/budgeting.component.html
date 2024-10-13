@@ -11,7 +11,10 @@
       <div class="balance-pie-chart-wrapper">
         <fin-man-basic-balance-panel></fin-man-basic-balance-panel>
 
-        <fin-man-pie-chart></fin-man-pie-chart>
+        <fin-man-pie-chart
+          [title]="'Budget Distribution'"
+          [subtitle]="'Share of the category budget in the total budget'"
+        ></fin-man-pie-chart>
       </div>
 
       <fin-man-budget-overview-panel (openModal)="openModal()"></fin-man-budget-overview-panel>

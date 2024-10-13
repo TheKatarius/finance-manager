@@ -1,0 +1,65 @@
+<div class="extended-balance-panel-container">
+  <p class="panel-header">Financial Balance Overview</p>
+
+  <!-- Sekcja przychodów -->
+  <div class="balance-wrapper">
+    <div class="balance-section">
+      <fin-man-custom-dropdown
+        [options]="incomeAccounts"
+        [defaultOption]="selectedIncomeAccount"
+      ></fin-man-custom-dropdown>
+
+      <p class="header header-income">Income</p>
+      <div class="balance-values-wrapper">
+        <span class="balance">Balance: {{ incomeBalance }}</span>
+        <span [ngStyle]="getPercentDifferenceStyle(percentDifference)">{{
+          displayPercentDifference(percentDifference)
+        }}</span>
+      </div>
+
+      <div class="small-chart-container">
+        <fin-man-small-chart [chartColor]="COLORS.accentGreen"></fin-man-small-chart>
+      </div>
+    </div>
+
+    <!-- Sekcja wydatków -->
+    <div class="balance-section">
+      <fin-man-custom-dropdown
+        [options]="expenseAccounts"
+        [defaultOption]="selectedExpenseAccount"
+      ></fin-man-custom-dropdown>
+
+      <p class="header header-expense">Expenses</p>
+      <div class="balance-values-wrapper">
+        <span class="balance">Balance: {{ expenseBalance }}</span>
+        <span [ngStyle]="getPercentDifferenceStyle(percentDifference)">{{
+          displayPercentDifference(percentDifference)
+        }}</span>
+      </div>
+
+      <div class="small-chart-container">
+        <fin-man-small-chart [chartColor]="COLORS.accentRed"></fin-man-small-chart>
+      </div>
+    </div>
+
+    <!-- Sekcja oszczędności -->
+    <div class="balance-section">
+      <fin-man-custom-dropdown
+        [options]="savingsAccounts"
+        [defaultOption]="selectedSavingsAccount"
+      ></fin-man-custom-dropdown>
+
+      <p class="header header-savings">Savings</p>
+      <div class="balance-values-wrapper">
+        <span class="balance">Balance: {{ savingsBalance }}</span>
+        <span [ngStyle]="getPercentDifferenceStyle(percentDifference)">{{
+          displayPercentDifference(percentDifference)
+        }}</span>
+      </div>
+
+      <div class="small-chart-container">
+        <fin-man-small-chart [chartColor]="COLORS.accentBlue"></fin-man-small-chart>
+      </div>
+    </div>
+  </div>
+</div>

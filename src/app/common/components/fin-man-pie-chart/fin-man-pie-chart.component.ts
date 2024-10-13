@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
@@ -19,6 +19,10 @@ import {
 })
 export class FinManPieChartComponent {
   @ViewChild(BaseChartDirective) chart!: BaseChartDirective;
+
+  @Input() smallChart: boolean = false;
+  @Input() title: string = '';
+  @Input() subtitle: string = '';
 
   categories: ExpenseCategoryBudgeting[] = ExpenseCategoriesMockData;
 

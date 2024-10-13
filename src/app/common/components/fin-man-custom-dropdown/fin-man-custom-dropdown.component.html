@@ -5,6 +5,7 @@
     <div
       class="custom-dropdown-select"
       [ngClass]="{ 'custom-dropdown-select-clicked': isOpen }"
+      [ngStyle]="{ 'background-color': backgroundStyleColor }"
       (click)="toggleDropdown()"
     >
       {{ (selected ?? defaultOption) || placeholder }}

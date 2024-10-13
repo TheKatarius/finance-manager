@@ -15,5 +15,10 @@
     gap: 20px;
 
     @include mixins.title-container;
+
+    .content-wrapper {
+      display: flex;
+      gap: dimensions.$gap-lg;
+    }
   }
 }

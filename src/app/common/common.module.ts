@@ -19,6 +19,9 @@ import { FinManProgressBarComponent } from '@common/components/fin-man-progress-
 import { FinManSearchComponent } from '@common/components/fin-man-search/fin-man-search.component';
 import { FinManTransactionPanelComponent } from '@common/components/fin-man-transaction-panel/fin-man-transaction-panel.component';
 import { FinManTransactionRecordComponent } from '@common/components/fin-man-transaction-panel/fin-man-transaction-record/fin-man-transaction-record.component';
+import { FinManKebabMenuPopoverComponent } from '@common/components/fin-man-kebab-menu-popover/fin-man-kebab-menu-popover.component';
+import { FinManExtendedBalancePanelComponent } from '@common/components/fin-man-extended-balance-panel/fin-man-extended-balance-panel.component';
+import { FinManSmallChartComponent } from '@common/components/fin-man-small-chart/fin-man-small-chart.component';
 
 const COMMON_COMPONENTS = [
   FinManBasicInfoPanelComponent,
@@ -33,6 +36,9 @@ const COMMON_COMPONENTS = [
   FinManBudgetOverviewPanelComponent,
   FinManNotificationComponent,
   FinManCustomDropdownComponent,
+  FinManKebabMenuPopoverComponent,
+  FinManExtendedBalancePanelComponent,
+  FinManSmallChartComponent,
 ];
 
 @NgModule({

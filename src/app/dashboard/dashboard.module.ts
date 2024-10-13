@@ -10,7 +10,7 @@ import { PersonalFinanceModule } from '@app/personal-finance/personal-finance.mo
 import { NgForOf, NgIf } from '@angular/common';
 
 @NgModule({
-  declarations: [DashboardComponent, AddTransactionModalComponent],
+  declarations: [DashboardComponent],
   imports: [
     RouterOutlet,
     DashboardRoutingModule,
@@ -19,7 +19,8 @@ import { NgForOf, NgIf } from '@angular/common';
     PersonalFinanceModule,
     NgIf,
     NgForOf,
+    AddTransactionModalComponent,
   ],
-  exports: [AddTransactionModalComponent],
+  exports: [],
 })
 export class DashboardModule {}

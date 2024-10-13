@@ -1,0 +1,39 @@
+@use 'colors' as colors;
+@use 'typography' as typography;
+@use 'dimensions' as dimensions;
+@use 'mixins' as mixins;
+
+.kebab-menu-wrapper {
+  font-size: typography.$font-size-sm;
+  font-weight: typography.$font-weight-regular;
+  position: relative;
+  user-select: none;
+
+  .kebab-menu-popover-wrapper {
+    background-color: colors.$background-inner-panel;
+    border-radius: dimensions.$border-radius-small;
+
+    position: absolute;
+    top: -25px;
+    left: -75px;
+    z-index: 1000;
+
+    &:first-child {
+      border-radius: dimensions.$border-radius-small;
+    }
+
+    &:last-child {
+      border-radius: 0 0 dimensions.$border-radius-small dimensions.$border-radius-small;
+    }
+
+    .kebab-menu-popover {
+      padding: dimensions.$padding-small;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: colors.$background-inner-panel-hover;
+      }
+    }
+  }
+}

@@ -7,10 +7,14 @@
   background-color: colors.$background-panel;
   border-radius: dimensions.$border-radius-medium;
   height: 750px;
-  padding: 15px;
+  padding: dimensions.$padding-md;
 
   display: flex;
   flex-direction: column;
+
+  &-extended {
+    width: 900px;
+  }
 
   .header-wrapper {
     display: flex;
@@ -22,6 +26,7 @@
       font-size: typography.$font-size-h4;
       color: colors.$accent-blue;
     }
+
     @include mixins.add-button;
   }
 
@@ -35,11 +40,13 @@
 
 .transactions-table-header {
   background-color: colors.$light-background-main;
-  padding: dimensions.$padding-small dimensions.$padding-md;
   border-bottom: 2px solid colors.$accent-red;
+  border-radius: dimensions.$border-radius-small dimensions.$border-radius-small 0 0;
+  height: 40px;
+  padding: dimensions.$padding-xxs dimensions.$padding-md dimensions.$padding-xxs 48px;
 
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: dimensions.$extended-transaction-table-widths;
 
   .header-cell {
     font-size: typography.$font-size-sm;

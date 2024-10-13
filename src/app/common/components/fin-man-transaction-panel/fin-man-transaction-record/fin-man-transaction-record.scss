@@ -21,13 +21,20 @@
     width: 100%;
 
     display: grid;
-    grid-template-columns: 30% 10% 10% 15% 15% 19% 1%;
+    align-items: center;
+    grid-template-columns: dimensions.$extended-transaction-table-widths;
+
+    &-basic {
+      grid-template-columns: 50% 25% 25%;
+    }
 
     .transaction-date {
       color: colors.$text-secondary;
     }
 
     .transaction-amount {
+      text-align: end;
+
       &-positive {
         color: colors.$accent-green;
       }

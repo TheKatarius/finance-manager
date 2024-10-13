@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { CrudOperations } from '@app/core/interfaces/crud-operations-enum.schema';
 
 import { ExtendedTransaction, Transaction } from '@app/core/interfaces/transaction.schema';
 
@@ -8,9 +9,10 @@ import { ExtendedTransaction, Transaction } from '@app/core/interfaces/transacti
   styleUrls: ['./fin-man-transaction-record.scss'],
 })
 export class FinManTransactionRecordComponent {
-  // TODO: Use isExtendedTransaction to assign boolean to extendedRecord, and change extendedRecord to property
   @Input() transactions!: (Transaction | ExtendedTransaction)[];
   @Input() extendedRecord: boolean = false;
+
+  readonly CrudOperations = CrudOperations;
 
   // TODO: To remove
   ngOnInit(): void {

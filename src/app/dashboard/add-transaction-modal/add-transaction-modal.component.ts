@@ -1,5 +1,5 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { VALIDATION } from '@app/core/constants/validators.const';
 import {
@@ -13,8 +13,12 @@ import { CurrenciesMocks } from '@app/core/mocks/currencies.mocks';
 import { PaymentTypes } from '@app/core/mocks/payment-types.mocks';
 import { ExpenseCategoriesMockData, IncomeSourcesMockData } from '@app/core/mocks/pie-charts.mocks';
 import { MergeCodeNamePipe } from '@app/core/pipes/merge-code-name.pipe';
+import { CommonModule } from '@common/common.module';
+import { NgIf } from '@angular/common';
 
 @Component({
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule, NgIf],
   selector: 'finance-manager-add-transaction-modal',
   templateUrl: './add-transaction-modal.component.html',
   styleUrls: ['../../../css/components/dashboard/add-transaction-modal/add-transaction-modal.scss'],

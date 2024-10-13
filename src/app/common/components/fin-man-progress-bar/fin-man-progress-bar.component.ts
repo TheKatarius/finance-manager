@@ -9,20 +9,15 @@ import { Directions } from '@app/core/interfaces/common-enums.schema';
 })
 export class FinManProgressBarComponent implements OnChanges {
   @Input() max = 100;
-
   @Input() value = 0;
-
   @Input() gradientColor: string = '';
-
   @Input() iconClass: string = '';
-
   @Input() isIconVisible: boolean = true;
-
   @Input() tooltipDescription: string = '';
-
   @Input() tooltipDisplayDirection: Directions = Directions.Up;
-
   @Input() moveLabelBelowProgressBar: boolean = false;
+
+  readonly Directions = Directions;
 
   progressPercentage = 0;
 
@@ -39,6 +34,4 @@ export class FinManProgressBarComponent implements OnChanges {
     const safeValue = Math.min(this.value, this.max);
     this.progressPercentage = (safeValue / this.max) * 100;
   }
-
-  protected readonly Directions = Directions;
 }
