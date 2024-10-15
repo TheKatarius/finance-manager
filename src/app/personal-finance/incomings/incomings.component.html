@@ -3,8 +3,8 @@
 
   <div class="expense-content-container">
     <div class="title-container">
-      <span class="title">Expenses</span>
-      <span class="subtitle">Track your expenses as you wish</span>
+      <span class="title">Incomings</span>
+      <span class="subtitle">Watch your incomings and your growth</span>
     </div>
 
     <div class="content-wrapper">
@@ -14,15 +14,17 @@
         <fin-man-transaction-panel
           [extendedPanel]="true"
           [transactionData]="transactionData"
-          [panelTitle]="'Expenses'"
+          [categoryKind]="CategoryKind.Income"
+          [panelTitle]="'Incomings'"
           (openModal)="openModal()"
         ></fin-man-transaction-panel>
       </div>
 
       <div class="one-side-positioning">
         <fin-man-pie-chart
-          [title]="'Expenses Distribution'"
-          [subtitle]="'Share of the categories in total expenses'"
+          [title]="'Incomings Distribution'"
+          [subtitle]="'Share of the categories in total incomings'"
+          [firstHue]="25"
           [smallChart]="true"
         ></fin-man-pie-chart>
 
@@ -30,7 +32,8 @@
           [extendedPanel]="true"
           [periodTransactions]="true"
           [periodTransactionsData]="periodTransactionsData"
-          [panelTitle]="'Periodic and Planned Expenses'"
+          [categoryKind]="CategoryKind.Income"
+          [panelTitle]="'Periodic and Planned Incomings'"
         ></fin-man-transaction-panel>
       </div>
     </div>

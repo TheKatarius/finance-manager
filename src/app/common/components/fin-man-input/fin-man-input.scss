@@ -27,6 +27,10 @@
     height: dimensions.$input-height;
     padding: dimensions.$padding-xs 50px dimensions.$padding-xs dimensions.$padding-small;
 
+    &-thin {
+      height: 30px;
+    }
+
     &::placeholder {
       color: colors.$text-secondary;
       opacity: 1;

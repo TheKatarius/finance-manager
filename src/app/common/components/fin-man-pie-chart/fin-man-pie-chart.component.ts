@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
@@ -17,22 +17,27 @@ import {
   templateUrl: './fin-man-pie-chart.component.html',
   styleUrls: ['./fin-man-pie-chart.scss'],
 })
-export class FinManPieChartComponent {
+export class FinManPieChartComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart!: BaseChartDirective;
 
   @Input() smallChart: boolean = false;
   @Input() title: string = '';
   @Input() subtitle: string = '';
+  @Input() firstHue: number = 0;
 
   categories: ExpenseCategoryBudgeting[] = ExpenseCategoriesMockData;
 
   pieChartType: PieChartTypeLiteral = PIE_CHART_TYPE;
 
-  chartData: ChartData<PieChartTypeLiteral> = CHART_DATA(this.categories);
+  chartData!: ChartData<PieChartTypeLiteral>;
 
   chartOptions: ChartOptions<PieChartTypeLiteral> = CHART_OPTIONS;
 
   constructor() {
     Chart.register(...registerables, ChartDataLabels);
+  }
+
+  ngOnInit(): void {
+    this.chartData = CHART_DATA(this.categories, this.firstHue);
   }
 }

@@ -14,8 +14,8 @@
     border-radius: dimensions.$border-radius-small;
 
     position: absolute;
-    top: -25px;
-    left: -75px;
+    top: 0;
+    left: -85px;
     z-index: 1000;
 
     &:first-child {
@@ -24,6 +24,16 @@
 
     &:last-child {
       border-radius: 0 0 dimensions.$border-radius-small dimensions.$border-radius-small;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -10px;
+      border-width: 10px 0 10px 10px;
+      border-style: solid;
+      border-color: transparent colors.$background-inner-panel;
     }
 
     .kebab-menu-popover {

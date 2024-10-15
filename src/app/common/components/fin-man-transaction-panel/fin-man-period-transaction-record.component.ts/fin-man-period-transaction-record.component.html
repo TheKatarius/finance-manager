@@ -12,9 +12,12 @@
       </div>
     </div>
 
-    <span class="transaction-date">{{ transaction.date | date: 'dd-MM-yyyy' }}</span>
-
-    <span class="transaction-period">{{ transaction.periodTime }}</span>
+    <div class="basic-info">
+      <span class="transaction-date">{{ transaction.date | date: 'dd-MM-yyyy' }}</span>
+      <div class="category-payment-wrapper">
+        <span class="transaction-period">{{ transaction.periodTime }}</span>
+      </div>
+    </div>
 
     <span
       [ngClass]="{

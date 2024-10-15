@@ -1,0 +1,33 @@
+<!-- Wizualizacja celu -->
+<div class="goal-image-container">
+  <img ngSrc="goalImage" alt="Twój cel" class="goal-image" />
+  <input type="file" (change)="onFileSelected($event)" />
+</div>
+
+<!-- Paski postępu -->
+<div class="progress-bar-container">
+  <div class="progress-bar" [style.width.%]="currentProgress"></div>
+</div>
+<p>{{ currentProgress }}% celu osiągnięte</p>
+
+<!-- Odliczanie czasu -->
+<div class="countdown-timer">
+  <p>Do osiągnięcia celu pozostało:</p>
+  <h2>{{ days }}d {{ hours }}h {{ minutes }}m {{ seconds }}s</h2>
+</div>
+
+<!-- Animacja monet -->
+<div class="coin-animation" *ngIf="showAnimation">
+  <div class="coin" *ngFor="let coin of coins"></div>
+</div>
+
+<!-- Emocjonalny przekaz -->
+<p class="motivational-message" *ngIf="motivationalMessage">{{ motivationalMessage }}</p>
+
+<!-- Natychmiastowa informacja zwrotna -->
+<div class="feedback" *ngIf="feedbackMessage">
+  {{ feedbackMessage }}
+</div>
+
+<!-- Przycisk dodający oszczędności -->
+<button (click)="addSavings()">Dodaj oszczędności</button>

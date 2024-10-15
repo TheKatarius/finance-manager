@@ -5,7 +5,8 @@
     class="input"
     [ngClass]="{
       'input-error': isError,
-      'search-input': componentClassName === FinManInputTypes.SEARCH
+      'search-input': componentClassName === FinManInputTypes.SEARCH,
+      'input-thin': thinInput,
     }"
     [id]="controlId"
     [type]="type"

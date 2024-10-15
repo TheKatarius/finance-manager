@@ -19,7 +19,8 @@
     }
 
     .transaction-date {
-      color: colors.$text-secondary;
+      color: colors.$text-main;
+      font-size: typography.$font-size-sm;
     }
 
     .transaction-amount {

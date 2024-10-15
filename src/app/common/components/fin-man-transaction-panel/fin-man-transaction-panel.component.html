@@ -6,7 +6,9 @@
   }"
 >
   <div class="header-wrapper">
-    <h4 class="transaction-header">{{ panelTitle }}</h4>
+    <h4 class="transaction-header" [ngClass]="{ 'transaction-header-period': periodTransactions }">
+      {{ panelTitle }}
+    </h4>
     <div class="add-button-wrapper" (click)="openModal.emit()">
       <div class="icon-wrapper">
         <em class="icon add-icon"></em>
@@ -20,7 +22,11 @@
   <!--  TODO: Add transaction counter -->
   <!--  TODO: Add arrow next to header columns for sorting operation -->
 
-  <div *ngIf="extendedPanel && !periodTransactions" class="transactions-table-header">
+  <div
+    *ngIf="extendedPanel && !periodTransactions"
+    class="transactions-table-header"
+    [ngClass]="{ 'transactions-table-header-incomings': categoryKind === CategoryKind.Income }"
+  >
     <div class="header-cell name-col">Transaction Name</div>
     <div class="header-cell date-col">Date & Time</div>
     <div class="header-cell category-col">Category</div>
@@ -31,24 +37,28 @@
   <div
     *ngIf="extendedPanel && periodTransactions"
     class="transactions-table-header"
-    [ngClass]="{ 'transactions-table-header-period': extendedPanel && periodTransactions }"
+    [ngClass]="{
+      'transactions-table-header-period': extendedPanel && periodTransactions,
+      'transactions-table-header-incomings': categoryKind === CategoryKind.Income
+    }"
   >
     <div class="header-cell">Basic Info</div>
     <div class="header-cell">Next Payment</div>
-    <div class="header-cell">Period Time</div>
     <div class="header-cell">Amount</div>
   </div>
 
   <div class="transactions-list">
     <fin-man-transaction-record
       *ngIf="!periodTransactions; else periodTrans"
-      [transactions]="transactions"
+      [transactions]="transactionData"
       [extendedRecord]="extendedPanel"
+      [categoryKind]="categoryKind"
     ></fin-man-transaction-record>
 
     <ng-template #periodTrans>
       <fin-man-period-transaction-record
-        [transactions]="PeriodTransactionsMocks"
+        [transactions]="periodTransactionsData"
+        [categoryKind]="categoryKind"
       ></fin-man-period-transaction-record>
     </ng-template>
   </div>

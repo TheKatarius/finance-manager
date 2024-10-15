@@ -1,5 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { GetStringService } from '@app/core/services/get-string.service';
 import { MenuService } from '@app/menu/menu.service';
@@ -10,25 +11,31 @@ import { menuSectionClassNames } from '@app/menu/menu.utils';
   templateUrl: './menu.component.html',
   styleUrls: ['../../css/components/menu/menu.scss'],
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
   private getStringService = inject(GetStringService);
 
   private menuService = inject(MenuService);
+
+  private menuSubscription!: Subscription;
 
   // All available section in className format
   sectionClassNames!: string[];
 
   // Dashboard is default active section
   activeSection!: string;
-  private router = inject(Router);
 
   ngOnInit(): void {
     this.sectionClassNames = menuSectionClassNames((...code: string[]) =>
       this.getStringService.get(...code),
     );
 
-    this.activeSection = this.menuService.clickedSectionSubject.getValue().section;
-    console.log(this.router.url.split('/'));
+    this.menuSubscription = this.menuService.clickedSectionSubject.subscribe((state) => {
+      this.activeSection = state.section;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 
   onSectionClick(sectionName: string): void {

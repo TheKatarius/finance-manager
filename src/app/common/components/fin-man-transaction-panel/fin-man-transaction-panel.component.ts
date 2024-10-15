@@ -1,8 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { CrudOperations } from '@app/core/interfaces/crud-operations-enum.schema';
 
-import { ExtendedTransaction, Transaction } from '@app/core/interfaces/transaction.schema';
+import { CategoryKind } from '@app/core/interfaces/common-enums.schema';
+import { CrudOperations } from '@app/core/interfaces/crud-operations-enum.schema';
+import {
+  ExtendedTransaction,
+  PeriodTransaction,
+  Transaction,
+} from '@app/core/interfaces/transaction.schema';
 import {
   ExtendedTransactionsMocks,
   PeriodTransactionsMocks,
@@ -14,20 +19,17 @@ import {
   templateUrl: './fin-man-transaction-panel.component.html',
   styleUrls: ['./fin-man-transaction-panel.scss'],
 })
-export class FinManTransactionPanelComponent implements OnInit {
+export class FinManTransactionPanelComponent {
   @Input() extendedPanel: boolean = false;
   @Input() panelTitle: string = 'Transactions';
   @Input() periodTransactions: boolean = false;
+  @Input() periodTransactionsData: PeriodTransaction[] = [];
+  @Input() transactionData: Transaction[] | ExtendedTransaction[] = [];
+  @Input() categoryKind: CategoryKind = CategoryKind.Expense;
 
   @Output() openModal = new EventEmitter<void>();
 
+  readonly CategoryKind = CategoryKind;
+
   control = new FormControl('');
-
-  transactions!: Transaction[] | ExtendedTransaction[];
-
-  ngOnInit(): void {
-    this.transactions = this.extendedPanel ? ExtendedTransactionsMocks : TransactionsMocks;
-  }
-
-  protected readonly PeriodTransactionsMocks = PeriodTransactionsMocks;
 }

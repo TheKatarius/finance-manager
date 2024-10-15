@@ -6,21 +6,44 @@ import { BehaviorSubject, filter } from 'rxjs';
   providedIn: 'root',
 })
 export class MenuService {
-  private router = inject(Router);
+  private router: Router;
 
+  // Używamy BehaviorSubject do przechowywania aktualnej sekcji i podsekcji
   clickedSectionSubject = new BehaviorSubject<{ section: string; subsection?: string }>({
-    section: this.router.url.split('/')[1],
-    subsection: this.router.url.split('/')?.[2],
+    section: 'dashboard', // Domyślna sekcja
+    subsection: undefined,
   });
 
+  constructor(router: Router) {
+    this.router = router;
+
+    // Subskrybujemy zdarzenia nawigacji
+    this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.updateSectionFromUrl(event.urlAfterRedirects);
+      });
+
+    // Inicjalizujemy stan na podstawie aktualnego URL po zarejestrowaniu subskrypcji
+    this.updateSectionFromUrl(this.router.url);
+  }
+
+  private updateSectionFromUrl(url: string): void {
+    const urlSegments = url.split('/').filter((segment) => segment);
+    const section = urlSegments[0] || 'dashboard';
+    const subsection = urlSegments[1];
+
+    // Aktualizujemy BehaviorSubject
+    this.clickedSectionSubject.next({ section, subsection });
+  }
+
   setClickedSection(section: string): void {
-    this.clickedSectionSubject.next({ section });
+    const currentState = this.clickedSectionSubject.getValue();
+    this.clickedSectionSubject.next({ ...currentState, section, subsection: undefined });
   }
 
   setClickedSubsection(subsection: string): void {
     const currentState = this.clickedSectionSubject.getValue();
-    const section = currentState.section || 'dashboard';
-
-    this.clickedSectionSubject.next({ section, subsection });
+    this.clickedSectionSubject.next({ ...currentState, subsection });
   }
 }

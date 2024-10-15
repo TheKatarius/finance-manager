@@ -11,6 +11,7 @@ export type PieChartTypeLiteral = typeof PIE_CHART_TYPE;
 
 export const CHART_DATA = (
   categories: ExpenseCategoryBudgeting[],
+  firstHue: number = 0,
 ): ChartData<PieChartTypeLiteral> => {
   const categoriesData = categoryData(categories);
 
@@ -19,7 +20,7 @@ export const CHART_DATA = (
     datasets: [
       {
         data: categoriesData.map((cat) => cat.budgetPercent),
-        backgroundColor: generateColors(categoriesData.length),
+        backgroundColor: generateColors(categoriesData.length, firstHue),
         borderWidth: 0,
       },
     ],

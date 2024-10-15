@@ -1,23 +1,25 @@
 import { Component } from '@angular/core';
 
+import { CategoryKind } from '@app/core/interfaces/common-enums.schema';
 import { ExtendedTransaction, PeriodTransaction } from '@app/core/interfaces/transaction.schema';
-import { ExpensesMockData } from '@app/core/mocks/line-charts.mocks';
 import {
-  ExtendedTransactionsMocks,
-  PeriodTransactionsMocks,
+  IncomeTransactionMocks,
+  PeriodIncomeTransactionsMocks,
 } from '@app/core/mocks/transactions.mocks';
 
 @Component({
-  selector: 'finance-manager-expenses',
-  templateUrl: './expenses.component.html',
+  selector: 'finance-manager-incomings',
+  templateUrl: './incomings.component.html',
   styleUrls: ['../../../css/components/personal-finance/expenses/expenses.scss'],
 })
-export class ExpensesComponent {
+export class IncomingsComponent {
+  readonly CategoryKind = CategoryKind;
+
   isModalVisible: boolean = false;
 
-  transactionData: ExtendedTransaction[] = ExtendedTransactionsMocks;
+  transactionData: ExtendedTransaction[] = IncomeTransactionMocks;
 
-  periodTransactionsData: PeriodTransaction[] = PeriodTransactionsMocks;
+  periodTransactionsData: PeriodTransaction[] = PeriodIncomeTransactionsMocks;
 
   openModal(): void {
     this.isModalVisible = true;

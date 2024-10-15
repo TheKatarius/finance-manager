@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { COLORS } from '@app/core/constants/colors.const';
 
 @Component({
@@ -6,7 +7,7 @@ import { COLORS } from '@app/core/constants/colors.const';
   templateUrl: './fin-man-extended-balance-panel.component.html',
   styleUrls: ['./fin-man-extended-balance-panel.scss'],
 })
-export class FinManExtendedBalancePanelComponent {
+export class FinManExtendedBalancePanelComponent implements OnInit {
   readonly COLORS = COLORS;
 
   // Mockowane dane kont
@@ -30,7 +31,11 @@ export class FinManExtendedBalancePanelComponent {
   savingsBalance: number = 0;
   totalBalance: number = 0;
 
-  checkboxValue: boolean = false;
+  checkboxValues: { id: number; value: boolean }[] = [
+    { id: 0, value: false },
+    { id: 1, value: false },
+    { id: 2, value: false },
+  ];
 
   ngOnInit(): void {
     this.loadAccounts();
@@ -108,7 +113,7 @@ export class FinManExtendedBalancePanelComponent {
     return char + percentDifference + '%';
   }
 
-  toggleCheckbox(): void {
-    this.checkboxValue = !this.checkboxValue;
+  toggleCheckbox(id: number): void {
+    this.checkboxValues[id].value = !this.checkboxValues[id].value;
   }
 }

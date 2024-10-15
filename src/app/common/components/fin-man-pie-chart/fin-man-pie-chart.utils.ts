@@ -55,7 +55,7 @@ export function categoryData(
   return displayedExtendedCategories;
 }
 
-export function generateColors(count: number): string[] {
+export function generateColors(count: number, firstHue: number = 0): string[] {
   const colors: string[] = [];
   const transparency: number = 0.7;
 
@@ -65,7 +65,7 @@ export function generateColors(count: number): string[] {
       break;
     }
 
-    const hue = (i * 70) / count;
+    const hue = ((i + firstHue) * 50) / count;
     colors.push(`hsla(${hue}, 75%, 50%, 1)`);
   }
   return colors;

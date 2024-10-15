@@ -36,7 +36,10 @@
     <div class="chart-transactions-container">
       <fin-man-charts [dataSets]="dataSets"></fin-man-charts>
 
-      <fin-man-transaction-panel (openModal)="openModal()"></fin-man-transaction-panel>
+      <fin-man-transaction-panel
+        [transactionData]="transactionsData"
+        (openModal)="openModal()"
+      ></fin-man-transaction-panel>
     </div>
   </div>
 </main>

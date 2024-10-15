@@ -172,7 +172,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Water Bill',
     date: '2023-02-20',
-    amount: 123.57,
+    amount: -123.57,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'children',
@@ -183,7 +183,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Electricity',
     date: '2023-02-19',
-    amount: 89.3,
+    amount: -89.3,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'clothing',
@@ -205,7 +205,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Electronics Purchase',
     date: '2023-02-15',
-    amount: 1250.0,
+    amount: -1250.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'education',
@@ -216,7 +216,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Movie Night',
     date: '2023-02-14',
-    amount: 45.5,
+    amount: -45.5,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'electronics',
@@ -227,7 +227,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Restaurant',
     date: '2023-02-12',
-    amount: 75.0,
+    amount: -75.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'entertainment',
@@ -249,7 +249,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Monthly Savings',
     date: '2023-02-09',
-    amount: 500.0,
+    amount: -500.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'groceries',
@@ -260,7 +260,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Health Checkup',
     date: '2023-02-07',
-    amount: 200.0,
+    amount: -200.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'health',
@@ -282,7 +282,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Books Purchase',
     date: '2023-02-03',
-    amount: 100.0,
+    amount: -100.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'insurance',
@@ -293,7 +293,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Gift for Friend',
     date: '2023-02-02',
-    amount: 150.0,
+    amount: -150.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'investments',
@@ -304,7 +304,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Gym Subscription',
     date: '2023-02-01',
-    amount: 120.0,
+    amount: -120.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'obligations',
@@ -315,7 +315,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Car Fuel',
     date: '2023-01-30',
-    amount: 200.0,
+    amount: -200.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'other',
@@ -326,7 +326,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Hygiene Products',
     date: '2023-01-28',
-    amount: 50.0,
+    amount: -50.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'pets',
@@ -337,7 +337,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Internet Bill',
     date: '2023-01-25',
-    amount: 60.0,
+    amount: -60.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'rent',
@@ -348,7 +348,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Loan Payment',
     date: '2023-01-22',
-    amount: 300.0,
+    amount: -300.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'savings',
@@ -359,7 +359,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'New Shoes',
     date: '2023-01-20',
-    amount: 250.0,
+    amount: -250.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'sport',
@@ -370,7 +370,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Concert Ticket',
     date: '2023-01-15',
-    amount: 120.0,
+    amount: -120.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'subscriptions',
@@ -381,7 +381,7 @@ export const ExtendedTransactionsMocks: ExtendedTransaction[] = [
   {
     name: 'Charity Donation',
     date: '2023-01-10',
-    amount: 100.0,
+    amount: -100.0,
     currencyIsoCode: 'PLN',
     currencyFullName: 'Polish Zloty',
     category: 'taxes',
@@ -395,7 +395,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Water Bill',
     date: '2023-02-20',
-    amount: 123.57,
+    amount: -123.57,
     currencyIsoCode: 'PLN',
     category: 'children',
     paymentType: 'Bank Transfer',
@@ -404,7 +404,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Electricity',
     date: '2023-02-19',
-    amount: 89.3,
+    amount: -89.3,
     currencyIsoCode: 'PLN',
     category: 'clothing',
     paymentType: 'Credit Card',
@@ -422,7 +422,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Electronics Purchase',
     date: '2023-02-15',
-    amount: 1250.0,
+    amount: -1250.0,
     currencyIsoCode: 'PLN',
     category: 'education',
     paymentType: 'Credit Card',
@@ -431,7 +431,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Movie Night',
     date: '2023-02-14',
-    amount: 45.5,
+    amount: -45.5,
     currencyIsoCode: 'PLN',
     category: 'electronics',
     paymentType: 'Cash',
@@ -440,7 +440,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Restaurant',
     date: '2023-02-12',
-    amount: 75.0,
+    amount: -75.0,
     currencyIsoCode: 'PLN',
     category: 'entertainment',
     paymentType: 'Debit Card',
@@ -458,7 +458,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Monthly Savings',
     date: '2023-02-09',
-    amount: 500.0,
+    amount: -500.0,
     currencyIsoCode: 'PLN',
     category: 'groceries',
     paymentType: 'Direct Debit',
@@ -467,7 +467,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Health Checkup',
     date: '2023-02-07',
-    amount: 200.0,
+    amount: -200.0,
     currencyIsoCode: 'PLN',
     category: 'health',
     paymentType: 'Credit Card',
@@ -485,7 +485,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Books Purchase',
     date: '2023-02-03',
-    amount: 100.0,
+    amount: -100.0,
     currencyIsoCode: 'PLN',
     category: 'insurance',
     paymentType: 'Debit Card',
@@ -494,7 +494,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Gift for Friend',
     date: '2023-02-02',
-    amount: 150.0,
+    amount: -150.0,
     currencyIsoCode: 'PLN',
     category: 'investments',
     paymentType: 'Credit Card',
@@ -503,7 +503,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Gym Subscription',
     date: '2023-02-01',
-    amount: 120.0,
+    amount: -120.0,
     currencyIsoCode: 'PLN',
     category: 'obligations',
     paymentType: 'Direct Debit',
@@ -512,7 +512,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Car Fuel',
     date: '2023-01-30',
-    amount: 200.0,
+    amount: -200.0,
     currencyIsoCode: 'PLN',
     category: 'other',
     paymentType: 'Debit Card',
@@ -521,7 +521,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Hygiene Products',
     date: '2023-01-28',
-    amount: 50.0,
+    amount: -50.0,
     currencyIsoCode: 'PLN',
     category: 'pets',
     paymentType: 'Cash',
@@ -530,7 +530,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Internet Bill',
     date: '2023-01-25',
-    amount: 60.0,
+    amount: -60.0,
     currencyIsoCode: 'PLN',
     category: 'rent',
     paymentType: 'Bank Transfer',
@@ -539,7 +539,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Loan Payment',
     date: '2023-01-22',
-    amount: 300.0,
+    amount: -300.0,
     currencyIsoCode: 'PLN',
     category: 'savings',
     paymentType: 'Bank Transfer',
@@ -548,7 +548,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'New Shoes',
     date: '2023-01-20',
-    amount: 250.0,
+    amount: -250.0,
     currencyIsoCode: 'PLN',
     category: 'sport',
     paymentType: 'Debit Card',
@@ -557,7 +557,7 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Concert Ticket',
     date: '2023-01-15',
-    amount: 120.0,
+    amount: -120.0,
     currencyIsoCode: 'PLN',
     category: 'subscriptions',
     paymentType: 'Credit Card',
@@ -566,10 +566,116 @@ export const PeriodTransactionsMocks: PeriodTransaction[] = [
   {
     name: 'Charity Donation',
     date: '2023-01-10',
-    amount: 100.0,
+    amount: -100.0,
     currencyIsoCode: 'PLN',
     category: 'taxes',
     paymentType: 'Direct Debit',
     periodTime: 'Monthly',
+  },
+];
+
+export const IncomeTransactionMocks: ExtendedTransaction[] = [
+  {
+    name: 'Salary',
+    date: '2023-02-28',
+    amount: 5000.0,
+    currencyIsoCode: 'PLN',
+    currencyFullName: 'Polish Zloty',
+    category: 'salary',
+    paymentType: 'Bank Transfer',
+    description: 'Monthly salary from company',
+    time: '17:00',
+  },
+  {
+    name: 'Freelance Project',
+    date: '2023-02-20',
+    amount: 2000.0,
+    currencyIsoCode: 'PLN',
+    currencyFullName: 'Polish Zloty',
+    category: 'side-gig',
+    paymentType: 'Bank Transfer',
+    description: 'Payment for freelance project',
+    time: '12:00',
+  },
+  {
+    name: 'Investment Dividend',
+    date: '2023-02-15',
+    amount: 500.0,
+    currencyIsoCode: 'PLN',
+    currencyFullName: 'Polish Zloty',
+    category: 'investments',
+    paymentType: 'Bank Transfer',
+    description: 'Dividend from stock investments',
+    time: '11:30',
+  },
+  {
+    name: 'Gift from Parents',
+    date: '2023-02-10',
+    amount: 300.0,
+    currencyIsoCode: 'PLN',
+    currencyFullName: 'Polish Zloty',
+    category: 'gift-income',
+    paymentType: 'Cash',
+    description: 'Birthday gift from parents',
+    time: '10:00',
+  },
+  {
+    name: 'Side Gig - Consulting',
+    date: '2023-01-25',
+    amount: 800.0,
+    currencyIsoCode: 'PLN',
+    currencyFullName: 'Polish Zloty',
+    category: 'side-gig',
+    paymentType: 'Bank Transfer',
+    description: 'Consulting work for a client',
+    time: '09:30',
+  },
+];
+
+export const PeriodIncomeTransactionsMocks: PeriodTransaction[] = [
+  {
+    name: 'Salary',
+    date: '2023-03-01',
+    amount: 5000.0,
+    currencyIsoCode: 'PLN',
+    category: 'salary',
+    paymentType: 'Bank Transfer',
+    periodTime: 'Monthly',
+  },
+  {
+    name: 'Freelance Work',
+    date: '2023-03-15',
+    amount: 2000.0,
+    currencyIsoCode: 'PLN',
+    category: 'side-gig',
+    paymentType: 'Bank Transfer',
+    periodTime: 'One-time',
+  },
+  {
+    name: 'Investment Dividends',
+    date: '2023-04-10',
+    amount: 700.0,
+    currencyIsoCode: 'PLN',
+    category: 'investments',
+    paymentType: 'Direct Debit',
+    periodTime: 'Quarterly',
+  },
+  {
+    name: 'Bonus Payment',
+    date: '2023-12-31',
+    amount: 1500.0,
+    currencyIsoCode: 'PLN',
+    category: 'bonus',
+    paymentType: 'Bank Transfer',
+    periodTime: 'Yearly',
+  },
+  {
+    name: 'Gift',
+    date: '2023-06-25',
+    amount: 400.0,
+    currencyIsoCode: 'PLN',
+    category: 'gift-income',
+    paymentType: 'Cash',
+    periodTime: 'One-time',
   },
 ];

@@ -24,6 +24,7 @@ export class FinManInputComponent implements OnInit {
   @Input() tooltip: string = '';
   @Input() iconClassName?: string;
   @Input() componentClassName: FinManInputTypes = FinManInputTypes.DEFAULT;
+  @Input() thinInput: boolean = false;
 
   @Input({ required: true }) control!: FormControl;
 

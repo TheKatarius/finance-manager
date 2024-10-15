@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { ChartDataset, Point } from 'chart.js';
 
 import { CHART_COLORS } from '@app/core/constants/chart-colors.const';
+import { Transaction } from '@app/core/interfaces/transaction.schema';
 import {
   ExpensesMockData,
   IncomeMockData,
   SavingsMockData,
 } from '@app/core/mocks/line-charts.mocks';
+import { TransactionsMocks } from '@app/core/mocks/transactions.mocks';
 
 @Component({
   selector: 'finance-manager-dashboard',
@@ -23,6 +25,8 @@ export class DashboardComponent {
       borderColor: CHART_COLORS.RED.HEX,
     },
   ];
+
+  transactionsData: Transaction[] = TransactionsMocks;
 
   openModal(): void {
     this.isModalVisible = true;

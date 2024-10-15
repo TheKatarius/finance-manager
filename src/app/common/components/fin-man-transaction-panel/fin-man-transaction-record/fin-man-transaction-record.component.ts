@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { CrudOperations } from '@app/core/interfaces/crud-operations-enum.schema';
 
+import { CategoryKind } from '@app/core/interfaces/common-enums.schema';
+import { CrudOperations } from '@app/core/interfaces/crud-operations-enum.schema';
 import { ExtendedTransaction, Transaction } from '@app/core/interfaces/transaction.schema';
 
 @Component({
@@ -11,15 +12,9 @@ import { ExtendedTransaction, Transaction } from '@app/core/interfaces/transacti
 export class FinManTransactionRecordComponent {
   @Input() transactions!: (Transaction | ExtendedTransaction)[];
   @Input() extendedRecord: boolean = false;
+  @Input() categoryKind: CategoryKind = CategoryKind.Expense;
 
   readonly CrudOperations = CrudOperations;
-
-  // TODO: To remove
-  ngOnInit(): void {
-    this.transactions = this.transactions.map((transaction) =>
-      transaction.amount > 0 ? { ...transaction, amount: -transaction.amount } : transaction,
-    );
-  }
 
   isExtendedTransaction(
     transaction: Transaction | ExtendedTransaction,
