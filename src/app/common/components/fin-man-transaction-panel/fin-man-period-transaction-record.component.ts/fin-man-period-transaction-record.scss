@@ -1,6 +1,6 @@
-@use './colors' as colors;
-@use './typography' as typography;
-@use './dimensions' as dimensions;
+@use 'colors' as colors;
+@use 'typography' as typography;
+@use 'dimensions' as dimensions;
 @use 'mixins' as mixins;
 
 .transaction-item {
@@ -11,10 +11,11 @@
 
     display: grid;
     align-items: center;
-    grid-template-columns: dimensions.$extended-transaction-table-widths;
+    grid-template-columns: dimensions.$extended-transaction-table-period-widths;
 
-    &-basic {
-      grid-template-columns: 50% 25% 25%;
+    .category-payment-wrapper {
+      color: colors.$text-secondary;
+      font-size: typography.$font-size-xs;
     }
 
     .transaction-date {

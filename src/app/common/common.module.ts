@@ -22,6 +22,7 @@ import { FinManTransactionRecordComponent } from '@common/components/fin-man-tra
 import { FinManKebabMenuPopoverComponent } from '@common/components/fin-man-kebab-menu-popover/fin-man-kebab-menu-popover.component';
 import { FinManExtendedBalancePanelComponent } from '@common/components/fin-man-extended-balance-panel/fin-man-extended-balance-panel.component';
 import { FinManSmallChartComponent } from '@common/components/fin-man-small-chart/fin-man-small-chart.component';
+import { FinManPeriodTransactionRecordComponent } from '@common/components/fin-man-transaction-panel/fin-man-period-transaction-record.component.ts/fin-man-period-transaction-record.component';
 
 const COMMON_COMPONENTS = [
   FinManBasicInfoPanelComponent,
@@ -39,6 +40,7 @@ const COMMON_COMPONENTS = [
   FinManKebabMenuPopoverComponent,
   FinManExtendedBalancePanelComponent,
   FinManSmallChartComponent,
+  FinManPeriodTransactionRecordComponent,
 ];
 
 @NgModule({

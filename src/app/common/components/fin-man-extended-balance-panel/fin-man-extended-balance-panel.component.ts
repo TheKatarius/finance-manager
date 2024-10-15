@@ -30,6 +30,8 @@ export class FinManExtendedBalancePanelComponent {
   savingsBalance: number = 0;
   totalBalance: number = 0;
 
+  checkboxValue: boolean = false;
+
   ngOnInit(): void {
     this.loadAccounts();
   }
@@ -104,5 +106,9 @@ export class FinManExtendedBalancePanelComponent {
     }
 
     return char + percentDifference + '%';
+  }
+
+  toggleCheckbox(): void {
+    this.checkboxValue = !this.checkboxValue;
   }
 }

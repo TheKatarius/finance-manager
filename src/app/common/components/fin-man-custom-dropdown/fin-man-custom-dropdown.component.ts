@@ -23,6 +23,7 @@ export class FinManCustomDropdownComponent implements OnChanges {
   @Input() label: string = '';
   @Input() control?: FormControl;
   @Input() backgroundStyleColor: string = '';
+  @Input() disabled: boolean = false;
 
   @Output() onChange = new EventEmitter<string>();
 

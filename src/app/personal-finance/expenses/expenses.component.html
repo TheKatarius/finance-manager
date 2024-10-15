@@ -8,7 +8,7 @@
     </div>
 
     <div class="content-wrapper">
-      <div>
+      <div class="one-side-positioning">
         <fin-man-extended-balance-panel></fin-man-extended-balance-panel>
 
         <fin-man-transaction-panel
@@ -17,7 +17,19 @@
         ></fin-man-transaction-panel>
       </div>
 
-      <fin-man-pie-chart [smallChart]="true"></fin-man-pie-chart>
+      <div class="one-side-positioning">
+        <fin-man-pie-chart
+          [title]="'Expenses Distribution'"
+          [subtitle]="'Share of the categories in total expenses'"
+          [smallChart]="true"
+        ></fin-man-pie-chart>
+
+        <fin-man-transaction-panel
+          [extendedPanel]="true"
+          [periodTransactions]="true"
+          [panelTitle]="'Period Expenses'"
+        ></fin-man-transaction-panel>
+      </div>
     </div>
   </div>
 </main>

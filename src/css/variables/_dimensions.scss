@@ -15,6 +15,9 @@ $register-window-width: 500px;
 // **Extended transaction table**
 $extended-transaction-table-widths: 30% 20% 15% 15% 19% 1%;
 
+$extended-transaction-table-period-widths-headers: 34% 24% 19% 18%;
+$extended-transaction-table-period-widths: 35% 25% 20% 19% 1%;
+
 // **Shared Components**
 $input-height: 40px;
 $input-icon-size: 20px;
@@ -52,3 +55,4 @@ $border-curve-width: 2.5px;
 $border-radius-large: 15px;
 $border-radius-medium: 10px;
 $border-radius-small: 5px;
+$border-radius-xs: 2.5px;

@@ -7,7 +7,6 @@
   background-color: colors.$background-panel;
   border-radius: dimensions.$border-radius-large;
   max-width: 900px;
-  margin-bottom: dimensions.$margin-large;
 
   position: relative;
 
@@ -29,6 +28,40 @@
       height: 100%;
 
       position: relative;
+
+      .checkbox-balance-wrapper {
+        color: colors.$text-supportive;
+        font-size: typography.$font-size-sm;
+        margin-top: -(dimensions.$margin-md);
+        margin-bottom: dimensions.$margin-md;
+
+        input[type='checkbox'] {
+          appearance: none; // Ukryj domyślny wygląd checkboxa
+          background-color: transparent;
+          border: 2px solid colors.$text-supportive;
+          border-radius: dimensions.$border-radius-xs;
+          cursor: pointer;
+          width: 14px;
+          height: 14px;
+          outline: none;
+          position: relative;
+
+          &:checked {
+            background-color: colors.$text-supportive;
+
+            &::before {
+              content: '✔'; // Znak check
+              color: colors.$text-main;
+              font-size: typography.$font-size-xs;
+
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+        }
+      }
 
       .header {
         font-size: typography.$font-size-xl;

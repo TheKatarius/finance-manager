@@ -47,6 +47,15 @@
         background-color: colors.$background-inner-panel-hover;
       }
 
+      &-disabled {
+        cursor: default;
+        opacity: 0.6;
+
+        &:hover {
+          background-color: colors.$background-inner-panel;
+        }
+      }
+
       .common-vector-icon {
         margin-right: 0;
         transform: rotateZ(-90deg);

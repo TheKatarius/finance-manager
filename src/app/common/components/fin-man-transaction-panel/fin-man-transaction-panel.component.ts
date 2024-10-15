@@ -3,7 +3,11 @@ import { FormControl } from '@angular/forms';
 import { CrudOperations } from '@app/core/interfaces/crud-operations-enum.schema';
 
 import { ExtendedTransaction, Transaction } from '@app/core/interfaces/transaction.schema';
-import { ExtendedTransactionsMocks, TransactionsMocks } from '@app/core/mocks/transactions.mocks';
+import {
+  ExtendedTransactionsMocks,
+  PeriodTransactionsMocks,
+  TransactionsMocks,
+} from '@app/core/mocks/transactions.mocks';
 
 @Component({
   selector: 'fin-man-transaction-panel',
@@ -12,6 +16,8 @@ import { ExtendedTransactionsMocks, TransactionsMocks } from '@app/core/mocks/tr
 })
 export class FinManTransactionPanelComponent implements OnInit {
   @Input() extendedPanel: boolean = false;
+  @Input() panelTitle: string = 'Transactions';
+  @Input() periodTransactions: boolean = false;
 
   @Output() openModal = new EventEmitter<void>();
 
@@ -22,4 +28,6 @@ export class FinManTransactionPanelComponent implements OnInit {
   ngOnInit(): void {
     this.transactions = this.extendedPanel ? ExtendedTransactionsMocks : TransactionsMocks;
   }
+
+  protected readonly PeriodTransactionsMocks = PeriodTransactionsMocks;
 }

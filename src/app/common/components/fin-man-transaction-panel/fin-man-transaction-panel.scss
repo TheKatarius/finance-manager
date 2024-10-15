@@ -16,6 +16,10 @@
     width: 900px;
   }
 
+  &-period {
+    width: 700px;
+  }
+
   .header-wrapper {
     display: flex;
     justify-content: space-between;
@@ -43,10 +47,14 @@
   border-bottom: 2px solid colors.$accent-red;
   border-radius: dimensions.$border-radius-small dimensions.$border-radius-small 0 0;
   height: 40px;
-  padding: dimensions.$padding-xxs dimensions.$padding-md dimensions.$padding-xxs 48px;
+  padding: dimensions.$padding-xxs dimensions.$padding-md dimensions.$padding-xxs 50px;
 
   display: grid;
   grid-template-columns: dimensions.$extended-transaction-table-widths;
+
+  &-period {
+    grid-template-columns: dimensions.$extended-transaction-table-period-widths-headers;
+  }
 
   .header-cell {
     font-size: typography.$font-size-sm;

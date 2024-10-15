@@ -15,6 +15,11 @@ export interface ExtendedTransaction extends Transaction {
   time: string;
 }
 
+export interface PeriodTransaction extends Transaction {
+  paymentType: string;
+  periodTime: string;
+}
+
 export interface ExtendedTransactionFormControls {
   name: FormControl<string | null>;
   date: FormControl<string | null>;

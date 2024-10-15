@@ -4,9 +4,12 @@
   <div class="custom-dropdown-select-wrapper" [ngClass]="{ active: isOpen }">
     <div
       class="custom-dropdown-select"
-      [ngClass]="{ 'custom-dropdown-select-clicked': isOpen }"
+      [ngClass]="{
+        'custom-dropdown-select-clicked': isOpen && !disabled,
+        'custom-dropdown-select-disabled': disabled
+      }"
       [ngStyle]="{ 'background-color': backgroundStyleColor }"
-      (click)="toggleDropdown()"
+      (click)="!disabled ? toggleDropdown() : null"
     >
       {{ (selected ?? defaultOption) || placeholder }}
       <div>

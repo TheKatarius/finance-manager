@@ -1,0 +1,34 @@
+<div *ngFor="let transaction of transactions" class="transaction-item">
+  <div class="transaction-icon">
+    <em class="icon" [ngClass]="transaction.category + '-icon'"></em>
+  </div>
+
+  <div class="transaction-details">
+    <div class="basic-info">
+      <span class="transaction-name">{{ transaction.name }}</span>
+      <div class="category-payment-wrapper">
+        <span>{{ transaction.category | kebabToTitle }} | </span>
+        <span>{{ transaction.paymentType }}</span>
+      </div>
+    </div>
+
+    <span class="transaction-date">{{ transaction.date | date: 'dd-MM-yyyy' }}</span>
+
+    <span class="transaction-period">{{ transaction.periodTime }}</span>
+
+    <span
+      [ngClass]="{
+        'transaction-amount-positive': transaction.amount > 0,
+        'transaction-amount-negative': transaction.amount < 0
+      }"
+      >{{ transaction.amount + transaction.currencyIsoCode }}
+    </span>
+
+    <!-- TODO: Add hover effect -->
+    <div>
+      <fin-man-kebab-menu-popover
+        [options]="[CrudOperations.EDIT, CrudOperations.DELETE]"
+      ></fin-man-kebab-menu-popover>
+    </div>
+  </div>
+</div>

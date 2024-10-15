@@ -7,7 +7,13 @@
       <fin-man-custom-dropdown
         [options]="incomeAccounts"
         [defaultOption]="selectedIncomeAccount"
+        [disabled]="checkboxValue"
       ></fin-man-custom-dropdown>
+
+      <div class="checkbox-balance-wrapper">
+        <input type="checkbox" (change)="toggleCheckbox()" />
+        Total Income
+      </div>
 
       <p class="header header-income">Income</p>
       <div class="balance-values-wrapper">
@@ -29,6 +35,8 @@
         [defaultOption]="selectedExpenseAccount"
       ></fin-man-custom-dropdown>
 
+      <div class="checkbox-balance-wrapper"><input type="checkbox" /> Total Expenses</div>
+
       <p class="header header-expense">Expenses</p>
       <div class="balance-values-wrapper">
         <span class="balance">Balance: {{ expenseBalance }}</span>
@@ -48,6 +56,8 @@
         [options]="savingsAccounts"
         [defaultOption]="selectedSavingsAccount"
       ></fin-man-custom-dropdown>
+
+      <div class="checkbox-balance-wrapper"><input type="checkbox" /> Total Savings</div>
 
       <p class="header header-savings">Savings</p>
       <div class="balance-values-wrapper">
