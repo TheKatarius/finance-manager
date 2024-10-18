@@ -1,7 +1,16 @@
-<main>
+<main class="savings-container">
   <router-outlet name="menu"></router-outlet>
 
-  <div style="background-color: #fff">
-    <fin-man-saving-goal-panel></fin-man-saving-goal-panel>
+  <div class="saving-content-container">
+    <div class="title-container">
+      <span class="title">Savings</span>
+      <span class="subtitle">Save for your dreams</span>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="one-side-positioning">
+        <fin-man-saving-goal-panel></fin-man-saving-goal-panel>
+      </div>
+    </div>
   </div>
 </main>

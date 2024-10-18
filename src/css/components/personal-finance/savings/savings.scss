@@ -1,0 +1,30 @@
+@use 'colors' as colors;
+@use 'dimensions' as dimensions;
+@use 'typography' as typography;
+@use 'mixins' as mixins;
+
+.savings-container {
+  display: flex;
+
+  .saving-content-container {
+    padding: dimensions.$padding-large;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    @include mixins.title-container;
+
+    .content-wrapper {
+      display: flex;
+      gap: dimensions.$gap-lg;
+
+      .one-side-positioning {
+        display: flex;
+        flex-direction: column;
+        gap: dimensions.$gap-lg;
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+@use './colors' as colors;
+@use './dimensions' as dimensions;
+@use './typography' as typography;
+@use './mixins' as mixins;
+
+.circular-progress-bar {
+  width: 100%;
+  height: 375px;
+
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  .progress-ring__circle {
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.1s;
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+  }
+
+  .progress-text {
+    color: colors.$text-main;
+    font-size: typography.$font-size-h4;
+    font-weight: typography.$font-weight-bold;
+
+    position: absolute;
+    top: 40%;
+  }
+
+  .supportive-text {
+    color: colors.$text-supportive;
+    font-size: typography.$font-size-xl;
+    font-weight: typography.$font-weight-bold;
+
+    position: absolute;
+
+    &-time-left {
+      top: 32%;
+    }
+
+    &-dates {
+      font-size: typography.$font-size-md;
+      top: 50%;
+    }
+  }
+}

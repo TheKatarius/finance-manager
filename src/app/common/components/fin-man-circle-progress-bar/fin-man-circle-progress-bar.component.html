@@ -1,0 +1,29 @@
+<div class="circular-progress-bar">
+  <svg class="progress-ring" width="350" height="350">
+    <!-- Trail circle -->
+    <circle
+      class="progress-ring__trail"
+      stroke-width="20"
+      fill="transparent"
+      cx="175"
+      cy="175"
+      stroke="lightblue"
+      [attr.r]="radius"
+    />
+    <!-- Progress circle -->
+    <circle
+      class="progress-ring__circle"
+      stroke-width="20"
+      fill="transparent"
+      cx="175"
+      cy="175"
+      [attr.r]="radius"
+      [attr.stroke]="COLORS.accentBlue"
+    />
+  </svg>
+  <div class="supportive-text supportive-text-time-left">Time Left:</div>
+  <div class="progress-text">{{ remainingTime }}</div>
+  <div class="supportive-text supportive-text-dates">
+    {{ startDate | date: 'dd.MM.yy' }} – {{ endDate | date: 'dd.MM.yy' }}
+  </div>
+</div>

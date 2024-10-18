@@ -1,87 +1,113 @@
-/* Stylizacja komponentu */
-.goal-image-container {
-  text-align: center;
-}
-.goal-image {
-  max-width: 100%;
-  height: auto;
-  border: 2px solid #ccc;
-  margin-bottom: 10px;
-}
-.progress-bar-container {
-  width: 100%;
-  background-color: #e0e0e0;
-  border-radius: 25px;
-  overflow: hidden;
-  margin-bottom: 10px;
-}
-.progress-bar {
-  height: 20px;
-  background-color: #76c7c0;
-  transition: width 0.5s;
-}
-.countdown-timer {
-  text-align: center;
-  margin-bottom: 10px;
-}
-button {
-  display: block;
-  margin: 20px auto;
-}
-/* Animacja monet */
-.coin-animation {
+@use './colors' as colors;
+@use './dimensions' as dimensions;
+@use './typography' as typography;
+@use './mixins' as mixins;
+
+.savings-panel-container {
+  background-color: colors.$background-panel;
+  border-radius: dimensions.$border-radius-medium;
+  height: 750px;
+  width: 600px;
+  padding: dimensions.$padding-md dimensions.$padding-md dimensions.$padding-xl
+    dimensions.$padding-md;
+
+  display: flex;
+  flex-direction: column;
+
   position: relative;
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  margin-bottom: 20px;
-}
-.coin {
-  position: absolute;
-  width: 30px;
-  height: 30px;
-  background-color: gold;
-  border-radius: 50%;
-  animation: drop 2s linear infinite;
-}
-@keyframes drop {
-  0% {
-    top: -50px;
-    left: calc(50% - 15px);
-    opacity: 1;
+
+  .header-wrapper {
+    margin-bottom: dimensions.$margin-large;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .transaction-header {
+      font-size: typography.$font-size-h4;
+      color: colors.$accent-blue;
+    }
+
+    @include mixins.add-button;
   }
-  100% {
-    top: 200px;
-    left: calc(50% - 15px);
-    opacity: 0;
+
+  .image-zone {
+    border: 2px dashed colors.$accent-blue;
+    border-radius: dimensions.$border-radius-medium;
+    margin-bottom: dimensions.$margin-large;
+    width: 100%;
+    min-height: 200px;
+
+    position: relative;
+
+    &-image-uploaded {
+      border-style: solid;
+    }
+
+    .circle {
+      background-color: colors.$accent-blue;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+
+    .upload-icon {
+      position: absolute;
+      top: 39%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    .drag-and-drop-text {
+      color: colors.$text-main;
+
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .image {
+      border-radius: 8px;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
-}
-/* Natychmiastowa informacja zwrotna */
-.feedback {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #76c7c0;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 25px;
-  animation: fadeOut 3s forwards;
-}
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
+
+  .saving-goal-name-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    .saving-goal-name {
+      color: colors.$text-main;
+      font-size: typography.$font-size-h4;
+      font-weight: typography.$font-weight-bold;
+    }
   }
-  80% {
-    opacity: 1;
+
+  .vector {
+    width: 35px;
+    height: 35px;
+
+    position: absolute;
+    top: 65%;
+
+    &-left {
+      transform: rotateY(180deg);
+      left: dimensions.$padding-small;
+    }
+
+    &-right {
+      right: 0;
+    }
   }
-  100% {
-    opacity: 0;
-  }
-}
-/* Emocjonalny przekaz */
-.motivational-message {
-  text-align: center;
-  font-style: italic;
-  margin-bottom: 20px;
 }

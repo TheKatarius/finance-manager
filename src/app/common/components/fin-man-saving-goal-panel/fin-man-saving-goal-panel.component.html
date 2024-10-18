@@ -1,33 +1,45 @@
-<!-- Wizualizacja celu -->
-<div class="goal-image-container">
-  <img ngSrc="goalImage" alt="Twój cel" class="goal-image" />
-  <input type="file" (change)="onFileSelected($event)" />
+<div class="savings-panel-container">
+  <div class="header-wrapper">
+    <h4 class="transaction-header">{{ panelTitle }}</h4>
+    <div class="add-button-wrapper" (click)="openModal.emit()">
+      <div class="icon-wrapper">
+        <em class="icon add-icon"></em>
+      </div>
+      <div class="add-button">Add</div>
+    </div>
+  </div>
+
+  <div
+    class="image-zone"
+    [ngClass]="{
+  'image-zone-image-uploaded': imageSrc,
+  }"
+    (dragover)="onDragOver($event)"
+    (drop)="onDrop($event)"
+  >
+    <div *ngIf="!imageSrc" class="circle"></div>
+    <em *ngIf="!imageSrc" class="icon upload-icon"></em>
+
+    <p *ngIf="!imageSrc" class="drag-and-drop-text">Drag & Drop The Image Here</p>
+    <img *ngIf="imageSrc" class="image" [src]="imageSrc" [alt]="'Dropped Image'" />
+  </div>
+
+  <div class="saving-goal-name-wrapper">
+    <span class="saving-goal-name" [style]="{ color: COLORS.accentBlue }">Goal 2/5:</span>
+    <span class="saving-goal-name">Wiślane Tarasy</span>
+  </div>
+
+  <fin-man-circle-progress-bar></fin-man-circle-progress-bar>
+
+  <fin-man-progress-bar
+    [max]="1000000"
+    [value]="200000"
+    [gradientColor]="GRADIENT_PROGRESS_BARS.BLUE"
+    [isIconVisible]="false"
+    [moveLabelBelowProgressBar]="true"
+  ></fin-man-progress-bar>
+
+  <span class="icon common-vector-icon vector vector-left"></span>
+
+  <span class="icon common-vector-icon vector vector-right"></span>
 </div>
-
-<!-- Paski postępu -->
-<div class="progress-bar-container">
-  <div class="progress-bar" [style.width.%]="currentProgress"></div>
-</div>
-<p>{{ currentProgress }}% celu osiągnięte</p>
-
-<!-- Odliczanie czasu -->
-<div class="countdown-timer">
-  <p>Do osiągnięcia celu pozostało:</p>
-  <h2>{{ days }}d {{ hours }}h {{ minutes }}m {{ seconds }}s</h2>
-</div>
-
-<!-- Animacja monet -->
-<div class="coin-animation" *ngIf="showAnimation">
-  <div class="coin" *ngFor="let coin of coins"></div>
-</div>
-
-<!-- Emocjonalny przekaz -->
-<p class="motivational-message" *ngIf="motivationalMessage">{{ motivationalMessage }}</p>
-
-<!-- Natychmiastowa informacja zwrotna -->
-<div class="feedback" *ngIf="feedbackMessage">
-  {{ feedbackMessage }}
-</div>
-
-<!-- Przycisk dodający oszczędności -->
-<button (click)="addSavings()">Dodaj oszczędności</button>
