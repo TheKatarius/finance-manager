@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { VALIDATION } from '@app/core/constants/validators.const';
 import { AuthService } from '@app/core/data/auth.service';
+import { VerifyEmailRequest } from '@app/core/interfaces/api-responses.schema';
 import { NotificationService } from '@app/core/services/notifications.service';
 import { validateFormGroup } from '@app/core/validators/validate-form-group.utils';
 import { EmailVerificationFormGroup } from '@app/register/email-verification/email-verification-form-group.schema';
@@ -37,16 +38,19 @@ export class EmailVerificationComponent implements OnInit {
 
   verifyAccount(): void {
     if (validateFormGroup(this.emailVerificationFormGroup)) {
-      const { email, code } = this.emailVerificationFormGroup.value;
+      const request: VerifyEmailRequest = {
+        email: this.emailVerificationFormGroup.value.email as string,
+        code: this.emailVerificationFormGroup.value.code as string,
+      };
 
-      this.authService.verifyEmail(email as string, code as string).subscribe({
+      this.authService.verifyEmail(request).subscribe({
         next: (response) => {
           if (response.status >= 200 && response.status < 300) {
             this.router.navigate(['/login']).then(() => {
               this.notificationService.addNotification({
                 type: 'success',
                 status: response.status,
-                message: response?.message || 'Account was verified successfully',
+                message: 'Account was verified successfully',
               });
             });
           }

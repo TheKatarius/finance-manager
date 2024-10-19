@@ -10,36 +10,60 @@
   </div>
 
   <div
-    class="image-zone"
-    [ngClass]="{
-  'image-zone-image-uploaded': imageSrc,
-  }"
-    (dragover)="onDragOver($event)"
-    (drop)="onDrop($event)"
+    *ngFor="let savingGoal of savingGoalsData; let i = index"
+    [ngClass]="{ 'saving-goal-content-wrapper': i !== savingGoalIndex }"
   >
-    <div *ngIf="!imageSrc" class="circle"></div>
-    <em *ngIf="!imageSrc" class="icon upload-icon"></em>
+    <div
+      class="image-zone"
+      [ngClass]="{
+  'image-zone-image-uploaded': imageSrcMap[savingGoal.uuid],
+  }"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop($event, savingGoal.uuid)"
+    >
+      <div *ngIf="!imageSrcMap[savingGoal.uuid]" class="circle"></div>
+      <em *ngIf="!imageSrcMap[savingGoal.uuid]" class="icon upload-icon"></em>
 
-    <p *ngIf="!imageSrc" class="drag-and-drop-text">Drag & Drop The Image Here</p>
-    <img *ngIf="imageSrc" class="image" [src]="imageSrc" [alt]="'Dropped Image'" />
+      <p *ngIf="!imageSrcMap[savingGoal.uuid]" class="drag-and-drop-text">
+        Drag & Drop The Image Here
+      </p>
+      <img
+        *ngIf="imageSrcMap[savingGoal.uuid]"
+        class="image"
+        [src]="savingGoal.img"
+        [alt]="savingGoal.name"
+      />
+    </div>
+
+    <div class="saving-goal-name-wrapper">
+      <span class="saving-goal-name" [style]="{ color: COLORS.accentBlue }"
+        >Goal {{ this.savingGoalIndex + 1 + '/' + this.savingGoalsData.length }}:</span
+      >
+      <span class="saving-goal-name">{{ savingGoal.name }}</span>
+    </div>
+
+    <fin-man-circle-progress-bar
+      [duration]="savingGoal.timeLeft"
+      [startDate]="savingGoal.startDate"
+      [endDate]="savingGoal.endDate"
+    ></fin-man-circle-progress-bar>
+
+    <fin-man-progress-bar
+      [max]="savingGoal.totalAmount"
+      [value]="savingGoal.currentAmount"
+      [gradientColor]="GRADIENT_PROGRESS_BARS.BLUE"
+      [isIconVisible]="false"
+      [moveLabelBelowProgressBar]="true"
+    ></fin-man-progress-bar>
+
+    <span
+      class="icon common-vector-icon vector vector-left"
+      (click)="changeSavingGoal(false)"
+    ></span>
+
+    <span
+      class="icon common-vector-icon vector vector-right"
+      (click)="changeSavingGoal(true)"
+    ></span>
   </div>
-
-  <div class="saving-goal-name-wrapper">
-    <span class="saving-goal-name" [style]="{ color: COLORS.accentBlue }">Goal 2/5:</span>
-    <span class="saving-goal-name">Wiślane Tarasy</span>
-  </div>
-
-  <fin-man-circle-progress-bar></fin-man-circle-progress-bar>
-
-  <fin-man-progress-bar
-    [max]="1000000"
-    [value]="200000"
-    [gradientColor]="GRADIENT_PROGRESS_BARS.BLUE"
-    [isIconVisible]="false"
-    [moveLabelBelowProgressBar]="true"
-  ></fin-man-progress-bar>
-
-  <span class="icon common-vector-icon vector vector-left"></span>
-
-  <span class="icon common-vector-icon vector vector-right"></span>
 </div>

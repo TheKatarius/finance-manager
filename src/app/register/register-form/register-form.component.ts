@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { VALIDATION } from '@app/core/constants/validators.const';
 import { AuthService } from '@app/core/data/auth.service';
+import { LoginRequest, RegisterRequest } from '@app/core/interfaces/api-responses.schema';
 import { NotificationService } from '@app/core/services/notifications.service';
 import { confirmPasswordValidator } from '@app/core/validators/confirm-password-validator.utils';
 import { validateFormGroup } from '@app/core/validators/validate-form-group.utils';
@@ -33,7 +34,7 @@ export class RegisterFormComponent implements OnInit {
 
   registerFormGroup!: RegisterFormGroup;
 
-  isLeftActive: boolean = true;
+  isLeftActive: boolean = false;
 
   ngOnInit(): void {
     this.registerFormGroup = this.registerFormGroupService.createRegisterForm();
@@ -49,21 +50,28 @@ export class RegisterFormComponent implements OnInit {
 
   registerUser(): void {
     if (validateFormGroup(this.registerFormGroup)) {
-      const { email, login, password } = this.registerFormGroup.value;
+      const request: RegisterRequest = {
+        login: this.registerFormGroup.value.login as string,
+        email: this.registerFormGroup.value.email as string,
+        password: this.registerFormGroup.value.password as string,
+      };
 
-      this.authService.register(email as string, login as string, password as string).subscribe({
+      this.authService.register(request).subscribe({
         next: (response) => {
+          console.log(response);
           if (response.status >= 200 && response.status < 300) {
+            console.log('registered user');
             this.router.navigate(['/login/authorization']).then(() => {
               this.notificationService.addNotification({
                 type: 'success',
                 status: response.status,
-                message: response?.message || 'User registered successfully',
+                message: 'User registered successfully',
               });
             });
           }
         },
         error: (error) => {
+          console.log(error);
           this.notificationService.addNotification({
             type: 'error',
             status: error.status,
@@ -85,15 +93,18 @@ export class RegisterFormComponent implements OnInit {
     );
 
     if (validateFormGroup(loginFormGroup)) {
-      const { email_or_login, password } = loginFormGroup.value;
+      const request: LoginRequest = {
+        email_or_login: loginFormGroup.value.email_or_login as string,
+        password: loginFormGroup.value.password as string,
+      };
 
-      this.authService.login(email_or_login as string, password as string).subscribe({
+      this.authService.login(request).subscribe({
         next: (response) => {
           if (response.status >= 200 && response.status < 300) {
             this.notificationService.addNotification({
               type: 'success',
               status: response.status,
-              message: response?.message || 'User logged in successfully',
+              message: 'User logged in successfully',
             });
           }
         },

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from '@app/core/data/auth.guard';
 import { MenuComponent } from '@app/menu/menu.component';
 import { BudgetingComponent } from '@app/personal-finance/budgeting/budgeting.component';
 import { ExpensesComponent } from '@app/personal-finance/expenses/expenses.component';
