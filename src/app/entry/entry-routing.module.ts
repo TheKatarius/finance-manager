@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from '@app/core/data/auth.guard';
+import { AuthGuard, GuestGuard } from '@app/core/data/auth.guard';
 import { EntryComponent } from '@app/entry/entry.component';
 
 const PRIMARY_ROUTES: Routes = [
@@ -21,7 +21,7 @@ const PRIMARY_ROUTES: Routes = [
       {
         path: 'login',
         loadChildren: () => import('../register/register.module').then((m) => m.RegisterModule),
-        canActivateChild: [AuthGuard],
+        canActivateChild: [GuestGuard],
       },
       {
         path: 'dashboard',
