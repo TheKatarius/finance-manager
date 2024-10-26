@@ -1,0 +1,29 @@
+<div class="import-transactions-container">
+  <div class="add-button-wrapper" (click)="displayPopOver()">
+    <div class="icon-wrapper">
+      <em class="icon import-icon"></em>
+    </div>
+  </div>
+
+  <div
+    class="import-pop-over-wrapper"
+    [ngClass]="{ 'display-pop-over': importTransactionsClicked }"
+  >
+    <div class="pop-over-header">Import Transactions From Selected Bank</div>
+
+    <div class="dropdown-file-wrapper">
+      <fin-man-custom-dropdown
+        [options]="[BankList.ING]"
+        [defaultOption]="selectedBank"
+        (onChange)="changeSelectedBank($event)"
+      ></fin-man-custom-dropdown>
+
+      <label for="file-upload" class="custom-file-upload">Choose *.csv file</label>
+      <input id="file-upload" type="file" accept=".csv" (change)="onFileSelected($event)" />
+    </div>
+
+    <div class="add-button-modal-wrapper">
+      <div class="add-button" (click)="importTransactions()">Import Transactions</div>
+    </div>
+  </div>
+</div>

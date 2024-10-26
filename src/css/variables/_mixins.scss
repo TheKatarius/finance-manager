@@ -151,8 +151,13 @@
   }
 }
 
-@mixin add-button-modal {
-  .add-button-wrapper {
+@mixin add-button-modal(
+  $margin: 0,
+  $button-height: 40px,
+  $background-color: colors.$accent-blue,
+  $background-color-hover: colors.$accent-blue-hover
+) {
+  .add-button-modal-wrapper {
     width: 100%;
 
     display: flex;
@@ -160,11 +165,13 @@
 
     .add-button {
       border-radius: dimensions.$border-radius-small;
-      background-color: colors.$accent-blue;
+      background-color: $background-color;
       color: colors.$text-main;
       font-size: typography.$font-size-base;
       font-weight: typography.$font-weight-semibold;
-      height: 40px;
+      width: 100%;
+      height: $button-height;
+      margin-top: $margin;
       padding: 0 dimensions.$padding-large;
       transition: background-color 0.3s ease;
 
@@ -173,7 +180,7 @@
       align-items: center;
 
       &:hover {
-        background-color: colors.$accent-blue-hover;
+        background-color: $background-color-hover;
         cursor: pointer;
       }
     }

@@ -9,11 +9,15 @@
     <h4 class="transaction-header" [ngClass]="{ 'transaction-header-period': periodTransactions }">
       {{ panelTitle }}
     </h4>
-    <div class="add-button-wrapper" (click)="openModal.emit()">
-      <div class="icon-wrapper">
-        <em class="icon add-icon"></em>
+
+    <div class="import-add-wrapper">
+      <fin-man-import-transactions></fin-man-import-transactions>
+      <div class="add-button-wrapper" (click)="openModal.emit()">
+        <div class="icon-wrapper">
+          <em class="icon add-icon"></em>
+        </div>
+        <div class="add-button">Add</div>
       </div>
-      <div class="add-button">Add</div>
     </div>
   </div>
 

@@ -26,6 +26,7 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "jwt-decode": "^4.0.0",
     "ng2-charts": "^6.0.1",
+    "papaparse": "^5.4.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
@@ -38,6 +39,7 @@
     "@angular/cli": "^17.1.2",
     "@angular/compiler-cli": "^17.1.0",
     "@types/jasmine": "~5.1.0",
+    "@types/papaparse": "^5.3.15",
     "@typescript-eslint/eslint-plugin": "^8.6.0",
     "@typescript-eslint/parser": "^8.6.0",
     "eslint": "^8.57.1",

@@ -1,0 +1,88 @@
+@use 'colors' as colors;
+@use 'dimensions' as dimensions;
+@use 'typography' as typography;
+@use 'mixins' as mixins;
+
+.import-transactions-container {
+  position: relative;
+
+  @include mixins.add-button;
+
+  .import-pop-over-wrapper {
+    background-color: colors.$background-panel;
+    border-radius: dimensions.$border-radius-medium;
+    width: 350px;
+    height: 135px;
+    padding: dimensions.$padding-small;
+    outline: 3px solid colors.$accent-blue;
+    visibility: hidden;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+
+    position: absolute;
+    bottom: -145px;
+    right: calc(50% - 100px);
+    z-index: 1000;
+
+    &::after {
+      content: '';
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid colors.$accent-blue;
+
+      position: absolute;
+      top: -9px;
+      right: 26%;
+      z-index: 1001;
+    }
+
+    .pop-over-header {
+      color: colors.$accent-blue;
+      font-size: typography.$font-size-md;
+    }
+
+    .dropdown-file-wrapper {
+      width: 100%;
+
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+
+      input[type='file'] {
+        display: none;
+      }
+
+      .custom-file-upload {
+        background-color: colors.$background-inner-panel;
+        border-radius: dimensions.$border-radius-small;
+        color: colors.$text-secondary;
+        cursor: pointer;
+        padding: dimensions.$padding-xxs dimensions.$padding-small;
+        width: 200px;
+        height: 30px;
+        text-align: center;
+        transition: background-color 0.3s;
+
+        display: inline-block;
+
+        &:hover {
+          background-color: colors.$background-inner-panel-hover;
+        }
+      }
+    }
+
+    @include mixins.add-button-modal(
+      -(dimensions.$margin-xl),
+      30px,
+      colors.$background-inner-panel,
+      colors.$background-inner-panel-hover
+    );
+  }
+
+  .display-pop-over {
+    visibility: visible;
+  }
+}

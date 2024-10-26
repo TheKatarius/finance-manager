@@ -37,7 +37,12 @@
       }
     }
 
-    @include mixins.add-button;
+    .import-add-wrapper {
+      display: flex;
+      gap: 10px;
+
+      @include mixins.add-button;
+    }
   }
 
   .transactions-list {

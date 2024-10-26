@@ -16,8 +16,8 @@ import { FormControl } from '@angular/forms';
   templateUrl: './fin-man-custom-dropdown.component.html',
   styleUrls: ['./fin-man-custom-dropdown.scss'],
 })
-export class FinManCustomDropdownComponent implements OnChanges {
-  @Input() options: string[] = [];
+export class FinManCustomDropdownComponent<T> implements OnChanges {
+  @Input() options: T[] = [];
   @Input() defaultOption: string = '';
   @Input() placeholder: string = 'Select an option';
   @Input() label: string = '';
@@ -25,12 +25,12 @@ export class FinManCustomDropdownComponent implements OnChanges {
   @Input() backgroundStyleColor: string = '';
   @Input() disabled: boolean = false;
 
-  @Output() onChange = new EventEmitter<string>();
+  @Output() onChange = new EventEmitter<T>();
 
   private elementRef = inject(ElementRef);
 
   isOpen: boolean = false;
-  selected: string | null = null;
+  selected: T | null = null;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.control) {
@@ -49,7 +49,7 @@ export class FinManCustomDropdownComponent implements OnChanges {
     this.isOpen = !this.isOpen;
   }
 
-  selectOption(option: string): void {
+  selectOption(option: T): void {
     this.selected = option;
     this.isOpen = false;
     this.control?.setValue(option);
