@@ -15,7 +15,7 @@
       <fin-man-custom-dropdown
         [options]="[BankList.ING]"
         [defaultOption]="selectedBank"
-        (onChange)="changeSelectedBank($event)"
+        (onChangeSingle)="changeSelectedBank($event)"
       ></fin-man-custom-dropdown>
 
       <label for="file-upload" class="custom-file-upload">Choose *.csv file</label>

@@ -1,18 +1,33 @@
 <div class="chart-wrapper">
-  <fin-man-custom-dropdown
-    class="custom-dropdown-container"
-    [options]="yearsMocks"
-    [placeholder]="'Select year:'"
-  ></fin-man-custom-dropdown>
+  <div class="dropdowns-wrapper">
+    <fin-man-custom-dropdown
+      [options]="chartTypes"
+      [placeholder]="'Select Charts:'"
+      [isMultiSelect]="true"
+      (onChangeMulti)="selectedChartTypes($event)"
+    ></fin-man-custom-dropdown>
+
+    <fin-man-custom-dropdown
+      [options]="availableYears"
+      [placeholder]="'Select year:'"
+      (onChangeSingle)="onYearChange($event)"
+    ></fin-man-custom-dropdown>
+
+    <fin-man-custom-dropdown
+      [options]="availableMonths"
+      [placeholder]="'Select month:'"
+      (onChangeSingle)="onMonthChange($event)"
+    ></fin-man-custom-dropdown>
+  </div>
 
   <div class="title-container">
     <span class="title">Money Flow</span>
     <!-- TODO: Add arrow for growth and loss everywhere -->
     <div class="multiple-legends-container">
       <div
-        *ngFor="let dataSet of dataSets; let i = index"
+        *ngFor="let dataSet of selectedDataSets; let i = index"
         class="legend-container"
-        [ngStyle]="{'border-bottom-color': borderColors?.[i]} "
+        [ngStyle]="{ 'border-bottom-color': borderColors[i] }"
       >
         <span class="legend-description">{{ dataSet.label }}</span>
         <span class="direct-value">{{ directValueDifference[i] + ' PLN' }}</span>

@@ -53,7 +53,7 @@ export class PlanBudgetCategoryModalComponent implements OnInit {
     }
   }
 
-  changeCategoryKind(categoryKind: string): void {
+  changeCategoryKind(categoryKind: CategoryKind): void {
     if (categoryKind === CategoryKind.Expense) {
       this.categories = ExpenseCategoriesMockData.map((category) => category.category);
     } else {

@@ -1,5 +1,5 @@
 <div class="custom-dropdown-wrapper">
-  <label [ngClass]="{ 'dropdown-label': label }">{{ label }}</label>
+  <label *ngIf="label" class="dropdown-label">{{ label }}</label>
 
   <div class="custom-dropdown-select-wrapper" [ngClass]="{ active: isOpen }">
     <div
@@ -9,9 +9,19 @@
         'custom-dropdown-select-disabled': disabled
       }"
       [ngStyle]="{ 'background-color': backgroundStyleColor }"
-      (click)="!disabled ? toggleDropdown() : null"
+      (click)="toggleDropdown()"
     >
-      {{ (selected ?? defaultOption) || placeholder }}
+      <ng-container *ngIf="isMultiSelect; else singleSelectDisplay">
+        <span *ngIf="selectedOptions.length > 0; else placeholderDisplay">
+          {{ selectedOptions.length }} selected
+        </span>
+        <ng-template #placeholderDisplay>
+          {{ placeholder }}
+        </ng-template>
+      </ng-container>
+      <ng-template #singleSelectDisplay>
+        {{ selected || defaultOption || placeholder }}
+      </ng-template>
       <div>
         <span class="icon common-vector-icon" [ngClass]="{ up: isOpen }"></span>
       </div>
@@ -22,9 +32,20 @@
         *ngFor="let option of options"
         class="custom-dropdown-option"
         [ngStyle]="{ 'background-color': backgroundStyleColor }"
-        (click)="selectOption(option)"
       >
-        {{ option }}
+        <label *ngIf="isMultiSelect; else singleSelectLabel" class="multi-select-label">
+          <input
+            type="checkbox"
+            [checked]="selectedOptions.includes(option)"
+            (change)="selectOptionMulti(option)"
+            (click)="$event.stopPropagation()"
+          />
+          <span>{{ option }}</span>
+        </label>
+
+        <ng-template #singleSelectLabel>
+          <div class="single-select-label" (click)="selectOption(option)">{{ option }}</div>
+        </ng-template>
       </li>
     </ul>
   </div>

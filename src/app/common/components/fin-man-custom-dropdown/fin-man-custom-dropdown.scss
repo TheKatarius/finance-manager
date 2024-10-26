@@ -85,12 +85,29 @@
       }
 
       .custom-dropdown-option {
-        padding: dimensions.$padding-small;
         cursor: pointer;
         transition: background-color 0.2s ease;
 
         &:hover {
           background-color: colors.$background-inner-panel-hover;
+        }
+
+        .multi-select-label {
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
+          padding: dimensions.$padding-small;
+
+          display: flex;
+          align-items: center;
+
+          input[type='checkbox'] {
+            margin-right: dimensions.$margin-small;
+          }
+        }
+
+        .single-select-label {
+          padding: dimensions.$padding-small;
         }
       }
     }

@@ -1,44 +1,55 @@
-export const ExpensesMockData = [
-  120000, // January
-  90000, // February
-  130000, // March
-  80000, // April
-  150000, // May
-  110000, // June
-  95000, // July
-  140000, // August
-  125000, // September
-  105000, // October
-  100000, // November
-  135000, // December
-];
+import { YearlyPersonalTransactionsData } from '@app/core/interfaces/chart.schema';
 
-export const IncomeMockData = [
-  90000, // January
-  70000, // February
-  95000, // March
-  50000, // April
-  110000, // May
-  90000, // June
-  70000, // July
-  120000, // August
-  115000, // September
-  80000, // October
-  140000, // November
-  150000, // December
-];
-
-export const SavingsMockData = [
-  20000, // January
-  15000, // February
-  25000, // March
-  10000, // April
-  30000, // May
-  20000, // June
-  15000, // July
-  35000, // August
-  30000, // September
-  18000, // October
-  40000, // November
-  45000, // December
+export const LineChartsMocks: YearlyPersonalTransactionsData[] = [
+  {
+    year: 2021,
+    months: [
+      { month: 'January', expense: 500, incomings: 700, savings: 200 },
+      { month: 'February', expense: 450, incomings: 750, savings: 300 },
+      { month: 'March', expense: 480, incomings: 720, savings: 240 },
+      { month: 'April', expense: 520, incomings: 680, savings: 160 },
+      { month: 'May', expense: 510, incomings: 710, savings: 200 },
+      { month: 'June', expense: 530, incomings: 690, savings: 160 },
+      { month: 'July', expense: 490, incomings: 730, savings: 240 },
+      { month: 'August', expense: 500, incomings: 700, savings: 200 },
+      { month: 'September', expense: 480, incomings: 720, savings: 240 },
+      { month: 'October', expense: 510, incomings: 690, savings: 180 },
+      { month: 'November', expense: 500, incomings: 710, savings: 210 },
+      { month: 'December', expense: 520, incomings: 680, savings: 160 },
+    ],
+  },
+  {
+    year: 2022,
+    months: [
+      { month: 'January', expense: 550, incomings: 800, savings: 250 },
+      { month: 'February', expense: 500, incomings: 850, savings: 350 },
+      { month: 'March', expense: 530, incomings: 820, savings: 290 },
+      { month: 'April', expense: 570, incomings: 780, savings: 210 },
+      { month: 'May', expense: 560, incomings: 810, savings: 250 },
+      { month: 'June', expense: 580, incomings: 790, savings: 210 },
+      { month: 'July', expense: 540, incomings: 830, savings: 290 },
+      { month: 'August', expense: 550, incomings: 800, savings: 250 },
+      { month: 'September', expense: 530, incomings: 820, savings: 290 },
+      { month: 'October', expense: 560, incomings: 790, savings: 230 },
+      { month: 'November', expense: 550, incomings: 810, savings: 260 },
+      { month: 'December', expense: 570, incomings: 780, savings: 210 },
+    ],
+  },
+  {
+    year: 2023,
+    months: [
+      { month: 'January', expense: 600, incomings: 900, savings: 300 },
+      { month: 'February', expense: 550, incomings: 950, savings: 400 },
+      { month: 'March', expense: 580, incomings: 920, savings: 340 },
+      { month: 'April', expense: 620, incomings: 880, savings: 260 },
+      { month: 'May', expense: 610, incomings: 910, savings: 300 },
+      { month: 'June', expense: 630, incomings: 890, savings: 260 },
+      { month: 'July', expense: 590, incomings: 930, savings: 340 },
+      { month: 'August', expense: 600, incomings: 900, savings: 300 },
+      { month: 'September', expense: 580, incomings: 920, savings: 340 },
+      { month: 'October', expense: 610, incomings: 890, savings: 280 },
+      { month: 'November', expense: 600, incomings: 910, savings: 310 },
+      { month: 'December', expense: 620, incomings: 880, savings: 260 },
+    ],
+  },
 ];

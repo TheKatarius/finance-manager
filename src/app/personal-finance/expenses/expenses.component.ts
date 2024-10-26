@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { ExtendedTransaction, PeriodTransaction } from '@app/core/interfaces/transaction.schema';
-import { ExpensesMockData } from '@app/core/mocks/line-charts.mocks';
 import {
   ExtendedTransactionsMocks,
   PeriodTransactionsMocks,

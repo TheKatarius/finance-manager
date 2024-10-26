@@ -1,0 +1,66 @@
+@use 'colors' as colors;
+@use 'dimensions' as dimensions;
+@use 'typography' as typography;
+@use 'mixins' as mixins;
+
+.modal-overlay {
+  @include mixins.modal-overlay;
+
+  .modal {
+    @include mixins.modal;
+
+    .modal-body {
+      .form-group {
+        margin-bottom: dimensions.$margin-large;
+
+        &.image-upload-group {
+          .image-zone {
+            border: 2px dashed colors.$accent-blue;
+            border-radius: dimensions.$border-radius-medium;
+            width: 100%;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            transition: border-color 0.3s, background-color 0.3s;
+
+            &.image-uploaded {
+              border-style: solid;
+            }
+
+            .placeholder {
+              text-align: center;
+              color: colors.$text-main;
+
+              .upload-icon {
+                font-size: 2em;
+                margin-bottom: dimensions.$margin-xs;
+              }
+
+              .drag-and-drop-text {
+                font-size: typography.$font-size-sm;
+              }
+            }
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              border-radius: dimensions.$border-radius-medium;
+            }
+          }
+        }
+      }
+
+      .horizontal-form-groups {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      @include mixins.add-button-modal;
+    }
+  }
+}

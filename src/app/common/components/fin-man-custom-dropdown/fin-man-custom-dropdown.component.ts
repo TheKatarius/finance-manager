@@ -24,17 +24,24 @@ export class FinManCustomDropdownComponent<T> implements OnChanges {
   @Input() control?: FormControl;
   @Input() backgroundStyleColor: string = '';
   @Input() disabled: boolean = false;
+  @Input() isMultiSelect: boolean = false;
 
-  @Output() onChange = new EventEmitter<T>();
+  @Output() onChangeSingle = new EventEmitter<T>();
+  @Output() onChangeMulti = new EventEmitter<T[]>();
 
   private elementRef = inject(ElementRef);
 
   isOpen: boolean = false;
   selected: T | null = null;
+  selectedOptions: T[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.control) {
-      this.selected = this.control.value;
+      if (this.isMultiSelect) {
+        this.selectedOptions = this.control.value || [];
+      } else {
+        this.selected = this.control.value;
+      }
     }
   }
 
@@ -46,13 +53,27 @@ export class FinManCustomDropdownComponent<T> implements OnChanges {
   }
 
   toggleDropdown(): void {
-    this.isOpen = !this.isOpen;
+    if (!this.disabled) {
+      this.isOpen = !this.isOpen;
+    }
   }
 
   selectOption(option: T): void {
     this.selected = option;
     this.isOpen = false;
     this.control?.setValue(option);
-    this.onChange.emit(option);
+    this.onChangeSingle.emit(option);
+  }
+
+  selectOptionMulti(option: T): void {
+    const index = this.selectedOptions.indexOf(option);
+    if (index >= 0) {
+      this.selectedOptions.splice(index, 1);
+    } else {
+      this.selectedOptions.push(option);
+    }
+
+    this.control?.setValue(this.selectedOptions);
+    this.onChangeMulti.emit(this.selectedOptions);
   }
 }

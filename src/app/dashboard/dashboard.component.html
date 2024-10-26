@@ -1,7 +1,7 @@
 <main class="dashboard-container">
   <router-outlet name="menu"></router-outlet>
 
-  <div class="dashboard-content-container">
+  <div class="dashboard-content-container" *ngIf="!isLoading">
     <div class="title-container">
       <span class="title">Dashboard</span>
       <span class="subtitle">All your finance in one place</span>
@@ -34,7 +34,7 @@
     </div>
 
     <div class="chart-transactions-container">
-      <fin-man-charts [dataSets]="dataSets"></fin-man-charts>
+      <fin-man-charts [dataSets]="dataSets" [chartData]="chartData"></fin-man-charts>
 
       <fin-man-transaction-panel
         [transactionData]="transactionsData"

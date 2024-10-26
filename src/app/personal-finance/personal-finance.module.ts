@@ -11,6 +11,7 @@ import { PersonalFinanceRoutingModule } from '@app/personal-finance/personal-fin
 import { PersonalFinanceComponent } from '@app/personal-finance/personal-finance.component';
 import { SavingsComponent } from '@app/personal-finance/savings/savings.component';
 import { CommonModule } from '@common/common.module';
+import { AddSavingModalComponent } from '@app/personal-finance/savings/add-saving-modal/add-saving-modal.component';
 
 const EXPORTED_COMPONENTS = [
   PersonalFinanceComponent,
@@ -32,6 +33,7 @@ const EXPORTED_COMPONENTS = [
     NgClass,
     FormsModule,
     AddTransactionModalComponent,
+    AddSavingModalComponent,
   ],
   exports: [...EXPORTED_COMPONENTS],
 })

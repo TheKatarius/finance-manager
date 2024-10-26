@@ -1,4 +1,5 @@
 import { FormControl } from '@angular/forms';
+import { ChartDataset, Point } from 'chart.js';
 
 export interface Transaction {
   name: string;
@@ -30,3 +31,5 @@ export interface ExtendedTransactionFormControls {
   description: FormControl<string | null>;
   time: FormControl<string | null>;
 }
+
+export type LineChartDataset = ChartDataset<'line', (number | Point | null)[]>;

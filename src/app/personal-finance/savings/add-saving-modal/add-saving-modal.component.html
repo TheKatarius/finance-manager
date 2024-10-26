@@ -1,0 +1,81 @@
+<div class="modal-overlay" *ngIf="isVisible">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Add Saving Goal</h2>
+      <button class="close-button" (click)="closeModal()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="savingFormGroup">
+        <div class="form-group image-upload-group">
+          <div
+            class="image-zone"
+            [ngClass]="{ 'image-uploaded': imageSrc }"
+            (dragover)="onDragOver($event)"
+            (drop)="onDrop($event)"
+            (click)="fileInput.click()"
+          >
+            <div *ngIf="!imageSrc" class="placeholder">
+              <em class="icon upload-icon"></em>
+              <p>Drag & Drop Image or Click to Upload</p>
+            </div>
+            <img *ngIf="imageSrc" [src]="imageSrc" alt="Saving Goal Image" />
+          </div>
+          <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" hidden />
+        </div>
+
+        <div class="form-group">
+          <fin-man-input
+            [label]="'Goal Name'"
+            [type]="'text'"
+            [placeholder]="'Enter goal name'"
+            [control]="savingFormGroup.controls.name"
+            [minlength]="3"
+            [maxlength]="50"
+            [required]="true"
+            [allowedCharsPattern]="VALIDATION.ALLOWED_CHARS_PATTERNS.BASIC_NAME_INPUT"
+          ></fin-man-input>
+        </div>
+
+        <div class="form-group">
+          <fin-man-input
+            [label]="'Amount to Save'"
+            [type]="'number'"
+            [placeholder]="'Enter amount'"
+            [control]="savingFormGroup.controls.targetAmount"
+            [min]="0.01"
+            [max]="1000000000"
+            [required]="true"
+            [allowedCharsPattern]="'[0-9.]'"
+          ></fin-man-input>
+        </div>
+
+        <div class="horizontal-form-groups">
+          <div class="form-group">
+            <fin-man-input
+              [label]="'Start Date'"
+              [type]="'date'"
+              [control]="savingFormGroup.controls.startDate"
+              [required]="true"
+              [allowedCharsPattern]="'[0-9]'"
+            ></fin-man-input>
+          </div>
+
+          <div class="form-group">
+            <fin-man-input
+              [label]="'End Date'"
+              [type]="'date'"
+              [control]="savingFormGroup.controls.endDate"
+              [required]="true"
+              [allowedCharsPattern]="'[0-9]'"
+            ></fin-man-input>
+          </div>
+        </div>
+
+        <div class="add-button-modal-wrapper">
+          <div class="add-button" (click)="onSubmit()">Add Saving Goal</div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

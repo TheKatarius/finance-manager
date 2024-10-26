@@ -9,8 +9,17 @@
 
     <div class="content-wrapper">
       <div class="one-side-positioning">
-        <fin-man-saving-goal-panel [savingGoalsData]="SavingGoalsMocks"></fin-man-saving-goal-panel>
+        <fin-man-saving-goal-panel
+          [savingGoalsData]="SavingGoalsMocks"
+          (openModal)="openModal()"
+        ></fin-man-saving-goal-panel>
       </div>
     </div>
   </div>
 </main>
+
+<finance-manager-add-saving-modal
+  [isVisible]="isModalVisible"
+  (close)="closeModal()"
+  (savingGoalAdded)="handleSavingsAdd($event)"
+></finance-manager-add-saving-modal>

@@ -12,7 +12,7 @@
             [options]="[CategoryKind.Income, CategoryKind.Expense]"
             [defaultOption]="CategoryKind.Expense"
             [label]="'Category Kind'"
-            (onChange)="changeCategoryKind($event)"
+            (onChangeSingle)="changeCategoryKind($event)"
           ></fin-man-custom-dropdown>
         </div>
 
