@@ -4,6 +4,8 @@ import annotationPlugin, { AnnotationOptions } from 'chartjs-plugin-annotation';
 import { BaseChartDirective } from 'ng2-charts';
 
 import { COLORS } from '@app/core/constants/colors.const';
+import { YearlyPersonalTransactionsData } from '@app/core/interfaces/chart.schema';
+import { LineChartDataset } from '@app/core/interfaces/transaction.schema';
 import { YearsMocks } from '@app/core/mocks/dates.mocks';
 import { calculateAverage } from '@app/core/utils/calculate-average.utils';
 import { ChartsColorType } from '@common/components/fin-man-charts/fin-man-charts-color-types.schema';
@@ -12,8 +14,6 @@ import {
   LINES_CHART_OPTIONS,
 } from '@common/components/fin-man-charts/fin-man-charts-configuration.const';
 import { setGradientBackground } from '@common/components/fin-man-charts/fin-man-charts-set-gradients.utils';
-import { LineChartDataset } from '@app/core/interfaces/transaction.schema';
-import { YearlyPersonalTransactionsData } from '@app/core/interfaces/chart.schema';
 
 @Component({
   selector: 'fin-man-charts',
@@ -55,13 +55,17 @@ export class FinManChartsComponent implements OnInit, OnChanges {
     // Inicjalizja ile i jakie wykresy będą obsługiwane
     this.chartTypes = this.dataSets.map((dataSet) => dataSet.label ?? '');
 
-    // Inicjalizacja `lineChartData.datasets` z `dataSets`
-    this.lineChartData.datasets = this.dataSets.map((dataSet) => ({
-      label: dataSet.label,
-      data: [], // Puste dane, zostaną uzupełnione później
-      borderColor: dataSet.borderColor,
-      backgroundColor: dataSet.backgroundColor,
-    }));
+    this.lineChartData.datasets = this.dataSets;
+    console.log('lineChartData:', this.lineChartData);
+
+    // this.dataSets.map((dataSet) => {
+    //   const data: number[] = dataSet.data as number[];
+    //   const value: number = this.calculateDifference(data);
+    //   this.directValueDifference.push(value);
+    //
+    //   const percentageValue = this.calculatePercentageDifference(data);
+    //   this.percentageValueDifference.push(percentageValue);
+    // });
 
     // Jeżeli dane zostały przekazane, to zainicjalizuj dane
     if (this.chartData && this.chartData.length > 0) {
@@ -87,14 +91,16 @@ export class FinManChartsComponent implements OnInit, OnChanges {
 
   // Obsługa wyboru roku
   onYearChange(year: number): void {
+    console.log(this.lineChartData);
+
     this.selectedYear = year;
     this.selectedMonths = []; // Resetowanie wybranego miesiąca
 
     // pobierz dane dla konkretnego roku
-    const yearData = this.chartData.find((y) => y.year === year);
-    if (yearData) {
+    const yearChartData = this.chartData.find((y) => y.year === year);
+    if (yearChartData) {
       // Pobierz miesiące dla konkretnego roku
-      this.availableMonths = yearData.months.map((m) => m.month);
+      this.availableMonths = yearChartData.months.map((m) => m.month);
       if (this.availableMonths.length > 0) {
         // Domyślnie puste, tak że po zmianie roku
         this.onMonthChange([]);
@@ -119,25 +125,28 @@ export class FinManChartsComponent implements OnInit, OnChanges {
   private updateChart(): void {
     // Pobierz dane dla wybranego roku
     const yearData = this.chartData.find((y) => y.year === this.selectedYear);
+    console.log('yearData: ', yearData);
+    console.log('selectedMonths: ', this.selectedMonths);
     if (yearData) {
-      // const monthsData = this.availableMonths.filter((m) => this.availableMonths.includes(m.month));
+      for (const month of this.selectedMonths) {
+        console.log(this.lineChartData);
+        this.lineChartData.datasets.forEach((dataset) => {
+          const foundMonth = yearData.months.find((m) => m.month === month);
+          console.log('foundMonth: ', foundMonth);
 
-      // Mapowanie danych na istniejące zestawy danych
-      // for (let monthData of monthsData) {
-      //   this.lineChartData.datasets.forEach((dataset) => {
-      //     switch (dataset.label) {
-      //       case 'Expenses':
-      //         dataset.data = [monthData.expense];
-      //         break;
-      //       case 'Income':
-      //         dataset.data = [monthData.incomings];
-      //         break;
-      //       case 'Savings':
-      //         dataset.data = [monthData.savings];
-      //         break;
-      //     }
-      //   });
-      // }
+          switch (dataset.label) {
+            case 'Expenses':
+              dataset.data.push(foundMonth?.expense ?? 0);
+              break;
+            case 'Income':
+              dataset.data.push(foundMonth?.incomings ?? 0);
+              break;
+            case 'Savings':
+              dataset.data.push(foundMonth?.expense ?? 0);
+              break;
+          }
+        });
+      }
 
       // Aktualizacja obliczeń
       this.updateChartCalculations();
