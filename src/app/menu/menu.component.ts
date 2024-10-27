@@ -1,8 +1,10 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
+import { AuthService } from '@app/core/data/auth.service';
 import { GetStringService } from '@app/core/services/get-string.service';
+import { NotificationService } from '@app/core/services/notifications.service';
 import { MenuService } from '@app/menu/menu.service';
 import { menuSectionClassNames } from '@app/menu/menu.utils';
 
@@ -18,11 +20,17 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   private menuSubscription!: Subscription;
 
+  private authService = inject(AuthService);
+
+  private notificationService = inject(NotificationService);
+
   // All available section in className format
   sectionClassNames!: string[];
 
   // Dashboard is default active section
   activeSection!: string;
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.sectionClassNames = menuSectionClassNames((...code: string[]) =>
@@ -36,6 +44,17 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.menuSubscription?.unsubscribe();
+  }
+
+  logoutUser(): void {
+    this.authService.logout();
+
+    this.router.navigate(['/login']).then(() =>
+      this.notificationService.addNotification({
+        type: 'success',
+        message: 'User logged out successfully',
+      }),
+    );
   }
 
   onSectionClick(sectionName: string): void {

@@ -1,4 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { PopUpNotification, NotificationTitle } from '@app/core/interfaces/notifications.schema';
 import { NotificationService } from '@app/core/services/notifications.service';
@@ -8,15 +9,23 @@ import { NotificationService } from '@app/core/services/notifications.service';
   templateUrl: './fin-man-notification.component.html',
   styleUrls: ['./fin-man-notification.scss'],
 })
-export class FinManNotificationComponent implements OnInit {
+export class FinManNotificationComponent implements OnInit, OnDestroy {
   notificationService = inject(NotificationService);
 
   notifications: PopUpNotification[] = [];
 
+  notificationSubscription!: Subscription;
+
   ngOnInit(): void {
-    this.notificationService.notifications$.subscribe((notifications) => {
-      this.notifications = notifications; // zaktualizuj stan komponentu po zmianach
-    });
+    this.notificationSubscription = this.notificationService.notifications$.subscribe(
+      (notifications) => {
+        this.notifications = notifications; // zaktualizuj stan komponentu po zmianach
+      },
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.notificationSubscription?.unsubscribe();
   }
 
   getNotificationTitle(type: 'success' | 'error' | 'info'): string {

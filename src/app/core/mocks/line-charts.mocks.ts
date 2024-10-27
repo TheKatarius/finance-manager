@@ -4,12 +4,6 @@ export const LineChartsMocks: YearlyPersonalTransactionsData[] = [
   {
     year: 2021,
     months: [
-      { month: 'January', expense: 500, incomings: 700, savings: 200 },
-      { month: 'February', expense: 450, incomings: 750, savings: 300 },
-      { month: 'March', expense: 480, incomings: 720, savings: 240 },
-      { month: 'April', expense: 520, incomings: 680, savings: 160 },
-      { month: 'May', expense: 510, incomings: 710, savings: 200 },
-      { month: 'June', expense: 530, incomings: 690, savings: 160 },
       { month: 'July', expense: 490, incomings: 730, savings: 240 },
       { month: 'August', expense: 500, incomings: 700, savings: 200 },
       { month: 'September', expense: 480, incomings: 720, savings: 240 },

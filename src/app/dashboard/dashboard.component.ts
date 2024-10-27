@@ -1,10 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { PersonalTransactionsService } from '@app/core/data/personal-transactions.service';
+import { YearlyPersonalTransactionsData } from '@app/core/interfaces/chart.schema';
 import { LineChartDataset, Transaction } from '@app/core/interfaces/transaction.schema';
 import { TransactionsMocks } from '@app/core/mocks/transactions.mocks';
+import { NotificationService } from '@app/core/services/notifications.service';
 import { ChartsColorType } from '@common/components/fin-man-charts/fin-man-charts-color-types.schema';
-import { YearlyPersonalTransactionsData } from '@app/core/interfaces/chart.schema';
-import { PersonalTransactionsService } from '@app/core/data/personal-transactions.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'finance-manager-dashboard',
@@ -12,10 +14,12 @@ import { Subscription } from 'rxjs';
   styleUrls: ['../../css/components/dashboard/dashboard.scss'],
   providers: [PersonalTransactionsService],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   private personalTransactionsService = inject(PersonalTransactionsService);
 
   private chartDataSubscription!: Subscription;
+
+  private notificationService = inject(NotificationService);
 
   isModalVisible: boolean = false;
 

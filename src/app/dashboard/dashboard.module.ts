@@ -1,13 +1,13 @@
+import { NgForOf, NgIf } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 
+import { AddTransactionModalComponent } from '@app/dashboard/add-transaction-modal/add-transaction-modal.component';
 import { DashboardRoutingModule } from '@app/dashboard/dashboard-routing.module';
 import { DashboardComponent } from '@app/dashboard/dashboard.component';
-import { CommonModule } from '@common/common.module';
-import { AddTransactionModalComponent } from '@app/dashboard/add-transaction-modal/add-transaction-modal.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { PersonalFinanceModule } from '@app/personal-finance/personal-finance.module';
-import { NgForOf, NgIf } from '@angular/common';
+import { CommonModule } from '@common/common.module';
 
 @NgModule({
   declarations: [DashboardComponent],

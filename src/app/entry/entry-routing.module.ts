@@ -27,7 +27,7 @@ const PRIMARY_ROUTES: Routes = [
         path: 'dashboard',
         loadChildren: () =>
           import('@app/dashboard/dashboard.module').then((m) => m.DashboardModule),
-        // canActivateChild: [AuthGuard],
+        canActivateChild: [AuthGuard],
       },
       {
         path: 'personal-finance',
@@ -35,7 +35,14 @@ const PRIMARY_ROUTES: Routes = [
           import('@app/personal-finance/personal-finance.module').then(
             (m) => m.PersonalFinanceModule,
           ),
-        // canActivateChild: [AuthGuard],
+        canActivateChild: [AuthGuard],
+      },
+      {
+        path: 'investment-portfolio',
+        loadChildren: () =>
+          import('@app/investment-portfolio/investment-portfolio.module').then(
+            (m) => m.InvestmentPortfolioModule,
+          ),
       },
       {
         path: '**',

@@ -1,4 +1,5 @@
 import { Chart, ChartData, ChartOptions, Color, LegendItem } from 'chart.js';
+
 import { COLORS } from '@app/core/constants/colors.const';
 
 const FONT_FAMILY: string = 'Noto Serif Kannada, sans-serif';
@@ -117,19 +118,6 @@ export const LINES_CHART_OPTIONS: ChartOptions = {
 };
 
 export const LINE_CHART_DATA: ChartData<'line'> = {
-  labels: [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ],
+  labels: [],
   datasets: [],
 };

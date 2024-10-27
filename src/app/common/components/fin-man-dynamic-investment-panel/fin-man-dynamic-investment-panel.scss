@@ -1,0 +1,95 @@
+@use 'colors' as colors;
+@use 'typography' as typography;
+@use 'dimensions' as dimensions;
+@use 'mixins' as mixins;
+
+.asset-panel-container {
+  background-color: colors.$background-panel;
+  border-radius: dimensions.$border-radius-medium;
+  height: 750px;
+  padding: dimensions.$padding-md;
+
+  display: flex;
+  flex-direction: column;
+
+  .header-wrapper {
+    margin-bottom: dimensions.$margin-small;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .asset-header {
+      font-size: typography.$font-size-h4;
+      color: colors.$accent-blue;
+    }
+
+    .actions-wrapper {
+      display: flex;
+      gap: 20px;
+
+      @include mixins.add-button;
+    }
+  }
+
+  .assets-table-header {
+    background-color: colors.$light-background-main;
+    border-bottom: 2px solid colors.$text-main;
+    border-radius: dimensions.$border-radius-small dimensions.$border-radius-small 0 0;
+    height: 40px;
+    padding: dimensions.$padding-xxs dimensions.$padding-md;
+
+    display: grid;
+    grid-template-columns: dimensions.$asset-table-widths;
+    gap: 5px;
+
+    .header-cell {
+      font-size: typography.$font-size-sm;
+      font-weight: typography.$font-weight-bold;
+      color: colors.$text-secondary; // Lekkie przyciemnienie tekstu
+      cursor: pointer;
+      text-transform: uppercase;
+
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        color: colors.$text-secondary-hover; // Podświetlenie kolumny po najechaniu myszką
+      }
+    }
+
+    .double-header {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  }
+
+  .asset-item {
+    @include mixins.transaction-items;
+    padding: dimensions.$padding-xxs dimensions.$padding-md;
+
+    display: grid;
+    grid-template-columns: dimensions.$asset-table-widths;
+
+    .double-column {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .column-date {
+      color: colors.$text-secondary;
+    }
+  }
+}
+
+.positive {
+  color: colors.$accent-green;
+}
+
+.negative {
+  color: colors.$accent-red;
+}

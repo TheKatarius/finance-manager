@@ -6,17 +6,22 @@ import {
   inject,
   Input,
   OnChanges,
+  OnDestroy,
+  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
+
+import { CustomDropdownService } from '@common/components/fin-man-custom-dropdown/fin-man-custom-dropdown.service';
 
 @Component({
   selector: 'fin-man-custom-dropdown',
   templateUrl: './fin-man-custom-dropdown.component.html',
   styleUrls: ['./fin-man-custom-dropdown.scss'],
 })
-export class FinManCustomDropdownComponent<T> implements OnChanges {
+export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDestroy {
   @Input() options: T[] = [];
   @Input() defaultOption: string | null = '';
   @Input() defaultOptionNumber: number | null = null;
@@ -32,12 +37,20 @@ export class FinManCustomDropdownComponent<T> implements OnChanges {
 
   private elementRef = inject(ElementRef);
 
+  private customDropdownService = inject(CustomDropdownService);
+
+  private clearSelectionsSubscription!: Subscription;
+
   isOpen: boolean = false;
   selected: T | null = null;
   selectedOptions: T[] = [];
 
   ngOnInit(): void {
     this.defaultOption = this.defaultOption === null ? '' : this.defaultOption;
+
+    if (this.isMultiSelect) {
+      this.clearSelectedCheckboxes();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -48,6 +61,10 @@ export class FinManCustomDropdownComponent<T> implements OnChanges {
         this.selected = this.control.value;
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    this.clearSelectionsSubscription?.unsubscribe();
   }
 
   @HostListener('document:click', ['$event'])
@@ -61,6 +78,14 @@ export class FinManCustomDropdownComponent<T> implements OnChanges {
     if (!this.disabled) {
       this.isOpen = !this.isOpen;
     }
+  }
+
+  clearSelectedCheckboxes(): void {
+    this.clearSelectionsSubscription = this.customDropdownService.clearSelected$.subscribe(() => {
+      this.selectedOptions = [];
+      this.control?.setValue(this.selectedOptions);
+      this.onChangeMulti.emit(this.selectedOptions);
+    });
   }
 
   selectOption(option: T): void {

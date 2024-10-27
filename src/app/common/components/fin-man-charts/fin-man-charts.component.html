@@ -27,7 +27,7 @@
     <!-- TODO: Add arrow for growth and loss everywhere -->
     <div class="multiple-legends-container">
       <div
-        *ngFor="let dataSet of selectedDataSets; let i = index"
+        *ngFor="let dataSet of visibleDataSets; let i = index"
         class="legend-container"
         [ngStyle]="{ 'border-bottom-color': borderColors[i] }"
       >
@@ -37,10 +37,10 @@
           class="difference"
           [ngStyle]="
             percentageValueDifference[i] < 0
-              ? { color: COLORS.accentGreen }
+              ? { color: COLORS.accentRed }
               : percentageValueDifference[i] === 0
               ? { color: COLORS.textMain }
-              : {}
+              : { color: COLORS.accentGreen }
           "
           >{{ percentageValueDifference[i] + '%' }}</span
         >

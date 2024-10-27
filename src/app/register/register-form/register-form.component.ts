@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { VALIDATION } from '@app/core/constants/validators.const';
 import { AuthService } from '@app/core/data/auth.service';
@@ -28,15 +28,19 @@ export class RegisterFormComponent implements OnInit {
 
   private authService = inject(AuthService);
 
-  private router = inject(Router);
-
   private notificationService = inject(NotificationService);
+
+  private returnUrl: string = '/dashboard'; // Domyślny adres po logowaniu
 
   registerFormGroup!: RegisterFormGroup;
 
   isLeftActive: boolean = false;
 
+  constructor(private route: ActivatedRoute, private router: Router) {}
+
   ngOnInit(): void {
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard';
+
     this.registerFormGroup = this.registerFormGroupService.createRegisterForm();
   }
 
@@ -60,7 +64,6 @@ export class RegisterFormComponent implements OnInit {
         next: (response) => {
           console.log(response);
           if (response.status >= 200 && response.status < 300) {
-            console.log('registered user');
             this.router.navigate(['/login/authorization']).then(() => {
               this.notificationService.addNotification({
                 type: 'success',
@@ -101,11 +104,13 @@ export class RegisterFormComponent implements OnInit {
       this.authService.login(request).subscribe({
         next: (response) => {
           if (response.status >= 200 && response.status < 300) {
-            this.notificationService.addNotification({
-              type: 'success',
-              status: response.status,
-              message: 'User logged in successfully',
-            });
+            this.router.navigateByUrl(this.returnUrl).then(() =>
+              this.notificationService.addNotification({
+                type: 'success',
+                status: response.status,
+                message: 'User logged in successfully',
+              }),
+            );
           }
         },
         error: (error) => {

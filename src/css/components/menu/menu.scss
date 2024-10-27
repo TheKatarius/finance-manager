@@ -13,10 +13,36 @@
   width: dimensions.$sidebar-menu-width;
   height: max(100vh, 100%);
   padding: dimensions.$padding-large;
-}
 
-.sidebarNav {
   display: flex;
   flex-direction: column;
-  gap: dimensions.$sidebar-nav-gap;
+  justify-content: space-between;
+
+  .sidebarNav {
+    display: flex;
+    flex-direction: column;
+    gap: dimensions.$sidebar-nav-gap;
+  }
+
+  .sign-out-wrapper {
+    padding: dimensions.$padding-small;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    &:hover {
+      border-radius: dimensions.$border-radius-small;
+      background-color: colors.$background-inner-panel-hover;
+      cursor: pointer;
+    }
+
+    .sign-out-text {
+      color: colors.$accent-red;
+
+      &:hover {
+        color: colors.$light-accent-red;
+      }
+    }
+  }
 }

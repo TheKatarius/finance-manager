@@ -1,12 +1,20 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Chart, ChartData, ChartOptions, ChartType, registerables } from 'chart.js';
 import annotationPlugin, { AnnotationOptions } from 'chartjs-plugin-annotation';
 import { BaseChartDirective } from 'ng2-charts';
 
 import { COLORS } from '@app/core/constants/colors.const';
+import { MONTHS_ORDER } from '@app/core/constants/data.const';
 import { YearlyPersonalTransactionsData } from '@app/core/interfaces/chart.schema';
 import { LineChartDataset } from '@app/core/interfaces/transaction.schema';
-import { YearsMocks } from '@app/core/mocks/dates.mocks';
 import { calculateAverage } from '@app/core/utils/calculate-average.utils';
 import { ChartsColorType } from '@common/components/fin-man-charts/fin-man-charts-color-types.schema';
 import {
@@ -14,19 +22,22 @@ import {
   LINES_CHART_OPTIONS,
 } from '@common/components/fin-man-charts/fin-man-charts-configuration.const';
 import { setGradientBackground } from '@common/components/fin-man-charts/fin-man-charts-set-gradients.utils';
+import { CustomDropdownService } from '@common/components/fin-man-custom-dropdown/fin-man-custom-dropdown.service';
 
 @Component({
   selector: 'fin-man-charts',
   templateUrl: './fin-man-charts.component.html',
   styleUrls: ['./fin-man-charts.scss', '../fin-man-custom-dropdown/fin-man-custom-dropdown.scss'],
 })
-export class FinManChartsComponent implements OnInit, OnChanges {
+export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild(BaseChartDirective) chart!: BaseChartDirective;
 
   @Input() dataSets: LineChartDataset[] = [];
   @Input() chartData: YearlyPersonalTransactionsData[] = [];
 
   readonly COLORS = COLORS;
+
+  private customDropdownService = inject(CustomDropdownService);
 
   borderColors!: string[];
   chartColorType?: ChartsColorType;
@@ -39,7 +50,7 @@ export class FinManChartsComponent implements OnInit, OnChanges {
   lineChartType: ChartType = 'line';
 
   chartTypes: string[] = [];
-  selectedDataSets: LineChartDataset[] = [];
+  visibleDataSets: LineChartDataset[] = [];
 
   // Nowe zmienne dla dropdownów
   availableYears: number[] = [];
@@ -56,24 +67,19 @@ export class FinManChartsComponent implements OnInit, OnChanges {
     this.chartTypes = this.dataSets.map((dataSet) => dataSet.label ?? '');
 
     this.lineChartData.datasets = this.dataSets;
-    console.log('lineChartData:', this.lineChartData);
 
-    // this.dataSets.map((dataSet) => {
-    //   const data: number[] = dataSet.data as number[];
-    //   const value: number = this.calculateDifference(data);
-    //   this.directValueDifference.push(value);
-    //
-    //   const percentageValue = this.calculatePercentageDifference(data);
-    //   this.percentageValueDifference.push(percentageValue);
-    // });
+    this.lineChartData.datasets.forEach((dataset) => {
+      dataset.hidden = true;
+    });
+  }
 
-    // Jeżeli dane zostały przekazane, to zainicjalizuj dane
+  ngOnChanges(): void {
     if (this.chartData && this.chartData.length > 0) {
       this.initializeData();
     }
   }
 
-  ngOnChanges(): void {
+  ngAfterViewInit(): void {
     if (this.chartData && this.chartData.length > 0) {
       this.initializeData();
     }
@@ -91,31 +97,39 @@ export class FinManChartsComponent implements OnInit, OnChanges {
 
   // Obsługa wyboru roku
   onYearChange(year: number): void {
-    console.log(this.lineChartData);
+    if (year !== this.selectedYear) {
+      this.customDropdownService.emitClearSelectedSubject();
 
-    this.selectedYear = year;
-    this.selectedMonths = []; // Resetowanie wybranego miesiąca
+      this.selectedYear = year;
+      this.selectedMonths = []; // Resetowanie wybranego miesiąca
 
-    // pobierz dane dla konkretnego roku
-    const yearChartData = this.chartData.find((y) => y.year === year);
-    if (yearChartData) {
-      // Pobierz miesiące dla konkretnego roku
-      this.availableMonths = yearChartData.months.map((m) => m.month);
-      if (this.availableMonths.length > 0) {
-        // Domyślnie puste, tak że po zmianie roku
-        this.onMonthChange([]);
+      // pobierz dane dla konkretnego roku
+      const yearChartData = this.chartData.find((y) => y.year === year);
+      this.selectedMonths = [];
+      if (yearChartData) {
+        // Pobierz miesiące dla konkretnego roku
+        this.availableMonths = yearChartData.months.map((m) => m.month);
+        if (this.availableMonths.length > 0) {
+          // Domyślnie puste, tak że po zmianie roku
+
+          this.onMonthChange([]);
+        } else {
+          this.clearChartData();
+        }
       } else {
+        this.availableMonths = [];
         this.clearChartData();
       }
-    } else {
-      this.availableMonths = [];
-      this.clearChartData();
     }
   }
 
   // Obsługa wyboru miesiąca
   onMonthChange(month: string[]): void {
     this.selectedMonths = month;
+
+    // Ustawienie posortowanych miesięcy jako etykiet na osi X
+    this.lineChartData.labels = this.sortMonths(this.selectedMonths);
+
     if (this.selectedYear) {
       this.updateChart();
     }
@@ -125,14 +139,15 @@ export class FinManChartsComponent implements OnInit, OnChanges {
   private updateChart(): void {
     // Pobierz dane dla wybranego roku
     const yearData = this.chartData.find((y) => y.year === this.selectedYear);
-    console.log('yearData: ', yearData);
-    console.log('selectedMonths: ', this.selectedMonths);
     if (yearData) {
+      // Resetowanie danych w zestawach
+      this.lineChartData.datasets.forEach((dataset) => {
+        dataset.data = [];
+      });
+
       for (const month of this.selectedMonths) {
-        console.log(this.lineChartData);
         this.lineChartData.datasets.forEach((dataset) => {
           const foundMonth = yearData.months.find((m) => m.month === month);
-          console.log('foundMonth: ', foundMonth);
 
           switch (dataset.label) {
             case 'Expenses':
@@ -142,7 +157,7 @@ export class FinManChartsComponent implements OnInit, OnChanges {
               dataset.data.push(foundMonth?.incomings ?? 0);
               break;
             case 'Savings':
-              dataset.data.push(foundMonth?.expense ?? 0);
+              dataset.data.push(foundMonth?.savings ?? 0);
               break;
           }
         });
@@ -175,9 +190,9 @@ export class FinManChartsComponent implements OnInit, OnChanges {
     }
   }
 
-  private checkIfSetGradientBackground(): void {
-    if (this.selectedDataSets.length === 1) {
-      this.chartColorType = this.selectedDataSets[0].borderColor as ChartsColorType;
+  private checkIfSetGradientBackground(visibleDatasets: LineChartDataset[]): void {
+    if (visibleDatasets.length === 1) {
+      this.chartColorType = visibleDatasets[0].borderColor as ChartsColorType;
       this.setGradientBackground(this.chartColorType);
     } else {
       this.removeGradientBackground();
@@ -188,7 +203,12 @@ export class FinManChartsComponent implements OnInit, OnChanges {
     const gradient = setGradientBackground(this.chart, charTypeColor);
 
     if (gradient) {
-      this.lineChartData.datasets[0].backgroundColor = gradient;
+      const dataSetToChange = this.lineChartData.datasets.find(
+        (dataset) => this.visibleDataSets[0].label === dataset.label,
+      );
+      if (dataSetToChange !== undefined) {
+        dataSetToChange.backgroundColor = gradient;
+      }
     }
   }
 
@@ -251,30 +271,13 @@ export class FinManChartsComponent implements OnInit, OnChanges {
       AnnotationOptions
     >;
 
-    const averageLineAnnotation: AnnotationOptions = {
-      type: 'line',
-      scaleID: 'y',
-      value: average,
-      borderColor: visibleDatasets[0].borderColor as string,
-      borderWidth: 2,
-      label: {
-        display: true,
-        content: `Average: ${average}`,
-      },
-    };
-
     // Dodaj lub zaktualizuj adnotację linii średniej
     existingAnnotations['averageLine'] = {
       ...(existingAnnotations as Record<string, AnnotationOptions>)['averageLine'],
-      type: 'line',
-      scaleID: 'y',
-      value: average,
-      borderColor: visibleDatasets[0].borderColor as string,
-      borderWidth: 2,
-      label: {
-        display: true,
-        content: `Average: ${average}`,
-      },
+      display: true,
+      borderDash: [10, 5],
+      yMin: average,
+      yMax: average,
     };
 
     this.lineChartOptions = {
@@ -329,34 +332,32 @@ export class FinManChartsComponent implements OnInit, OnChanges {
   }
 
   selectedChartTypes(selectedChartTypes: string[]): void {
-    if (Array.isArray(selectedChartTypes)) {
-      // Ustawienie właściwości `hidden` dla każdego datasetu
-      this.lineChartData.datasets.forEach((dataset) => {
-        dataset.hidden = !selectedChartTypes.includes(dataset.label ?? '');
-      });
+    // Ustawienie właściwości `hidden` dla każdego datasetu
+    this.lineChartData.datasets.forEach((dataset) => {
+      dataset.hidden = !selectedChartTypes.includes(dataset.label ?? '');
+    });
 
-      // Aktualizacja obliczeń
-      this.updateChartCalculations();
+    // Aktualizacja obliczeń
+    this.updateChartCalculations();
 
-      // Aktualizacja wykresu
-      if (this.chart && this.chart.chart) {
-        this.chart.chart.update();
-      }
+    // Aktualizacja wykresu
+    if (this.chart && this.chart.chart) {
+      this.chart.chart.update();
     }
   }
 
   private updateChartCalculations(): void {
     // Pobierz widoczne zestawy danych
-    const visibleDatasets = this.lineChartData.datasets.filter((dataset) => !dataset.hidden);
+    this.visibleDataSets = this.lineChartData.datasets.filter((dataset) => !dataset.hidden);
 
     // Aktualizuj kolory obramowania dla widocznych zestawów danych
-    this.borderColors = visibleDatasets.map((dataset) => dataset.borderColor as string);
+    this.borderColors = this.visibleDataSets.map((dataset) => dataset.borderColor as string);
 
     // Ponowne obliczenie różnic dla widocznych zestawów danych
     this.directValueDifference = [];
     this.percentageValueDifference = [];
 
-    visibleDatasets.forEach((dataset) => {
+    this.visibleDataSets.forEach((dataset) => {
       const data: number[] = dataset.data as number[];
       const value: number = this.calculateDifference(data);
       this.directValueDifference.push(value);
@@ -366,12 +367,12 @@ export class FinManChartsComponent implements OnInit, OnChanges {
     });
 
     // Dodawanie lub usuwanie linii średniej i gradientu tła
-    if (visibleDatasets.length === 1) {
+    if (this.visibleDataSets.length === 1) {
       this.addAverageLine();
 
       // Ustaw gradient tła
-      this.chartColorType = visibleDatasets[0].borderColor as ChartsColorType;
-      this.checkIfSetGradientBackground();
+      this.chartColorType = this.visibleDataSets[0].borderColor as ChartsColorType;
+      this.checkIfSetGradientBackground(this.visibleDataSets);
     } else {
       this.removeAverageLine();
       this.removeGradientBackground();
@@ -381,5 +382,13 @@ export class FinManChartsComponent implements OnInit, OnChanges {
     if (this.chart && this.chart.chart) {
       this.chart.chart.update();
     }
+  }
+
+  private sortMonths(months: string[]): string[] {
+    return months.sort((a, b) => {
+      const indexA = MONTHS_ORDER.indexOf(a);
+      const indexB = MONTHS_ORDER.indexOf(b);
+      return indexA - indexB;
+    });
   }
 }
