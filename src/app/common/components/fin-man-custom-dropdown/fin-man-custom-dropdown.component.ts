@@ -18,7 +18,8 @@ import { FormControl } from '@angular/forms';
 })
 export class FinManCustomDropdownComponent<T> implements OnChanges {
   @Input() options: T[] = [];
-  @Input() defaultOption: string = '';
+  @Input() defaultOption: string | null = '';
+  @Input() defaultOptionNumber: number | null = null;
   @Input() placeholder: string = 'Select an option';
   @Input() label: string = '';
   @Input() control?: FormControl;
@@ -34,6 +35,10 @@ export class FinManCustomDropdownComponent<T> implements OnChanges {
   isOpen: boolean = false;
   selected: T | null = null;
   selectedOptions: T[] = [];
+
+  ngOnInit(): void {
+    this.defaultOption = this.defaultOption === null ? '' : this.defaultOption;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.control) {

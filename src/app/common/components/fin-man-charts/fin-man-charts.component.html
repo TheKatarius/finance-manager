@@ -9,6 +9,7 @@
 
     <fin-man-custom-dropdown
       [options]="availableYears"
+      [defaultOptionNumber]="selectedYear"
       [placeholder]="'Select year:'"
       (onChangeSingle)="onYearChange($event)"
     ></fin-man-custom-dropdown>
@@ -16,7 +17,8 @@
     <fin-man-custom-dropdown
       [options]="availableMonths"
       [placeholder]="'Select month:'"
-      (onChangeSingle)="onMonthChange($event)"
+      [isMultiSelect]="true"
+      (onChangeMulti)="onMonthChange($event)"
     ></fin-man-custom-dropdown>
   </div>
 
