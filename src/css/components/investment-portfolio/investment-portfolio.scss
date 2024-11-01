@@ -1,0 +1,19 @@
+@use 'dimensions' as dimensions;
+@use 'colors' as colors;
+@use 'typography' as typography;
+@use 'mixins' as mixins;
+
+.investment-portfolio-wrapper {
+  display: flex;
+
+  .investment-portfolio-content-container {
+    padding: dimensions.$padding-large;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    @include mixins.title-container;
+  }
+}
