@@ -1,28 +1,23 @@
 <div *ngFor="let transaction of transactions" class="transaction-item">
   <div class="transaction-icon">
-    <em class="icon" [ngClass]="transaction.category + '-icon'"></em>
+    <em class="icon" [ngClass]="(transaction.category | pascalToKebabCase) + '-icon'"></em>
   </div>
 
-  <div
-    class="transaction-details"
-    [ngClass]="{ 'transaction-details-basic': !isExtendedTransaction(transaction) }"
-  >
+  <div class="transaction-details" [ngClass]="{ 'transaction-details-basic': !extendedRecord }">
     <span class="transaction-name">{{ transaction.name }}</span>
 
     <span class="transaction-date"
       >{{ transaction.date | date: 'dd-MM-yyyy' }}
-      {{ isExtendedTransaction(transaction) ? transaction.time : '' }}</span
+      {{ extendedRecord ? transaction.time : '' }}</span
     >
 
-    <span *ngIf="isExtendedTransaction(transaction)">
-      {{ transaction.category | kebabToTitle }}</span
-    >
+    <span *ngIf="extendedRecord"> {{ transaction.category | kebabToTitle }}</span>
 
-    <span *ngIf="isExtendedTransaction(transaction)"> {{ transaction.paymentType }}</span>
+    <span *ngIf="extendedRecord"> {{ transaction.paymentSource }}</span>
 
     <span
       [ngClass]="{
-        'transaction-amount': !isExtendedTransaction(transaction),
+        'transaction-amount': !extendedRecord,
         'transaction-amount-positive': transaction.amount > 0,
         'transaction-amount-negative': transaction.amount < 0
       }"

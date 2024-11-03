@@ -1,10 +1,10 @@
 import { ChartData, ChartOptions } from 'chart.js';
 
-import { ExpenseCategoryBudgeting } from '@app/core/interfaces/category.schema';
 import {
   categoryData,
   generateColors,
 } from '@common/components/fin-man-pie-chart/fin-man-pie-chart.utils';
+import { ExpenseCategoryBudgeting } from '@app/core/interfaces/budgeting.schema';
 
 export const PIE_CHART_TYPE = 'pie' as const;
 export type PieChartTypeLiteral = typeof PIE_CHART_TYPE;

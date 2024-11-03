@@ -1,83 +1,83 @@
-<div class="asset-panel-container">
-  <div class="header-wrapper">
-    <h4 class="asset-header">
-      {{ getPanelTitle }}
-    </h4>
+<!--<div class="asset-panel-container">-->
+<!--  <div class="header-wrapper">-->
+<!--    <h4 class="asset-header">-->
+<!--      {{ getPanelTitle }}-->
+<!--    </h4>-->
 
-    <div class="actions-wrapper">
-      <fin-man-custom-dropdown
-        [options]="['all', 'portfolio1', 'portfolio2']"
-      ></fin-man-custom-dropdown>
+<!--    <div class="actions-wrapper">-->
+<!--      <fin-man-custom-dropdown-->
+<!--        [options]="['all', 'portfolio1', 'portfolio2']"-->
+<!--      ></fin-man-custom-dropdown>-->
 
-      <fin-man-custom-dropdown
-        [options]="assetTypeNames"
-        [defaultOption]="selectedAssetType"
-      ></fin-man-custom-dropdown>
+<!--      <fin-man-custom-dropdown-->
+<!--        [options]="assetTypeNames"-->
+<!--        [defaultOption]="selectedAssetType"-->
+<!--      ></fin-man-custom-dropdown>-->
 
-      <div class="add-button-wrapper">
-        <div class="icon-wrapper">
-          <em class="icon add-icon"></em>
-        </div>
-        <div class="add-button">Add</div>
-      </div>
-    </div>
-  </div>
+<!--      <div class="add-button-wrapper" (click)="openModal.emit()">-->
+<!--        <div class="icon-wrapper">-->
+<!--          <em class="icon add-icon"></em>-->
+<!--        </div>-->
+<!--        <div class="add-button">Add</div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 
-  <fin-man-search [control]="searchControl"></fin-man-search>
+<!--  <fin-man-search [control]="searchControl"></fin-man-search>-->
 
-  <div class="assets-table-header">
-    <div class="header-cell">{{ assetHeaders[0] }}</div>
-    <div class="header-cell">{{ assetHeaders[1] }}</div>
-    <div class="header-cell">{{ assetHeaders[2] }}</div>
-    <div class="header-cell">{{ assetHeaders[3] }}</div>
-    <div class="header-cell">{{ assetHeaders[4] }}</div>
-    <div class="header-cell">{{ assetHeaders[5] }}</div>
-    <div class="header-cell">{{ assetHeaders[6] }}</div>
-    <div class="header-cell">{{ assetHeaders[7] }}</div>
-    <div class="header-cell">{{ assetHeaders[8] }}</div>
-    <div class="header-cell double-header">
-      <div>{{ assetHeaders[9] }}</div>
-      <div>{{ assetHeaders[10] }}</div>
-    </div>
-  </div>
+<!--  <div class="assets-table-header">-->
+<!--    <div class="header-cell">{{ assetHeaders[0] }}</div>-->
+<!--    <div class="header-cell">{{ assetHeaders[1] }}</div>-->
+<!--    <div class="header-cell">{{ assetHeaders[2] }}</div>-->
+<!--    <div class="header-cell">{{ assetHeaders[3] }}</div>-->
+<!--    <div class="header-cell">{{ assetHeaders[4] }}</div>-->
+<!--    <div class="header-cell">{{ assetHeaders[5] }}</div>-->
+<!--    <div class="header-cell">{{ assetHeaders[6] }}</div>-->
+<!--    <div class="header-cell">{{ assetHeaders[7] }}</div>-->
+<!--    <div class="header-cell">{{ assetHeaders[8] }}</div>-->
+<!--    <div class="header-cell double-header">-->
+<!--      <div>{{ assetHeaders[9] }}</div>-->
+<!--      <div>{{ assetHeaders[10] }}</div>-->
+<!--    </div>-->
+<!--  </div>-->
 
-  <div *ngFor="let asset of assetData" class="asset-item">
-    <div class="column column-name">{{ asset.Name }}</div>
-    <div class="column column-ticker">{{ asset.Ticker }}</div>
-    <div class="column column-dividend-yield" [ngClass]="{ positive: asset.DividendYield > 0 }">
-      {{ asset.DividendYield + '%' }}
-    </div>
-    <div class="column column-accumulation">{{ asset.Accumulation ? 'Tak' : 'Nie' }}</div>
-    <div class="column column-total-invested">{{ asset.TotalInvested }}</div>
-    <div class="column column-average-purchase-price">{{ asset.AveragePurchasePrice }}</div>
-    <div class="column column-total-invested">{{ asset.TotalInvested }}</div>
-    <div class="column column-current-value">
-      {{ asset.CurrentValue }}
-    </div>
-    <div
-      class="column column-gain-loss"
-      [ngClass]="{
-        positive: asset.UnrealizedGainLoss > 0,
-        negative: asset.UnrealizedGainLoss < 0
-      }"
-    >
-      {{
-        asset.UnrealizedGainLoss +
-          ' / ' +
-          ((asset.CurrentValue / asset.AveragePurchasePrice - 1) * 100).toFixed(2) +
-          '%'
-      }}
-    </div>
-    <div class="double-column">
-      <div class="column column-date">{{ asset.CreatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
-      <div class="column column-date">{{ asset.UpdatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
-    </div>
+<!--  <div *ngFor="let asset of assetData" class="asset-item">-->
+<!--    <div class="column column-name">{{ asset.Name }}</div>-->
+<!--    <div class="column column-ticker">{{ asset.Ticker }}</div>-->
+<!--    <div class="column column-dividend-yield" [ngClass]="{ positive: asset.DividendYield > 0 }">-->
+<!--      {{ asset.DividendYield + '%' }}-->
+<!--    </div>-->
+<!--    <div class="column column-accumulation">{{ asset.Accumulation ? 'Tak' : 'Nie' }}</div>-->
+<!--    <div class="column column-total-invested">{{ asset.TotalInvested }}</div>-->
+<!--    <div class="column column-average-purchase-price">{{ asset.AveragePurchasePrice }}</div>-->
+<!--    <div class="column column-total-invested">{{ asset.TotalInvested }}</div>-->
+<!--    <div class="column column-current-value">-->
+<!--      {{ asset.CurrentValue }}-->
+<!--    </div>-->
+<!--    <div-->
+<!--      class="column column-gain-loss"-->
+<!--      [ngClass]="{-->
+<!--        positive: asset.UnrealizedGainLoss > 0,-->
+<!--        negative: asset.UnrealizedGainLoss < 0-->
+<!--      }"-->
+<!--    >-->
+<!--      {{-->
+<!--        asset.UnrealizedGainLoss +-->
+<!--          ' / ' +-->
+<!--          ((asset.CurrentValue / asset.AveragePurchasePrice - 1) * 100).toFixed(2) +-->
+<!--          '%'-->
+<!--      }}-->
+<!--    </div>-->
+<!--    <div class="double-column">-->
+<!--      <div class="column column-date">{{ asset.CreatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>-->
+<!--      <div class="column column-date">{{ asset.UpdatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>-->
+<!--    </div>-->
 
-    <!-- TODO: Add hover effect -->
-    <div>
-      <fin-man-kebab-menu-popover
-        [options]="[CrudOperations.EDIT, CrudOperations.DELETE]"
-      ></fin-man-kebab-menu-popover>
-    </div>
-  </div>
-</div>
+<!--    &lt;!&ndash; TODO: Add hover effect &ndash;&gt;-->
+<!--    <div>-->
+<!--      <fin-man-kebab-menu-popover-->
+<!--        [options]="[CrudOperations.EDIT, CrudOperations.DELETE]"-->
+<!--      ></fin-man-kebab-menu-popover>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

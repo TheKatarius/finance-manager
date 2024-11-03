@@ -8,7 +8,10 @@ import {
 } from '@app/core/interfaces/category-names.schema';
 import { CodeValueItem } from '@app/core/interfaces/code-value.schema';
 import { CategoryKind } from '@app/core/interfaces/common-enums.schema';
-import { ExtendedTransactionFormControls } from '@app/core/interfaces/transaction.schema';
+import {
+  ExtendedTransactionFormControls,
+  PaymentSource,
+} from '@app/core/interfaces/transaction.schema';
 import { CurrenciesMocks } from '@app/core/mocks/currencies.mocks';
 import { PaymentTypes } from '@app/core/mocks/payment-types.mocks';
 import { ExpenseCategoriesMockData, IncomeSourcesMockData } from '@app/core/mocks/pie-charts.mocks';
@@ -49,7 +52,7 @@ export class AddTransactionModalComponent implements OnInit {
     CurrenciesMocks.find((currency) => currency.code === 'PLN') as CodeValueItem,
   );
 
-  paymentTypes: string[] = PaymentTypes;
+  paymentSources: string[] = Object.values(PaymentSource);
 
   extendedTransactionFormGroup!: FormGroup<ExtendedTransactionFormControls>;
 

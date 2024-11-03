@@ -2,11 +2,14 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { PersonalTransactionsService } from '@app/core/data/personal-transactions.service';
-import { YearlyPersonalTransactionsData } from '@app/core/interfaces/chart.schema';
-import { LineChartDataset, Transaction } from '@app/core/interfaces/transaction.schema';
-import { TransactionsMocks } from '@app/core/mocks/transactions.mocks';
+import {
+  LineChartDataset,
+  YearlyPersonalTransactionsData,
+} from '@app/core/interfaces/chart.schema';
+import { Transaction } from '@app/core/interfaces/transaction.schema';
 import { NotificationService } from '@app/core/services/notifications.service';
 import { ChartsColorType } from '@common/components/fin-man-charts/fin-man-charts-color-types.schema';
+import { TransactionsMocks } from '@app/core/mocks/transactions.mocks';
 
 @Component({
   selector: 'finance-manager-dashboard',

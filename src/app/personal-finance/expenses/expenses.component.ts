@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 
-import { ExtendedTransaction, PeriodTransaction } from '@app/core/interfaces/transaction.schema';
-import {
-  ExtendedTransactionsMocks,
-  PeriodTransactionsMocks,
-} from '@app/core/mocks/transactions.mocks';
+import { PeriodTransaction, Transaction } from '@app/core/interfaces/transaction.schema';
+import { PeriodTransactionsMocks, TransactionsMocks } from '@app/core/mocks/transactions.mocks';
 
 @Component({
   selector: 'finance-manager-expenses',
@@ -14,7 +11,7 @@ import {
 export class ExpensesComponent {
   isModalVisible: boolean = false;
 
-  transactionData: ExtendedTransaction[] = ExtendedTransactionsMocks;
+  transactionData: Transaction[] = TransactionsMocks;
 
   periodTransactionsData: PeriodTransaction[] = PeriodTransactionsMocks;
 

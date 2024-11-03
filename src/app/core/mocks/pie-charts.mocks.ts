@@ -5,7 +5,7 @@ import {
 import {
   ExpenseCategoryBudgeting,
   IncomeCategoryBudgeting,
-} from '@app/core/interfaces/category.schema';
+} from '@app/core/interfaces/budgeting.schema';
 
 // Helper function to generate random numbers within a range
 function randomRange(min: number, max: number) {

@@ -1,18 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { CategoryKind } from '@app/core/interfaces/common-enums.schema';
-import { CrudOperations } from '@app/core/interfaces/crud-operations-enum.schema';
-import {
-  ExtendedTransaction,
-  PeriodTransaction,
-  Transaction,
-} from '@app/core/interfaces/transaction.schema';
-import {
-  ExtendedTransactionsMocks,
-  PeriodTransactionsMocks,
-  TransactionsMocks,
-} from '@app/core/mocks/transactions.mocks';
+import { PeriodTransaction, Transaction } from '@app/core/interfaces/transaction.schema';
 
 @Component({
   selector: 'fin-man-transaction-panel',
@@ -24,8 +14,9 @@ export class FinManTransactionPanelComponent {
   @Input() panelTitle: string = 'Transactions';
   @Input() periodTransactions: boolean = false;
   @Input() periodTransactionsData: PeriodTransaction[] = [];
-  @Input() transactionData: Transaction[] | ExtendedTransaction[] = [];
+  @Input() transactionData: Transaction[] = [];
   @Input() categoryKind: CategoryKind = CategoryKind.Expense;
+  @Input() isImportActive: boolean = false;
 
   @Output() openModal = new EventEmitter<void>();
 

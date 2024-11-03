@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 
 import { CategoryKind } from '@app/core/interfaces/common-enums.schema';
-import { ExtendedTransaction, PeriodTransaction } from '@app/core/interfaces/transaction.schema';
-import {
-  IncomeTransactionMocks,
-  PeriodIncomeTransactionsMocks,
-} from '@app/core/mocks/transactions.mocks';
+import { PeriodTransaction, Transaction } from '@app/core/interfaces/transaction.schema';
+import { PeriodTransactionsMocks, TransactionsMocks } from '@app/core/mocks/transactions.mocks';
 
 @Component({
   selector: 'finance-manager-incomings',
@@ -17,9 +14,13 @@ export class IncomingsComponent {
 
   isModalVisible: boolean = false;
 
-  transactionData: ExtendedTransaction[] = IncomeTransactionMocks;
+  transactionData: Transaction[] = TransactionsMocks.filter(
+    (transaction) => transaction.amount > 0,
+  );
 
-  periodTransactionsData: PeriodTransaction[] = PeriodIncomeTransactionsMocks;
+  periodTransactionsData: PeriodTransaction[] = PeriodTransactionsMocks.filter(
+    (transaction) => transaction.amount > 0,
+  );
 
   openModal(): void {
     this.isModalVisible = true;

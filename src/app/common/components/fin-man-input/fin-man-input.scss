@@ -24,12 +24,8 @@
     color: colors.$text-main;
 
     width: 100%;
-    height: dimensions.$input-height;
+    height: 40px;
     padding: dimensions.$padding-xs 50px dimensions.$padding-xs dimensions.$padding-small;
-
-    &-thin {
-      height: 30px;
-    }
 
     &::placeholder {
       color: colors.$text-secondary;

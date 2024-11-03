@@ -1,0 +1,12 @@
+@use 'colors' as colors;
+@use 'dimensions' as dimensions;
+@use 'typography' as typography;
+@use 'mixins' as mixins;
+
+.modal-overlay {
+  @include mixins.modal-overlay;
+
+  .modal {
+    @include mixins.modal;
+  }
+}

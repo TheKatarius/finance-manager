@@ -4,7 +4,8 @@ import * as Papa from 'papaparse';
 import { ING_COLUMN_NAMES } from '@app/core/constants/bank-import-column-names.const';
 import { COLORS } from '@app/core/constants/colors.const';
 import { BankList } from '@app/core/interfaces/bank-list.schema';
-import { ExtendedTransaction, Transaction } from '@app/core/interfaces/transaction.schema';
+import { PaymentSource, Transaction } from '@app/core/interfaces/transaction.schema';
+import { ExpenseCategoryNames } from '@app/core/interfaces/category-names.schema';
 
 @Component({
   selector: 'fin-man-import-transactions',
@@ -113,18 +114,18 @@ export class FinManImportTransactionsComponent implements OnInit {
       }
     }
 
-    const transactions: ExtendedTransaction[] = [];
+    const transactions: Transaction[] = [];
     for (let i = headerRowIndex + 1; i < this.csvData.length; i++) {
       const row = this.csvData[i];
 
-      const transaction: ExtendedTransaction = {
+      const transaction: Transaction = {
         name: row[columnRows[this.columnNames[1]]],
         date: row[columnRows[this.columnNames[0]]],
         amount: row[columnRows[this.columnNames[3]]] || row[columnRows[this.columnNames[5]]],
         currencyIsoCode:
           row[columnRows[this.columnNames[4]]] || row[columnRows[this.columnNames[5]] + 1],
-        category: 'Other',
-        paymentType: 'Other',
+        category: ExpenseCategoryNames.Other,
+        paymentSource: PaymentSource.BANK_ACCOUNT,
         currencyFullName: '',
         description: row[columnRows[this.columnNames[2]]],
         time: '00:00',

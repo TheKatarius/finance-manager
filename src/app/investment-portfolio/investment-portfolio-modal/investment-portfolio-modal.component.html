@@ -1,0 +1,73 @@
+<div class="modal-overlay" *ngIf="isVisible">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>{{ assetData ? 'Edytuj Aktywo' : 'Dodaj Nowe Aktywo' }}</h2>
+      <button class="close-button" (click)="closeModal()">&times;</button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="assetFormGroup">
+        <div class="form-group">
+          <fin-man-input
+            [type]="'text'"
+            [label]="'Portfolio Kind'"
+            [control]="assetFormGroup.controls.portfolioId"
+            [required]="true"
+          ></fin-man-input>
+        </div>
+
+        <div class="form-group">
+          <fin-man-custom-dropdown
+            [label]="'Asset Kind'"
+            [optionsIds]="Object.keys(AssetTypeMap)"
+            [options]="Object.values(AssetTypeMap)"
+            [control]="assetFormGroup.controls.assetTypeId"
+          ></fin-man-custom-dropdown>
+        </div>
+
+        <div class="form-group">
+          <fin-man-input
+            [type]="'number'"
+            [label]="'Dividend Yield'"
+            [control]="assetFormGroup.controls.portfolioId"
+          ></fin-man-input>
+        </div>
+
+        <div class="form-group">
+          <label for="maturityDate">Data Wygasnięcia</label>
+          <input id="maturityDate" formControlName="MaturityDate" type="date" />
+        </div>
+
+        <div class="form-group">
+          <label for="faceValue">Wartość Nominalna</label>
+          <input id="faceValue" formControlName="FaceValue" type="number" step="0.01" />
+        </div>
+
+        <div class="form-group">
+          <label for="dividendYield">Dywidenda (%)</label>
+          <input id="dividendYield" formControlName="DividendYield" type="number" step="0.01" />
+        </div>
+
+        <div class="form-group">
+          <label for="accumulation">Akumulacja</label>
+          <input id="accumulation" formControlName="Accumulation" type="checkbox" />
+        </div>
+
+        <div class="form-group">
+          <fin-man-input
+            [label]="'Current Value'"
+            [control]="assetFormGroup.controls.currentValue"
+            [disabled]="true"
+          ></fin-man-input>
+        </div>
+
+        <div class="button-group">
+          <button type="button" (click)="onSubmit()">
+            {{ assetData ? 'Zaktualizuj' : 'Dodaj' }}
+          </button>
+          <button type="button" (click)="closeModal()">Anuluj</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

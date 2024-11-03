@@ -22,6 +22,7 @@ import { CustomDropdownService } from '@common/components/fin-man-custom-dropdow
   styleUrls: ['./fin-man-custom-dropdown.scss'],
 })
 export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDestroy {
+  @Input() optionsIds: (string | number)[] = [];
   @Input() options: T[] = [];
   @Input() defaultOption: string | null = '';
   @Input() defaultOptionNumber: number | null = null;
@@ -90,8 +91,14 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
 
   selectOption(option: T): void {
     this.selected = option;
+    if (this.optionsIds.length) {
+      const id = this.options.findIndex((opt) => opt === option);
+      this.control?.setValue(this.optionsIds[id]);
+    } else {
+      this.control?.setValue(option);
+    }
+
     this.isOpen = false;
-    this.control?.setValue(option);
     this.onChangeSingle.emit(option);
   }
 

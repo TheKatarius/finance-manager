@@ -1,8 +1,8 @@
 import { ExpenseCategoryNames } from '@app/core/interfaces/category-names.schema';
 import {
-  ExtendedExpenseCategoryBudgeting,
   ExpenseCategoryBudgeting,
-} from '@app/core/interfaces/category.schema';
+  ExtendedExpenseCategoryBudgeting,
+} from '@app/core/interfaces/budgeting.schema';
 
 export function categoryData(
   categories: ExpenseCategoryBudgeting[],

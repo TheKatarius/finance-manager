@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { Asset } from '@app/core/interfaces/asset.schema';
@@ -12,6 +12,8 @@ import { AssetsMocks } from '@app/core/mocks/investment-portfolio.mocks';
   styleUrls: ['./fin-man-dynamic-investment-panel.scss'],
 })
 export class FinManDynamicInvestmentPanelComponent {
+  @Output() openModal = new EventEmitter<void>();
+
   readonly CategoryKind = CategoryKind;
 
   readonly CrudOperations = CrudOperations;

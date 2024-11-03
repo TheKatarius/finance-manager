@@ -66,32 +66,34 @@
 
         <div class="form-group">
           <fin-man-custom-dropdown
-            [options]="paymentTypes"
-            [label]="'Payment Type'"
-            [placeholder]="'Select payment type'"
+            [options]="paymentSources"
+            [label]="'Payment Source'"
+            [placeholder]="'Select payment source'"
             [control]="extendedTransactionFormGroup.controls.paymentType"
-            [defaultOption]="paymentTypes[0]"
+            [defaultOption]="paymentSources[0]"
           ></fin-man-custom-dropdown>
         </div>
 
-        <div class="form-group">
-          <fin-man-input
-            [label]="'Date'"
-            [type]="'date'"
-            [control]="extendedTransactionFormGroup.controls.date"
-            [required]="true"
-            [allowedCharsPattern]="'[0-9]'"
-          ></fin-man-input>
-        </div>
+        <div class="horizontal-form-groups">
+          <div class="form-group">
+            <fin-man-input
+              [label]="'Date'"
+              [type]="'date'"
+              [control]="extendedTransactionFormGroup.controls.date"
+              [required]="true"
+              [allowedCharsPattern]="'[0-9]'"
+            ></fin-man-input>
+          </div>
 
-        <div class="form-group">
-          <fin-man-input
-            [label]="'Time'"
-            [type]="'time'"
-            [control]="extendedTransactionFormGroup.controls.time"
-            [required]="true"
-            [allowedCharsPattern]="'[0-9]'"
-          ></fin-man-input>
+          <div class="form-group">
+            <fin-man-input
+              [label]="'Time'"
+              [type]="'time'"
+              [control]="extendedTransactionFormGroup.controls.time"
+              [required]="true"
+              [allowedCharsPattern]="'[0-9]'"
+            ></fin-man-input>
+          </div>
         </div>
 
         <div class="form-group">

@@ -1,24 +1,37 @@
 import { FormControl } from '@angular/forms';
 import { ChartDataset, Point } from 'chart.js';
+import {
+  ExpenseCategoryNames,
+  IncomeCategoryNames,
+} from '@app/core/interfaces/category-names.schema';
 
 export interface Transaction {
   name: string;
-  date: string;
+  category: ExpenseCategoryNames | IncomeCategoryNames;
   amount: number;
-  currencyIsoCode: string;
-  category: string;
-}
-
-export interface ExtendedTransaction extends Transaction {
-  paymentType: string;
-  currencyFullName: string;
-  description?: string;
+  date: string; // In periodTransactions, it is date of next payment
   time: string;
+  currencyIsoCode: string;
+  currencyFullName: string;
+  paymentSource: PaymentSource;
+  description?: string;
 }
 
 export interface PeriodTransaction extends Transaction {
-  paymentType: string;
-  periodTime: string;
+  periodTime: PeriodTimeTransaction;
+}
+
+export enum PeriodTimeTransaction {
+  ONE_TIME = 'ONE_TIME',
+  DAILY = 'DAILY',
+  WEEKLY = 'WEEKLY',
+  MONTHLY = 'MONTHLY',
+  YEARLY = 'YEARLY',
+}
+
+export enum PaymentSource {
+  CASH = 'CASH',
+  BANK_ACCOUNT = 'BANK_ACCOUNT',
 }
 
 export interface ExtendedTransactionFormControls {
@@ -31,5 +44,3 @@ export interface ExtendedTransactionFormControls {
   description: FormControl<string | null>;
   time: FormControl<string | null>;
 }
-
-export type LineChartDataset = ChartDataset<'line', (number | Point | null)[]>;

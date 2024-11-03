@@ -7,6 +7,14 @@
       <span class="subtitle">All your investments in one place</span>
     </div>
 
-    <fin-man-dynamic-investment-panel></fin-man-dynamic-investment-panel>
+    <fin-man-dynamic-investment-panel (openModal)="openModal()"></fin-man-dynamic-investment-panel>
   </div>
 </div>
+
+<finance-manager-investment-portfolio-modal
+  [isVisible]="isModalVisible"
+  (close)="closeModal()"
+  (assetAdded)="handleAssetAdded($event)"
+  (assetUpdated)="handleAssetUpdated($event)"
+  [assetData]="selectedAsset"
+></finance-manager-investment-portfolio-modal>

@@ -13,8 +13,10 @@ import { BaseChartDirective } from 'ng2-charts';
 
 import { COLORS } from '@app/core/constants/colors.const';
 import { MONTHS_ORDER } from '@app/core/constants/data.const';
-import { YearlyPersonalTransactionsData } from '@app/core/interfaces/chart.schema';
-import { LineChartDataset } from '@app/core/interfaces/transaction.schema';
+import {
+  LineChartDataset,
+  YearlyPersonalTransactionsData,
+} from '@app/core/interfaces/chart.schema';
 import { calculateAverage } from '@app/core/utils/calculate-average.utils';
 import { ChartsColorType } from '@common/components/fin-man-charts/fin-man-charts-color-types.schema';
 import {
