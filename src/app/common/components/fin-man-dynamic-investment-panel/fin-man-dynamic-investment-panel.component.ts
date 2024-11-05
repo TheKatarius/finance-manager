@@ -13,6 +13,9 @@ import { AssetsMocks } from '@app/core/mocks/investment-portfolio.mocks';
 })
 export class FinManDynamicInvestmentPanelComponent {
   @Output() openModal = new EventEmitter<void>();
+  @Output() openPortfolioModal = new EventEmitter<void>();
+  @Output() deleteAsset = new EventEmitter<Asset>();
+  @Output() editAsset = new EventEmitter<Asset>();
 
   readonly CategoryKind = CategoryKind;
 
@@ -41,5 +44,13 @@ export class FinManDynamicInvestmentPanelComponent {
 
   get getPanelTitle(): string {
     return 'Purchased ' + this.selectedAssetType + 's';
+  }
+
+  handleOptionSelected(option: CrudOperations, asset: Asset): void {
+    if (option === CrudOperations.EDIT) {
+      this.editAsset.emit(asset);
+    } else if (option === CrudOperations.DELETE) {
+      this.deleteAsset.emit(asset);
+    }
   }
 }

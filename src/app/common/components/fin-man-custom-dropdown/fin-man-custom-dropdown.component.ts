@@ -14,6 +14,8 @@ import {
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
+import { AssetTypeMap } from '@app/core/constants/assets.const';
+import { AssetTypes } from '@app/core/interfaces/asset.schema';
 import { CustomDropdownService } from '@common/components/fin-man-custom-dropdown/fin-man-custom-dropdown.service';
 
 @Component({
@@ -22,7 +24,7 @@ import { CustomDropdownService } from '@common/components/fin-man-custom-dropdow
   styleUrls: ['./fin-man-custom-dropdown.scss'],
 })
 export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDestroy {
-  @Input() optionsIds: (string | number)[] = [];
+  @Input() optionsIds: number[] = [];
   @Input() options: T[] = [];
   @Input() defaultOption: string | null = '';
   @Input() defaultOptionNumber: number | null = null;
@@ -37,12 +39,11 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
   @Output() onChangeMulti = new EventEmitter<T[]>();
 
   private elementRef = inject(ElementRef);
-
   private customDropdownService = inject(CustomDropdownService);
-
   private clearSelectionsSubscription!: Subscription;
 
   isOpen: boolean = false;
+  selectedId: number = 0;
   selected: T | null = null;
   selectedOptions: T[] = [];
 
@@ -55,7 +56,9 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.control) {
+    if (this.control && changes.optionsIds) {
+      this.selectedId = this.control.value;
+    } else if (this.control && !changes.optionsIds) {
       if (this.isMultiSelect) {
         this.selectedOptions = this.control.value || [];
       } else {
@@ -89,8 +92,13 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
     });
   }
 
+  getDisplayValue(option: T): T | null {
+    return this.options[this.selectedId - 1] || this.selected;
+  }
+
   selectOption(option: T): void {
     this.selected = option;
+    this.selectedId = this.optionsIds[this.options.indexOf(option)];
     if (this.optionsIds.length) {
       const id = this.options.findIndex((opt) => opt === option);
       this.control?.setValue(this.optionsIds[id]);

@@ -1,8 +1,9 @@
 // asset-modal.component.ts
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { AssetFormControls } from '@app/core/interfaces/asset.schema';
+
 import { AssetTypeMap } from '@app/core/constants/assets.const';
+import { AssetFormControls, AssetTypes } from '@app/core/interfaces/asset.schema';
 import { InvestmentPortfolioFormGroupService } from '@app/investment-portfolio/investment-portfolio-modal/investment-portfolio-modal.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { InvestmentPortfolioFormGroupService } from '@app/investment-portfolio/i
   styleUrls: [
     '../../../css/components/investment-portfolio/investment-portfolio-modal/investment-portfolio-modal.scss',
   ],
-  providers: [],
+  providers: [InvestmentPortfolioFormGroupService],
 })
 export class InvestmentPortfolioModalComponent implements OnInit {
   @Input() isVisible: boolean = false;
@@ -26,7 +27,7 @@ export class InvestmentPortfolioModalComponent implements OnInit {
   assetFormGroup!: FormGroup<AssetFormControls>;
 
   ngOnInit(): void {
-    // this.assetFormGroup = this.investmentPortfolioFormGroupService.createInvestmentPortfolioAsset();
+    this.assetFormGroup = this.investmentPortfolioFormGroupService.createInvestmentPortfolioAsset();
 
     if (this.assetData) {
       this.assetFormGroup.patchValue(this.assetData);
@@ -57,6 +58,11 @@ export class InvestmentPortfolioModalComponent implements OnInit {
     }
   }
 
+  get assetTypeKeys(): number[] {
+    return Object.keys(AssetTypeMap).map((key) => +key);
+  }
+
   protected readonly Object = Object;
   protected readonly AssetTypeMap = AssetTypeMap;
+  protected readonly AssetTypes = AssetTypes;
 }

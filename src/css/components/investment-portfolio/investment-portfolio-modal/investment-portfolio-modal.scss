@@ -8,5 +8,7 @@
 
   .modal {
     @include mixins.modal;
+
+    @include mixins.add-button-modal;
   }
 }

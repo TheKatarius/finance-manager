@@ -1,5 +1,18 @@
 import { FormControl } from '@angular/forms';
 
+export interface Portfolio {
+  id: string;
+  name: string; // Nazwa portfela
+  description?: string; // Opis portfela (opcjonalny)
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface PortfolioFormControls {
+  name: FormControl<string | null>;
+  description: FormControl<string | null>;
+}
+
 export interface Asset {
   id: string;
   portfolioId: string; // Typ portfela
@@ -7,7 +20,7 @@ export interface Asset {
   ticker: string; // Nazwa skrócona assetu
   assetTypeId: AssetTypes; // Rodzaj assetu
   couponRate: number; // Stopa kuponowa (obligacje)
-  maturityDate: string | null; // Data wygaśnięcia - wykupu obligacji
+  maturityDate: Date | null; // Data wygaśnięcia - wykupu obligacji
   faceValue: number; // Wartość którą zwraca emitent po upływie maturity date - przeważnie jest to kwota zakupu obligacji
   dividendYield: number;
   accumulation: boolean;
@@ -16,8 +29,23 @@ export interface Asset {
   totalInvested: number;
   currentValue: number;
   unrealizedGainLoss: number;
-  createdAt: string;
-  updatedAt: string;
+  currency: string;
+  exchange: string;
+  interestAccrued: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface AssetType {
+  id: number;
+  type: string;
+}
+
+export interface VerifiedTicker {
+  ticker: string;
+  name: string;
+  assetType: string;
+  lastVerifiedAt: Date;
 }
 
 export interface AssetFormControls {
@@ -35,6 +63,9 @@ export interface AssetFormControls {
   totalInvested: FormControl<number | null>;
   currentValue: FormControl<number | null>;
   unrealizedGainLoss: FormControl<number | null>;
+  currency: FormControl<string | null>;
+  exchange: FormControl<string | null>;
+  interestAccrued: FormControl<number | null>;
   createdAt: FormControl<string | null>;
   updatedAt: FormControl<string | null>;
 }

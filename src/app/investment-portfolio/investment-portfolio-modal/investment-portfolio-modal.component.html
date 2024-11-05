@@ -8,64 +8,122 @@
     <div class="modal-body">
       <form [formGroup]="assetFormGroup">
         <div class="form-group">
-          <fin-man-input
-            [type]="'text'"
+          <fin-man-custom-dropdown
             [label]="'Portfolio Kind'"
+            [options]="['portfolio1', 'portfolio2']"
+            [defaultOption]="'portfolio1'"
+            [placeholder]="'Select Portfolio'"
             [control]="assetFormGroup.controls.portfolioId"
-            [required]="true"
-          ></fin-man-input>
+          ></fin-man-custom-dropdown>
         </div>
 
         <div class="form-group">
           <fin-man-custom-dropdown
             [label]="'Asset Kind'"
-            [optionsIds]="Object.keys(AssetTypeMap)"
+            [optionsIds]="assetTypeKeys"
             [options]="Object.values(AssetTypeMap)"
+            [defaultOption]="Object.values(AssetTypeMap)[0]"
             [control]="assetFormGroup.controls.assetTypeId"
           ></fin-man-custom-dropdown>
         </div>
 
         <div class="form-group">
           <fin-man-input
-            [type]="'number'"
-            [label]="'Dividend Yield'"
-            [control]="assetFormGroup.controls.portfolioId"
+            [type]="'text'"
+            [label]="'Name'"
+            [placeholder]="'Enter asset name'"
+            [control]="assetFormGroup.controls.name"
           ></fin-man-input>
         </div>
 
-        <div class="form-group">
-          <label for="maturityDate">Data Wygasnięcia</label>
-          <input id="maturityDate" formControlName="MaturityDate" type="date" />
+        <div
+          *ngIf="
+            assetFormGroup.controls.assetTypeId.value === AssetTypes.Stock ||
+            assetFormGroup.controls.assetTypeId.value === AssetTypes.Cryptocurrency
+          "
+          class="form-group"
+        >
+          <fin-man-custom-dropdown
+            [label]="'Ticker'"
+            [options]="[]"
+            [control]="assetFormGroup.controls.ticker"
+          ></fin-man-custom-dropdown>
         </div>
 
-        <div class="form-group">
-          <label for="faceValue">Wartość Nominalna</label>
-          <input id="faceValue" formControlName="FaceValue" type="number" step="0.01" />
+        <div
+          *ngIf="assetFormGroup.controls.assetTypeId.value === AssetTypes.Stock"
+          class="form-group"
+        >
+          <fin-man-input
+            [type]="'number'"
+            [label]="'Dividend Yield'"
+            [control]="assetFormGroup.controls.dividendYield"
+          ></fin-man-input>
         </div>
 
-        <div class="form-group">
-          <label for="dividendYield">Dywidenda (%)</label>
-          <input id="dividendYield" formControlName="DividendYield" type="number" step="0.01" />
+        <div
+          *ngIf="assetFormGroup.controls.assetTypeId.value === AssetTypes.Bonds"
+          class="form-group"
+        >
+          <fin-man-input
+            [type]="'number'"
+            [label]="'Coupon Rate'"
+            [control]="assetFormGroup.controls.couponRate"
+          ></fin-man-input>
         </div>
 
-        <div class="form-group">
-          <label for="accumulation">Akumulacja</label>
-          <input id="accumulation" formControlName="Accumulation" type="checkbox" />
+        <div
+          *ngIf="assetFormGroup.controls.assetTypeId.value === AssetTypes.Bonds"
+          class="form-group"
+        >
+          <fin-man-input
+            [type]="'date'"
+            [label]="'Maturity Date'"
+            [control]="assetFormGroup.controls.maturityDate"
+          ></fin-man-input>
+        </div>
+
+        <div
+          *ngIf="assetFormGroup.controls.assetTypeId.value === AssetTypes.Bonds"
+          class="form-group"
+        >
+          <fin-man-input
+            [type]="'number'"
+            [label]="'Face Value'"
+            [control]="assetFormGroup.controls.faceValue"
+          ></fin-man-input>
+        </div>
+
+        <div
+          *ngIf="assetFormGroup.controls.assetTypeId.value === AssetTypes.ETF"
+          class="form-group"
+        >
+          <fin-man-custom-dropdown
+            [label]="'Accumulation'"
+            [options]="['Yes', 'No']"
+            [control]="assetFormGroup.controls.accumulation"
+          ></fin-man-custom-dropdown>
         </div>
 
         <div class="form-group">
           <fin-man-input
             [label]="'Current Value'"
             [control]="assetFormGroup.controls.currentValue"
-            [disabled]="true"
           ></fin-man-input>
         </div>
 
-        <div class="button-group">
-          <button type="button" (click)="onSubmit()">
-            {{ assetData ? 'Zaktualizuj' : 'Dodaj' }}
-          </button>
-          <button type="button" (click)="closeModal()">Anuluj</button>
+        <div class="form-group">
+          <fin-man-input
+            [type]="'date'"
+            [label]="'Created At'"
+            [control]="assetFormGroup.controls.createdAt"
+          ></fin-man-input>
+        </div>
+
+        <div class="add-button-modal-wrapper">
+          <div class="add-button" (click)="onSubmit()">
+            {{ assetData ? 'Edytuj Aktywo' : 'Dodaj Nowe Aktywo' }}
+          </div>
         </div>
       </form>
     </div>
