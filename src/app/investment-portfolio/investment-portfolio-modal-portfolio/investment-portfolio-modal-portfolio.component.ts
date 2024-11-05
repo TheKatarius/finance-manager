@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+import { VALIDATION } from '@app/core/constants/validators.const';
 import { PortfolioService } from '@app/core/data/portfolios.service';
 import { Portfolio, PortfolioFormControls } from '@app/core/interfaces/asset.schema';
 import { InvestmentPortfolioModalPortfolioService } from '@app/investment-portfolio/investment-portfolio-modal-portfolio/investment-portfolio-modal-portfolio.service';
@@ -62,4 +63,6 @@ export class InvestmentPortfolioModalPortfolioComponent implements OnInit {
     this.close.emit();
     this.portfolioForm.reset();
   }
+
+  protected readonly VALIDATION = VALIDATION;
 }

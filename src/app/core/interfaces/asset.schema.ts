@@ -8,9 +8,26 @@ export interface Portfolio {
   updatedAt: Date;
 }
 
+export interface PortfolioResponse {
+  data: Portfolio[];
+  message: string;
+  status: string;
+}
+
 export interface PortfolioFormControls {
   name: FormControl<string | null>;
   description: FormControl<string | null>;
+}
+
+export interface AssetType {
+  id: number;
+  type: string;
+}
+
+export interface AssetTypeResponse {
+  data: AssetType[];
+  message: string;
+  status: string;
 }
 
 export interface Asset {
@@ -18,7 +35,7 @@ export interface Asset {
   portfolioId: string; // Typ portfela
   name: string; // Nazwa assetu wpisywana ręcznie (np. dla obligacji) lub po wybraniu assetu w dropdown
   ticker: string; // Nazwa skrócona assetu
-  assetTypeId: AssetTypes; // Rodzaj assetu
+  assetTypeId: number; // Rodzaj assetu
   couponRate: number; // Stopa kuponowa (obligacje)
   maturityDate: Date | null; // Data wygaśnięcia - wykupu obligacji
   faceValue: number; // Wartość którą zwraca emitent po upływie maturity date - przeważnie jest to kwota zakupu obligacji
@@ -36,11 +53,6 @@ export interface Asset {
   updatedAt: Date;
 }
 
-export interface AssetType {
-  id: number;
-  type: string;
-}
-
 export interface VerifiedTicker {
   ticker: string;
   name: string;
@@ -52,7 +64,7 @@ export interface AssetFormControls {
   portfolioId: FormControl<string | null>;
   name: FormControl<string | null>;
   ticker: FormControl<string | null>;
-  assetTypeId: FormControl<AssetTypes | null>;
+  assetTypeId: FormControl<number | null>;
   couponRate: FormControl<number | null>;
   maturityDate: FormControl<string | null>;
   faceValue: FormControl<number | null>;
@@ -68,11 +80,4 @@ export interface AssetFormControls {
   interestAccrued: FormControl<number | null>;
   createdAt: FormControl<string | null>;
   updatedAt: FormControl<string | null>;
-}
-
-export enum AssetTypes {
-  Stock = 1,
-  Bonds = 2,
-  ETF = 3,
-  Cryptocurrency = 4,
 }

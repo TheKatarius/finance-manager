@@ -2,8 +2,8 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { AssetTypeMap } from '@app/core/constants/assets.const';
-import { AssetFormControls, AssetTypes } from '@app/core/interfaces/asset.schema';
+import { VALIDATION } from '@app/core/constants/validators.const';
+import { Asset, AssetFormControls, AssetType, Portfolio } from '@app/core/interfaces/asset.schema';
 import { InvestmentPortfolioFormGroupService } from '@app/investment-portfolio/investment-portfolio-modal/investment-portfolio-modal.service';
 
 @Component({
@@ -16,11 +16,16 @@ import { InvestmentPortfolioFormGroupService } from '@app/investment-portfolio/i
 })
 export class InvestmentPortfolioModalComponent implements OnInit {
   @Input() isVisible: boolean = false;
-  @Input() assetData: any = null; // Dane aktywów do edycji (opcjonalne)
+  @Input() assetData: Asset[] = []; // Dane aktywów do edycji (opcjonalne)
+  @Input() assetTypesData: AssetType[] = [];
+  @Input() portfolioData: Portfolio[] = []; // Dane portfela do edycji (opcjonalne)
 
   @Output() close = new EventEmitter<void>();
   @Output() assetAdded = new EventEmitter<any>();
   @Output() assetUpdated = new EventEmitter<any>();
+
+  readonly VALIDATION = VALIDATION;
+  readonly Object = Object;
 
   private investmentPortfolioFormGroupService = inject(InvestmentPortfolioFormGroupService);
 
@@ -28,13 +33,7 @@ export class InvestmentPortfolioModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.assetFormGroup = this.investmentPortfolioFormGroupService.createInvestmentPortfolioAsset();
-
-    if (this.assetData) {
-      this.assetFormGroup.patchValue(this.assetData);
-    }
   }
-
-  private loadData(): void {}
 
   closeModal(): void {
     this.close.emit();
@@ -42,6 +41,7 @@ export class InvestmentPortfolioModalComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log(this.assetFormGroup);
     if (this.assetFormGroup.valid) {
       const assetData = this.assetFormGroup.value;
       if (this.assetData) {
@@ -58,11 +58,19 @@ export class InvestmentPortfolioModalComponent implements OnInit {
     }
   }
 
-  get assetTypeKeys(): number[] {
-    return Object.keys(AssetTypeMap).map((key) => +key);
+  get assetTypesDataIds(): number[] {
+    return this.assetTypesData.map((assetType) => assetType.id);
   }
 
-  protected readonly Object = Object;
-  protected readonly AssetTypeMap = AssetTypeMap;
-  protected readonly AssetTypes = AssetTypes;
+  get assetTypesDataTypes(): string[] {
+    return this.assetTypesData.map((assetType) => assetType.type);
+  }
+
+  get portfolioDataIds(): string[] {
+    return this.portfolioData.map((portfolio) => portfolio.id);
+  }
+
+  get portfolioDataNames(): string[] {
+    return this.portfolioData.map((portfolio) => portfolio.name);
+  }
 }

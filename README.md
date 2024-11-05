@@ -1,2 +1,3 @@
 - Poprawa tooltip ponieważ wpada pod headers columns
 - Dodać modal do periodic and planned transactions 
+- co możemy edytować w assetach i transakcjach?

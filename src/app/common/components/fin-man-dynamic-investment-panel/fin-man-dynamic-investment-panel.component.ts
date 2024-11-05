@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { Asset } from '@app/core/interfaces/asset.schema';
+import { ASSET_HEADERS } from '@app/core/constants/asset-types-columns.const';
+import { Asset, AssetType, Portfolio } from '@app/core/interfaces/asset.schema';
 import { CategoryKind } from '@app/core/interfaces/common-enums.schema';
 import { CrudOperations } from '@app/core/interfaces/crud-operations-enum.schema';
 import { AssetsMocks } from '@app/core/mocks/investment-portfolio.mocks';
@@ -11,39 +12,39 @@ import { AssetsMocks } from '@app/core/mocks/investment-portfolio.mocks';
   templateUrl: './fin-man-dynamic-investment-panel.component.html',
   styleUrls: ['./fin-man-dynamic-investment-panel.scss'],
 })
-export class FinManDynamicInvestmentPanelComponent {
+export class FinManDynamicInvestmentPanelComponent implements OnInit {
+  @Input() portfolioData: Portfolio[] = [];
+  @Input() assetTypesData: AssetType[] = [];
+
   @Output() openModal = new EventEmitter<void>();
   @Output() openPortfolioModal = new EventEmitter<void>();
   @Output() deleteAsset = new EventEmitter<Asset>();
   @Output() editAsset = new EventEmitter<Asset>();
 
   readonly CategoryKind = CategoryKind;
-
   readonly CrudOperations = CrudOperations;
-
-  assetHeaders: string[] = [
-    'Asset Name',
-    'Ticker',
-    'Dividend Yield',
-    'Accumulation',
-    'Total Quantity',
-    'Average Purchase Price',
-    'Total Invested',
-    'Current Value',
-    'Unrealized Gain/Loss',
-    'Created At',
-    'Updated At',
-  ];
+  readonly assetHeaders = ASSET_HEADERS;
 
   searchControl = new FormControl('');
 
-  assetTypeNames = ['Stock', 'ETF', 'Crypto', 'REIT', 'Mutual Fund', 'Bond', 'Commodity', 'Other'];
-  selectedAssetType = 'Stock';
+  assetTypeNames: string[] = [];
+  assetTypeIds: number[] = [];
+  selectedAssetType: number = 1;
 
   assetData: Asset[] = AssetsMocks;
 
+  ngOnInit(): void {
+    this.assetTypeNames = this.assetTypesData.map((assetType) => assetType.type);
+
+    this.assetTypeIds = this.assetTypesData.map((assetType) => assetType.id);
+  }
+
   get getPanelTitle(): string {
     return 'Purchased ' + this.selectedAssetType + 's';
+  }
+
+  handleAssetTypeChange(assetType: number): void {
+    this.selectedAssetType = assetType;
   }
 
   handleOptionSelected(option: CrudOperations, asset: Asset): void {
@@ -52,5 +53,9 @@ export class FinManDynamicInvestmentPanelComponent {
     } else if (option === CrudOperations.DELETE) {
       this.deleteAsset.emit(asset);
     }
+  }
+
+  get portfolioDataNames(): string[] {
+    return this.portfolioData.map((portfolio) => portfolio.name);
   }
 }

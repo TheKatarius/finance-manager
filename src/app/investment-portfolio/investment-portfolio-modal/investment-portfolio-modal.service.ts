@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Asset, AssetFormControls, AssetTypes } from '@app/core/interfaces/asset.schema';
+import { Asset, AssetFormControls } from '@app/core/interfaces/asset.schema';
 
 @Injectable()
 export class InvestmentPortfolioFormGroupService {
@@ -10,51 +10,39 @@ export class InvestmentPortfolioFormGroupService {
   createInvestmentPortfolioAsset(asset?: Asset): FormGroup<AssetFormControls> {
     return this.formBuilder.group({
       // Podstawowe informacje
-      portfolioId: [asset?.portfolioId ?? '', Validators.required],
-      name: [asset?.name ?? '', Validators.required],
-      ticker: [asset?.ticker ?? '', Validators.required],
-      assetTypeId: [asset?.assetTypeId ?? AssetTypes.Stock, Validators.required],
+      portfolioId: asset?.portfolioId ?? '',
+      name: asset?.name ?? '',
+      ticker: asset?.ticker ?? '',
+      assetTypeId: asset?.assetTypeId ?? 1,
 
       // Finansowe szczegóły
-      couponRate: [asset?.couponRate ?? 0, [Validators.required, Validators.min(0)]],
-      maturityDate: [
-        asset?.maturityDate ? this.formatDate(asset.maturityDate) : '',
-        Validators.required,
-      ],
-      faceValue: [asset?.faceValue ?? 0, [Validators.required, Validators.min(0)]],
-      dividendYield: [asset?.dividendYield ?? 0, [Validators.required, Validators.min(0)]],
-      accumulation: [asset?.accumulation ?? false, Validators.required],
+      couponRate: asset?.couponRate ?? 0,
+      maturityDate: asset?.maturityDate ? this.formatDate(asset.maturityDate) : '',
+
+      faceValue: asset?.faceValue ?? 0,
+      dividendYield: asset?.dividendYield ?? 0,
+      accumulation: asset?.accumulation ?? false,
 
       // Ilościowe szczegóły (domyślnie wyłączone, ponieważ są kalkulowane)
-      totalQuantity: [{ value: asset?.totalQuantity ?? 0, disabled: true }, Validators.required],
-      averagePurchasePrice: [
-        { value: asset?.averagePurchasePrice ?? 0, disabled: true },
-        Validators.required,
-      ],
-      totalInvested: [{ value: asset?.totalInvested ?? 0, disabled: true }, Validators.required],
-      currentValue: [{ value: asset?.currentValue ?? 0, disabled: true }, Validators.required],
-      unrealizedGainLoss: [
-        { value: asset?.unrealizedGainLoss ?? 0, disabled: true },
-        Validators.required,
-      ],
+      totalQuantity: { value: asset?.totalQuantity ?? 0, disabled: true },
+      averagePurchasePrice: { value: asset?.averagePurchasePrice ?? 0, disabled: true },
+
+      totalInvested: { value: asset?.totalInvested ?? 0, disabled: true },
+      currentValue: asset?.currentValue ?? 0,
+      unrealizedGainLoss: { value: asset?.unrealizedGainLoss ?? 0, disabled: true },
 
       // Walutowe i giełdowe szczegóły
-      currency: [asset?.currency ?? '', Validators.required],
-      exchange: [asset?.exchange ?? '', Validators.required],
+      currency: asset?.currency ?? '',
+      exchange: asset?.exchange ?? '',
 
       // Dodatkowe szczegóły (domyślnie wyłączone)
-      interestAccrued: [
-        { value: asset?.interestAccrued ?? 0, disabled: true },
-        Validators.required,
-      ],
-      createdAt: [
-        { value: asset?.createdAt ? this.formatDate(asset.createdAt) : '', disabled: true },
-        Validators.required,
-      ],
-      updatedAt: [
-        { value: asset?.updatedAt ? this.formatDate(asset.updatedAt) : '', disabled: true },
-        Validators.required,
-      ],
+      interestAccrued: { value: asset?.interestAccrued ?? 0, disabled: true },
+
+      createdAt: asset?.createdAt ? this.formatDate(asset.createdAt) : '',
+      updatedAt: {
+        value: asset?.updatedAt ? this.formatDate(asset.updatedAt) : '',
+        disabled: true,
+      },
     });
   }
 

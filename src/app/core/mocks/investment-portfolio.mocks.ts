@@ -1,5 +1,5 @@
 // assets.mock.ts
-import { Asset, AssetTypes } from '@app/core/interfaces/asset.schema';
+import { Asset } from '@app/core/interfaces/asset.schema';
 
 export const AssetsMocks: Asset[] = [
   // Istniejące aktywa
@@ -8,7 +8,7 @@ export const AssetsMocks: Asset[] = [
     portfolioId: 'portfolio-1',
     name: 'Apple Inc.',
     ticker: 'AAPL',
-    assetTypeId: AssetTypes.Stock,
+    assetTypeId: 1,
     couponRate: 0,
     maturityDate: null,
     faceValue: 0,
@@ -30,7 +30,7 @@ export const AssetsMocks: Asset[] = [
     portfolioId: 'portfolio-1',
     name: 'Microsoft Corp.',
     ticker: 'MSFT',
-    assetTypeId: AssetTypes.Stock,
+    assetTypeId: 1,
     couponRate: 0,
     maturityDate: null,
     faceValue: 0,
@@ -52,7 +52,7 @@ export const AssetsMocks: Asset[] = [
     portfolioId: 'portfolio-2',
     name: 'Tesla Inc.',
     ticker: 'TSLA',
-    assetTypeId: AssetTypes.Stock,
+    assetTypeId: 1,
     couponRate: 0,
     maturityDate: null,
     faceValue: 0,
@@ -74,7 +74,7 @@ export const AssetsMocks: Asset[] = [
     portfolioId: 'portfolio-1',
     name: 'Bitcoin',
     ticker: 'BTC',
-    assetTypeId: AssetTypes.Cryptocurrency,
+    assetTypeId: 4,
     couponRate: 0,
     maturityDate: null,
     faceValue: 0,
@@ -96,7 +96,7 @@ export const AssetsMocks: Asset[] = [
     portfolioId: 'portfolio-1',
     name: 'Ethereum',
     ticker: 'ETH',
-    assetTypeId: AssetTypes.Cryptocurrency,
+    assetTypeId: 4,
     couponRate: 0,
     maturityDate: null,
     faceValue: 0,
@@ -118,7 +118,7 @@ export const AssetsMocks: Asset[] = [
     portfolioId: 'portfolio-2',
     name: 'SPDR S&P 500 ETF',
     ticker: 'SPY',
-    assetTypeId: AssetTypes.ETF,
+    assetTypeId: 3,
     couponRate: 0,
     maturityDate: null,
     faceValue: 0,
@@ -140,7 +140,7 @@ export const AssetsMocks: Asset[] = [
     portfolioId: 'portfolio-2',
     name: 'Vanguard Total',
     ticker: 'VTI',
-    assetTypeId: AssetTypes.ETF,
+    assetTypeId: 3,
     couponRate: 0,
     maturityDate: null,
     faceValue: 0,
@@ -164,7 +164,7 @@ export const AssetsMocks: Asset[] = [
     portfolioId: 'portfolio-3',
     name: 'Obligacja Skarbowa 2024',
     ticker: 'OBL2024',
-    assetTypeId: AssetTypes.Bonds, // assetTypeId=2 dla obligacji
+    assetTypeId: 2, // assetTypeId=2 dla obligacji
     couponRate: 3.5, // Stopa kuponowa 3.5%
     maturityDate: new Date('2034-01-01T00:00:00Z'), // Data wykupu 1 stycznia 2034
     faceValue: 1000, // Wartość nominalna 1000 PLN
@@ -186,7 +186,7 @@ export const AssetsMocks: Asset[] = [
     portfolioId: 'portfolio-3',
     name: 'Obligacja Skarbowa 2026',
     ticker: 'OBL2026',
-    assetTypeId: AssetTypes.Bonds, // assetTypeId=2 dla obligacji
+    assetTypeId: 2, // assetTypeId=2 dla obligacji
     couponRate: 4.0, // Stopa kuponowa 4.0%
     maturityDate: new Date('2026-12-31T00:00:00Z'), // Data wykupu 31 grudnia 2026
     faceValue: 1000, // Wartość nominalna 1000 PLN

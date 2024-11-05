@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Asset, AssetType, VerifiedTicker } from '@app/core/interfaces/asset.schema';
+import { Asset, AssetTypeResponse, VerifiedTicker } from '@app/core/interfaces/asset.schema';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AssetService {
-  private baseUrl = '/api/assets'; // Zakładam, że backend API jest dostępny pod tym adresem
+  private baseUrl = '/api/protected'; // Zakładam, że backend API jest dostępny pod tym adresem
 
   constructor(private http: HttpClient) {}
 
@@ -20,8 +20,9 @@ export class AssetService {
 
   // Pobieranie aktywów na podstawie Portfolio ID
   getAssetsByPortfolioId(portfolioId: string): Observable<Asset[]> {
-    const params = new HttpParams().set('portfolioId', portfolioId);
-    return this.http.get<Asset[]>(`${this.baseUrl}`, { params }).pipe(catchError(this.handleError));
+    return this.http
+      .get<Asset[]>(`${this.baseUrl}/portfolios/${portfolioId}/assets`)
+      .pipe(catchError(this.handleError));
   }
 
   // Pobieranie aktywów przez Portfolio ID (inna metoda, jeśli potrzebne)
@@ -49,8 +50,10 @@ export class AssetService {
   }
 
   // Pobieranie typów aktywów
-  getAssetTypes(): Observable<AssetType[]> {
-    return this.http.get<AssetType[]>(`${this.baseUrl}/types`).pipe(catchError(this.handleError));
+  getAssetTypes(): Observable<AssetTypeResponse> {
+    return this.http
+      .get<AssetTypeResponse>(`${this.baseUrl}/asset_types`)
+      .pipe(catchError(this.handleError));
   }
 
   // Weryfikacja ticker'a

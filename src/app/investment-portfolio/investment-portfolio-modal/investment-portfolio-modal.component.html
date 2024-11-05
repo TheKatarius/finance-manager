@@ -10,7 +10,8 @@
         <div class="form-group">
           <fin-man-custom-dropdown
             [label]="'Portfolio Kind'"
-            [options]="['portfolio1', 'portfolio2']"
+            [optionStringIds]="portfolioDataIds"
+            [options]="portfolioDataNames"
             [defaultOption]="'portfolio1'"
             [placeholder]="'Select Portfolio'"
             [control]="assetFormGroup.controls.portfolioId"
@@ -20,9 +21,9 @@
         <div class="form-group">
           <fin-man-custom-dropdown
             [label]="'Asset Kind'"
-            [optionsIds]="assetTypeKeys"
-            [options]="Object.values(AssetTypeMap)"
-            [defaultOption]="Object.values(AssetTypeMap)[0]"
+            [optionsIds]="assetTypesDataIds"
+            [options]="assetTypesDataTypes"
+            [defaultOption]="assetTypesDataTypes[0]"
             [control]="assetFormGroup.controls.assetTypeId"
           ></fin-man-custom-dropdown>
         </div>
@@ -33,13 +34,16 @@
             [label]="'Name'"
             [placeholder]="'Enter asset name'"
             [control]="assetFormGroup.controls.name"
+            [minlength]="3"
+            [maxlength]="50"
+            [allowedCharsPattern]="VALIDATION.ALLOWED_CHARS_PATTERNS.BASIC_NAME_INPUT"
           ></fin-man-input>
         </div>
 
         <div
           *ngIf="
-            assetFormGroup.controls.assetTypeId.value === AssetTypes.Stock ||
-            assetFormGroup.controls.assetTypeId.value === AssetTypes.Cryptocurrency
+            assetFormGroup.controls.assetTypeId.value === 1 ||
+            assetFormGroup.controls.assetTypeId.value === 4
           "
           class="form-group"
         >
@@ -50,21 +54,19 @@
           ></fin-man-custom-dropdown>
         </div>
 
-        <div
-          *ngIf="assetFormGroup.controls.assetTypeId.value === AssetTypes.Stock"
-          class="form-group"
-        >
+        <div *ngIf="assetFormGroup.controls.assetTypeId.value === 1" class="form-group">
           <fin-man-input
             [type]="'number'"
             [label]="'Dividend Yield'"
             [control]="assetFormGroup.controls.dividendYield"
+            [min]="0"
+            [max]="1000000000"
+            [required]="true"
+            [allowedCharsPattern]="'[0-9.]'"
           ></fin-man-input>
         </div>
 
-        <div
-          *ngIf="assetFormGroup.controls.assetTypeId.value === AssetTypes.Bonds"
-          class="form-group"
-        >
+        <div *ngIf="assetFormGroup.controls.assetTypeId.value === 2" class="form-group">
           <fin-man-input
             [type]="'number'"
             [label]="'Coupon Rate'"
@@ -72,10 +74,7 @@
           ></fin-man-input>
         </div>
 
-        <div
-          *ngIf="assetFormGroup.controls.assetTypeId.value === AssetTypes.Bonds"
-          class="form-group"
-        >
+        <div *ngIf="assetFormGroup.controls.assetTypeId.value === 2" class="form-group">
           <fin-man-input
             [type]="'date'"
             [label]="'Maturity Date'"
@@ -83,10 +82,7 @@
           ></fin-man-input>
         </div>
 
-        <div
-          *ngIf="assetFormGroup.controls.assetTypeId.value === AssetTypes.Bonds"
-          class="form-group"
-        >
+        <div *ngIf="assetFormGroup.controls.assetTypeId.value === 2" class="form-group">
           <fin-man-input
             [type]="'number'"
             [label]="'Face Value'"
@@ -94,10 +90,7 @@
           ></fin-man-input>
         </div>
 
-        <div
-          *ngIf="assetFormGroup.controls.assetTypeId.value === AssetTypes.ETF"
-          class="form-group"
-        >
+        <div *ngIf="assetFormGroup.controls.assetTypeId.value === 3" class="form-group">
           <fin-man-custom-dropdown
             [label]="'Accumulation'"
             [options]="['Yes', 'No']"
@@ -107,8 +100,13 @@
 
         <div class="form-group">
           <fin-man-input
+            [type]="'number'"
             [label]="'Current Value'"
-            [control]="assetFormGroup.controls.currentValue"
+            [control]="assetFormGroup.controls.dividendYield"
+            [min]="0"
+            [max]="1000000000"
+            [required]="true"
+            [allowedCharsPattern]="'[0-9.]'"
           ></fin-man-input>
         </div>
 

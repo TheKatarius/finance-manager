@@ -14,8 +14,6 @@ import {
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AssetTypeMap } from '@app/core/constants/assets.const';
-import { AssetTypes } from '@app/core/interfaces/asset.schema';
 import { CustomDropdownService } from '@common/components/fin-man-custom-dropdown/fin-man-custom-dropdown.service';
 
 @Component({
@@ -25,6 +23,7 @@ import { CustomDropdownService } from '@common/components/fin-man-custom-dropdow
 })
 export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDestroy {
   @Input() optionsIds: number[] = [];
+  @Input() optionStringIds: string[] = [];
   @Input() options: T[] = [];
   @Input() defaultOption: string | null = '';
   @Input() defaultOptionNumber: number | null = null;
@@ -36,6 +35,7 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
   @Input() isMultiSelect: boolean = false;
 
   @Output() onChangeSingle = new EventEmitter<T>();
+  @Output() onChangeNumber = new EventEmitter<number>();
   @Output() onChangeMulti = new EventEmitter<T[]>();
 
   private elementRef = inject(ElementRef);
@@ -44,6 +44,7 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
 
   isOpen: boolean = false;
   selectedId: number = 0;
+  selectedStringId: string = '';
   selected: T | null = null;
   selectedOptions: T[] = [];
 
@@ -56,9 +57,9 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.control && changes.optionsIds) {
+    if (this.control && (changes.optionsIds || changes.optionStringIds)) {
       this.selectedId = this.control.value;
-    } else if (this.control && !changes.optionsIds) {
+    } else if (this.control && !changes.optionsIds && !changes.optionStringIds) {
       if (this.isMultiSelect) {
         this.selectedOptions = this.control.value || [];
       } else {
@@ -98,10 +99,19 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
 
   selectOption(option: T): void {
     this.selected = option;
-    this.selectedId = this.optionsIds[this.options.indexOf(option)];
+    if (this.optionsIds.length) {
+      this.selectedId = this.optionsIds[this.options.indexOf(option)];
+    } else if (this.optionStringIds.length) {
+      this.selectedStringId = this.optionStringIds[this.options.indexOf(option)];
+    }
+
     if (this.optionsIds.length) {
       const id = this.options.findIndex((opt) => opt === option);
       this.control?.setValue(this.optionsIds[id]);
+      this.onChangeNumber.emit(this.optionsIds[id]);
+    } else if (this.optionStringIds.length) {
+      const id = this.options.findIndex((opt) => opt === option);
+      this.control?.setValue(this.optionStringIds[id]);
     } else {
       this.control?.setValue(option);
     }

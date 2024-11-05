@@ -2,18 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Portfolio } from '@app/core/interfaces/asset.schema';
+import { Portfolio, PortfolioResponse } from '@app/core/interfaces/asset.schema';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PortfolioService {
-  private apiUrl = '/api/portfolios'; // URL do backendowego endpointu portfeli
+  private apiUrl = '/api/protected/portfolios'; // URL do backendowego endpointu portfeli
 
   constructor(private http: HttpClient) {}
 
-  getPortfolios(): Observable<Portfolio[]> {
-    return this.http.get<Portfolio[]>(this.apiUrl);
+  getPortfolios(): Observable<PortfolioResponse> {
+    return this.http.get<PortfolioResponse>(this.apiUrl);
   }
 
   createPortfolio(portfolio: Portfolio): Observable<Portfolio> {

@@ -6,13 +6,15 @@
 
     <div class="actions-wrapper">
       <fin-man-custom-dropdown
-        [options]="['all', 'portfolio1', 'portfolio2']"
-        [defaultOption]="'all'"
+        [options]="portfolioDataNames"
+        [defaultOption]="portfolioData[0].name"
       ></fin-man-custom-dropdown>
 
       <fin-man-custom-dropdown
+        [optionsIds]="assetTypeIds"
         [options]="assetTypeNames"
-        [defaultOption]="selectedAssetType"
+        [defaultOption]="assetTypeNames[0]"
+        (onChangeNumber)="handleAssetTypeChange($event)"
       ></fin-man-custom-dropdown>
 
       <div class="add-button-wrapper" (click)="openPortfolioModal.emit()">
@@ -34,19 +36,66 @@
   <fin-man-search [control]="searchControl"></fin-man-search>
 
   <div class="assets-table-header">
-    <div class="header-cell">{{ assetHeaders[0] }}</div>
-    <div class="header-cell">{{ assetHeaders[1] }}</div>
-    <div class="header-cell">{{ assetHeaders[2] }}</div>
-    <div class="header-cell">{{ assetHeaders[3] }}</div>
-    <div class="header-cell">{{ assetHeaders[4] }}</div>
-    <div class="header-cell">{{ assetHeaders[5] }}</div>
-    <div class="header-cell">{{ assetHeaders[6] }}</div>
-    <div class="header-cell">{{ assetHeaders[7] }}</div>
-    <div class="header-cell">{{ assetHeaders[8] }}</div>
-    <div class="header-cell double-header">
-      <div>{{ assetHeaders[9] }}</div>
-      <div>{{ assetHeaders[10] }}</div>
-    </div>
+    <ng-container *ngIf="selectedAssetType === 1">
+      <div class="header-cell">{{ assetHeaders[1][0] }}</div>
+      <div class="header-cell">{{ assetHeaders[1][1] }}</div>
+      <div class="header-cell">{{ assetHeaders[1][2] }}</div>
+      <div class="header-cell">{{ assetHeaders[1][3] }}</div>
+      <div class="header-cell">{{ assetHeaders[1][4] }}</div>
+      <div class="header-cell">{{ assetHeaders[1][5] }}</div>
+      <div class="header-cell">{{ assetHeaders[1][6] }}</div>
+      <div class="header-cell">{{ assetHeaders[1][7] }}</div>
+      <div class="header-cell">{{ assetHeaders[1][8] }}</div>
+      <div class="header-cell double-header">
+        <div>{{ assetHeaders[1][9] }}</div>
+        <div>{{ assetHeaders[1][10] }}</div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="selectedAssetType === 2">
+      <div class="header-cell">{{ assetHeaders[2][0] }}</div>
+      <div class="header-cell">{{ assetHeaders[2][1] }}</div>
+      <div class="header-cell">{{ assetHeaders[2][2] }}</div>
+      <div class="header-cell">{{ assetHeaders[2][3] }}</div>
+      <div class="header-cell">{{ assetHeaders[2][4] }}</div>
+      <div class="header-cell">{{ assetHeaders[2][5] }}</div>
+      <div class="header-cell">{{ assetHeaders[2][6] }}</div>
+      <div class="header-cell">{{ assetHeaders[2][7] }}</div>
+      <div class="header-cell">{{ assetHeaders[2][8] }}</div>
+      <div class="header-cell double-header">
+        <div>{{ assetHeaders[2][9] }}</div>
+        <div>{{ assetHeaders[2][10] }}</div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="selectedAssetType === 3">
+      <div class="header-cell">{{ assetHeaders[3][0] }}</div>
+      <div class="header-cell">{{ assetHeaders[3][1] }}</div>
+      <div class="header-cell">{{ assetHeaders[3][2] }}</div>
+      <div class="header-cell">{{ assetHeaders[3][3] }}</div>
+      <div class="header-cell">{{ assetHeaders[3][4] }}</div>
+      <div class="header-cell">{{ assetHeaders[3][5] }}</div>
+      <div class="header-cell">{{ assetHeaders[3][6] }}</div>
+      <div class="header-cell">{{ assetHeaders[3][7] }}</div>
+      <div class="header-cell">{{ assetHeaders[3][8] }}</div>
+      <div class="header-cell double-header">
+        <div>{{ assetHeaders[3][9] }}</div>
+        <div>{{ assetHeaders[3][10] }}</div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="selectedAssetType === 4">
+      <div class="header-cell">{{ assetHeaders[4][0] }}</div>
+      <div class="header-cell">{{ assetHeaders[4][1] }}</div>
+      <div class="header-cell">{{ assetHeaders[4][2] }}</div>
+      <div class="header-cell">{{ assetHeaders[4][3] }}</div>
+      <div class="header-cell">{{ assetHeaders[4][4] }}</div>
+      <div class="header-cell">{{ assetHeaders[4][5] }}</div>
+      <div class="header-cell">{{ assetHeaders[4][6] }}</div>
+      <div class="header-cell">{{ assetHeaders[4][7] }}</div>
+      <div class="header-cell">{{ assetHeaders[4][8] }}</div>
+      <div class="header-cell double-header">
+        <div>{{ assetHeaders[4][9] }}</div>
+        <div>{{ assetHeaders[4][10] }}</div>
+      </div>
+    </ng-container>
   </div>
 
   <div *ngFor="let asset of assetData" class="asset-item">

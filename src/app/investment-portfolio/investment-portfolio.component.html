@@ -1,4 +1,4 @@
-<div class="investment-portfolio-wrapper">
+<div *ngIf="!isLoading" class="investment-portfolio-wrapper">
   <router-outlet name="menu"></router-outlet>
 
   <div class="investment-portfolio-content-container">
@@ -8,11 +8,15 @@
     </div>
 
     <fin-man-dynamic-investment-panel
+      [portfolioData]="portfolioData"
+      [assetTypesData]="assetTypesData"
       (openModal)="openModal()"
       (openPortfolioModal)="openPortfolioModal()"
       (editAsset)="openModal()"
       (deleteAsset)="deleteAsset($event)"
     ></fin-man-dynamic-investment-panel>
+
+    <fin-man-transaction-panel [transactionData]="[]"></fin-man-transaction-panel>
   </div>
 </div>
 
@@ -24,8 +28,9 @@
 
 <finance-manager-investment-portfolio-modal
   [isVisible]="isModalVisible"
+  [assetTypesData]="assetTypesData"
+  [assetData]="[]"
   (close)="closeModal()"
   (assetAdded)="handleAssetAdded($event)"
   (assetUpdated)="handleAssetUpdated($event)"
-  [assetData]="selectedAsset"
 ></finance-manager-investment-portfolio-modal>

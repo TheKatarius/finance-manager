@@ -1,9 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 import { AssetService } from '@app/core/data/assets.service';
 import { PortfolioService } from '@app/core/data/portfolios.service';
-import { Asset, AssetType, Portfolio } from '@app/core/interfaces/asset.schema';
+import { Asset, AssetType, Portfolio, PortfolioResponse } from '@app/core/interfaces/asset.schema';
 
 @Component({
   selector: 'finance-manager-investment-portfolio',
@@ -13,59 +14,45 @@ import { Asset, AssetType, Portfolio } from '@app/core/interfaces/asset.schema';
 export class InvestmentPortfolioComponent implements OnInit {
   private assetService = inject(AssetService);
   private portfolioService = inject(PortfolioService);
-  private route = inject(ActivatedRoute);
+
+  isLoading: boolean = true;
 
   isModalVisible: boolean = false;
   isPortfolioModalVisible: boolean = false;
 
-  selectedAsset: Asset | null = null;
-  assets: Asset[] = [];
-  assetTypes: AssetType[] = [];
-  selectedAssetTypeId: number | null = null;
+  portfolioData: Portfolio[] = [];
   portfolioId: string = '';
-  error: string = '';
+
+  assetTypesData: AssetType[] = [];
+  selectedAssetTypeId: string | null = null;
+
+  assets: Asset[] = [];
+  selectedAsset: Asset | null = null;
 
   ngOnInit(): void {
-    // Pobierz portfolioId z parametrów routingu lub innego źródła
-    this.route.params.subscribe((params) => {
-      this.portfolioId = params['portfolioId'];
-      this.loadAssetTypes();
-      this.loadAssets();
-    });
+    this.loadData();
   }
 
-  // Pobierz typy aktywów do filtrowania
-  loadAssetTypes(): void {
-    this.assetService.getAssetTypes().subscribe(
-      (data) => {
-        this.assetTypes = data;
-      },
-      (err) => {
-        this.error = err;
-      },
-    );
-  }
+  loadData(): void {
+    forkJoin([this.assetService.getAssetTypes(), this.portfolioService.getPortfolios()]).subscribe(
+      ([assetTypes, portfolios]) => {
+        this.assetTypesData = assetTypes.data
+          .filter((assetType) => assetType.id <= 4)
+          .sort((a, b) => a.id - b.id);
+        this.portfolioData = portfolios.data;
+        this.portfolioId = this.portfolioData[0].id;
 
-  // Pobierz aktywa na podstawie portfolioId i opcjonalnie assetTypeId
-  loadAssets(): void {
-    this.assetService.getAssetsByPortfolioId(this.portfolioId).subscribe(
-      (data) => {
-        if (this.selectedAssetTypeId) {
-          this.assets = data.filter((asset) => asset.assetTypeId === this.selectedAssetTypeId);
-        } else {
-          this.assets = data;
-        }
-      },
-      (err) => {
-        this.error = err;
+        this.assetService.getAssetsByPortfolioId(this.portfolioId).subscribe((assets) => {
+          this.assets = assets;
+          this.isLoading = false;
+        });
       },
     );
   }
 
   // Obsługa zmiany filtrowania przez assetTypeId
-  onAssetTypeChange(assetTypeId: number): void {
+  onAssetTypeChange(assetTypeId: string): void {
     this.selectedAssetTypeId = assetTypeId;
-    this.loadAssets();
   }
 
   // Otwórz modal do tworzenia lub edycji aktywu
