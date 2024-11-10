@@ -12,7 +12,7 @@
             [label]="'Portfolio Kind'"
             [optionStringIds]="portfolioDataIds"
             [options]="portfolioDataNames"
-            [defaultOption]="'portfolio1'"
+            [defaultOption]="portfolioDataNames[0]"
             [placeholder]="'Select Portfolio'"
             [control]="assetFormGroup.controls.portfolioId"
           ></fin-man-custom-dropdown>
@@ -48,9 +48,12 @@
           class="form-group"
         >
           <fin-man-custom-dropdown
+            [isSearchable]="true"
             [label]="'Ticker'"
-            [options]="[]"
+            [options]="tickerAssets"
             [control]="assetFormGroup.controls.ticker"
+            (onSearchValue)="onSearchChange($event)"
+            (onChangeSingle)="onTickerChange($event)"
           ></fin-man-custom-dropdown>
         </div>
 

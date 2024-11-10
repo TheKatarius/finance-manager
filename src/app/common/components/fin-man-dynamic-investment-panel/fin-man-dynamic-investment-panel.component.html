@@ -7,7 +7,7 @@
     <div class="actions-wrapper">
       <fin-man-custom-dropdown
         [options]="portfolioDataNames"
-        [defaultOption]="portfolioData[0].name"
+        [defaultOption]="portfolioData[0].name ?? null"
       ></fin-man-custom-dropdown>
 
       <fin-man-custom-dropdown

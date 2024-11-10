@@ -15,6 +15,7 @@ import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { CustomDropdownService } from '@common/components/fin-man-custom-dropdown/fin-man-custom-dropdown.service';
+import { VALIDATION } from '@app/core/constants/validators.const';
 
 @Component({
   selector: 'fin-man-custom-dropdown',
@@ -29,14 +30,18 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
   @Input() defaultOptionNumber: number | null = null;
   @Input() placeholder: string = 'Select an option';
   @Input() label: string = '';
-  @Input() control?: FormControl;
+  @Input() control!: FormControl;
   @Input() backgroundStyleColor: string = '';
   @Input() disabled: boolean = false;
   @Input() isMultiSelect: boolean = false;
+  @Input() isSearchable: boolean = false;
 
   @Output() onChangeSingle = new EventEmitter<T>();
   @Output() onChangeNumber = new EventEmitter<number>();
   @Output() onChangeMulti = new EventEmitter<T[]>();
+  @Output() onSearchValue = new EventEmitter<string>();
+
+  readonly VALIDATION = VALIDATION;
 
   private elementRef = inject(ElementRef);
   private customDropdownService = inject(CustomDropdownService);
@@ -47,6 +52,8 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
   selectedStringId: string = '';
   selected: T | null = null;
   selectedOptions: T[] = [];
+
+  searchedValue: string = '';
 
   ngOnInit(): void {
     this.defaultOption = this.defaultOption === null ? '' : this.defaultOption;
@@ -130,5 +137,13 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
 
     this.control?.setValue(this.selectedOptions);
     this.onChangeMulti.emit(this.selectedOptions);
+  }
+
+  onSearch(event: Event): void {
+    const searchedValue = (event.target as HTMLInputElement)?.value;
+    if (this.searchedValue !== searchedValue) {
+      this.onSearchValue.emit(searchedValue);
+    }
+    this.searchedValue = searchedValue;
   }
 }

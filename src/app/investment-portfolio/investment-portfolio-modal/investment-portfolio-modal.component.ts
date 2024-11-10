@@ -1,9 +1,16 @@
-// asset-modal.component.ts
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { VALIDATION } from '@app/core/constants/validators.const';
-import { Asset, AssetFormControls, AssetType, Portfolio } from '@app/core/interfaces/asset.schema';
+import { AssetService } from '@app/core/data/assets.service';
+import {
+  Asset,
+  AssetFormControls,
+  AssetType,
+  Portfolio,
+  VerifiedTicker,
+  VerifiedTickerResponse,
+} from '@app/core/interfaces/asset.schema';
 import { InvestmentPortfolioFormGroupService } from '@app/investment-portfolio/investment-portfolio-modal/investment-portfolio-modal.service';
 
 @Component({
@@ -27,12 +34,37 @@ export class InvestmentPortfolioModalComponent implements OnInit {
   readonly VALIDATION = VALIDATION;
   readonly Object = Object;
 
+  private assetService = inject(AssetService);
   private investmentPortfolioFormGroupService = inject(InvestmentPortfolioFormGroupService);
+
+  searchedAssets: VerifiedTicker[] = [];
+  tickerAssets: string[] = [];
 
   assetFormGroup!: FormGroup<AssetFormControls>;
 
   ngOnInit(): void {
     this.assetFormGroup = this.investmentPortfolioFormGroupService.createInvestmentPortfolioAsset();
+  }
+
+  onSearchChange(searchValue: string): void {
+    if (searchValue.length >= 3) {
+      this.assetService.searchInstruments(searchValue, 1).subscribe({
+        next: (assets: VerifiedTickerResponse) => {
+          this.searchedAssets = assets.data ?? [];
+          this.tickerAssets = assets.data?.map((asset) => asset.Symbol) ?? [];
+        },
+      });
+    }
+  }
+
+  onTickerChange(ticker: string): void {
+    const selectedAsset = this.searchedAssets.find((asset) => asset.Symbol === ticker);
+    if (selectedAsset) {
+      this.assetFormGroup.patchValue({
+        ticker: selectedAsset.Symbol,
+        name: selectedAsset.Name,
+      });
+    }
   }
 
   closeModal(): void {
@@ -41,11 +73,10 @@ export class InvestmentPortfolioModalComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.assetFormGroup);
     if (this.assetFormGroup.valid) {
       const assetData = this.assetFormGroup.value;
       if (this.assetData) {
-        // Aktualizacja istniejącego aktywu
+        // Aktualizacja istniejącego aktywu prz
         this.assetUpdated.emit({ ...this.assetData, ...assetData });
       } else {
         // Dodanie nowego aktywu

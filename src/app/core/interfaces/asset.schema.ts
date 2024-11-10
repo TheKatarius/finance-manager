@@ -54,10 +54,19 @@ export interface Asset {
 }
 
 export interface VerifiedTicker {
-  ticker: string;
-  name: string;
-  assetType: string;
-  lastVerifiedAt: Date;
+  ID: number;
+  AssetTypeID: number;
+  Currency: string;
+  Exchange: string;
+  Name: string;
+  Price: number;
+  Symbol: string;
+}
+
+export interface VerifiedTickerResponse {
+  data: VerifiedTicker[];
+  message: string;
+  status: string;
 }
 
 export interface AssetFormControls {

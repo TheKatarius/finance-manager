@@ -27,6 +27,8 @@ export class FinManDynamicInvestmentPanelComponent implements OnInit {
 
   searchControl = new FormControl('');
 
+  portfolioDataNames: string[] = [];
+
   assetTypeNames: string[] = [];
   assetTypeIds: number[] = [];
   selectedAssetType: number = 1;
@@ -34,6 +36,11 @@ export class FinManDynamicInvestmentPanelComponent implements OnInit {
   assetData: Asset[] = AssetsMocks;
 
   ngOnInit(): void {
+    console.log('this.portfolioData: ', this.portfolioData);
+    console.log('this.assetTypesData: ', this.assetTypesData);
+
+    this.portfolioDataNames = this.portfolioData.map((portfolio) => portfolio.name) ?? ['abc'];
+
     this.assetTypeNames = this.assetTypesData.map((assetType) => assetType.type);
 
     this.assetTypeIds = this.assetTypesData.map((assetType) => assetType.id);
@@ -53,9 +60,5 @@ export class FinManDynamicInvestmentPanelComponent implements OnInit {
     } else if (option === CrudOperations.DELETE) {
       this.deleteAsset.emit(asset);
     }
-  }
-
-  get portfolioDataNames(): string[] {
-    return this.portfolioData.map((portfolio) => portfolio.name);
   }
 }

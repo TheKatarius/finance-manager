@@ -3,7 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Asset, AssetTypeResponse, VerifiedTicker } from '@app/core/interfaces/asset.schema';
+import {
+  Asset,
+  AssetTypeResponse,
+  VerifiedTickerResponse,
+} from '@app/core/interfaces/asset.schema';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +16,21 @@ export class AssetService {
   private baseUrl = '/api/protected'; // Zakładam, że backend API jest dostępny pod tym adresem
 
   constructor(private http: HttpClient) {}
+
+  searchInstruments(
+    q: string,
+    typeId: number,
+    limit: number = 100,
+  ): Observable<VerifiedTickerResponse> {
+    let params = new HttpParams();
+    params = params.append('q', q);
+    params = params.append('typeID', typeId);
+    params = params.append('limit', limit);
+
+    return this.http
+      .get<VerifiedTickerResponse>(`${this.baseUrl}/instruments/search`, { params })
+      .pipe(catchError(this.handleError));
+  }
 
   // Tworzenie nowego aktywa
   createAsset(asset: Asset): Observable<void> {
@@ -22,13 +41,6 @@ export class AssetService {
   getAssetsByPortfolioId(portfolioId: string): Observable<Asset[]> {
     return this.http
       .get<Asset[]>(`${this.baseUrl}/portfolios/${portfolioId}/assets`)
-      .pipe(catchError(this.handleError));
-  }
-
-  // Pobieranie aktywów przez Portfolio ID (inna metoda, jeśli potrzebne)
-  getAllAssetsByPortfolioId(portfolioId: string): Observable<Asset[]> {
-    return this.http
-      .get<Asset[]>(`${this.baseUrl}/portfolio/${portfolioId}`)
       .pipe(catchError(this.handleError));
   }
 
@@ -53,24 +65,6 @@ export class AssetService {
   getAssetTypes(): Observable<AssetTypeResponse> {
     return this.http
       .get<AssetTypeResponse>(`${this.baseUrl}/asset_types`)
-      .pipe(catchError(this.handleError));
-  }
-
-  // Weryfikacja ticker'a
-  verifyTicker(ticker: string, exchange: string, currency: string): Observable<VerifiedTicker> {
-    const params = new HttpParams()
-      .set('ticker', ticker)
-      .set('exchange', exchange)
-      .set('currency', currency);
-    return this.http
-      .get<VerifiedTicker>(`${this.baseUrl}/verify-ticker`, { params })
-      .pipe(catchError(this.handleError));
-  }
-
-  // Aktualizacja zbiorczych cen aktywów
-  updateAssetPricing(): Observable<void> {
-    return this.http
-      .post<void>(`${this.baseUrl}/update-pricing`, {})
       .pipe(catchError(this.handleError));
   }
 

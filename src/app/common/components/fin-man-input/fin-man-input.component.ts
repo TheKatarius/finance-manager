@@ -25,7 +25,7 @@ export class FinManInputComponent implements OnInit {
   @Input() iconClassName?: string;
   @Input() componentClassName: FinManInputTypes = FinManInputTypes.DEFAULT;
   @Input() thinInput: boolean = false;
-  @Input() control!: FormControl;
+  @Input() control: FormControl = new FormControl();
 
   @Output() input = new EventEmitter<Event>();
 

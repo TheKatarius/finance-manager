@@ -92,11 +92,7 @@ export class AuthService {
     }
 
     return this.http
-      .post(
-        `${API_URL}/auth/refresh-token`,
-        { refresh_token: refreshToken },
-        { observe: 'response' },
-      )
+      .post(`${API_URL}/refresh/token`, { refresh_token: refreshToken }, { observe: 'response' })
       .pipe(
         tap((response: HttpResponse<any>) => {
           const tokens = response.body?.data;

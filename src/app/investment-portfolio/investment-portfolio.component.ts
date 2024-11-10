@@ -1,10 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 
 import { AssetService } from '@app/core/data/assets.service';
 import { PortfolioService } from '@app/core/data/portfolios.service';
-import { Asset, AssetType, Portfolio, PortfolioResponse } from '@app/core/interfaces/asset.schema';
+import { Asset, AssetType, Portfolio } from '@app/core/interfaces/asset.schema';
 
 @Component({
   selector: 'finance-manager-investment-portfolio',
@@ -34,20 +33,34 @@ export class InvestmentPortfolioComponent implements OnInit {
   }
 
   loadData(): void {
-    forkJoin([this.assetService.getAssetTypes(), this.portfolioService.getPortfolios()]).subscribe(
-      ([assetTypes, portfolios]) => {
+    forkJoin([this.assetService.getAssetTypes(), this.portfolioService.getPortfolios()]).subscribe({
+      next: ([assetTypes, portfolios]) => {
         this.assetTypesData = assetTypes.data
           .filter((assetType) => assetType.id <= 4)
           .sort((a, b) => a.id - b.id);
-        this.portfolioData = portfolios.data;
-        this.portfolioId = this.portfolioData[0].id;
 
-        this.assetService.getAssetsByPortfolioId(this.portfolioId).subscribe((assets) => {
-          this.assets = assets;
-          this.isLoading = false;
-        });
+        this.portfolioData = portfolios.data ?? [];
+        console.log('this.portfolioData: ', this.portfolioData);
+
+        if (this.portfolioData.length) {
+          this.portfolioId = this.portfolioData[0].id;
+        }
+
+        if (this.portfolioId) {
+          this.assetService.getAssetsByPortfolioId(this.portfolioId).subscribe((assets) => {
+            this.assets = assets;
+          });
+        }
+
+        this.assetService.searchInstruments('app', 1).subscribe();
       },
-    );
+      error: (error) => {
+        console.error('Error loading data:', error);
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
   }
 
   // Obsługa zmiany filtrowania przez assetTypeId

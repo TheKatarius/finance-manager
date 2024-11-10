@@ -32,6 +32,16 @@
       </div>
     </div>
 
+    <div *ngIf="isOpen && isSearchable" class="search-input">
+      <fin-man-input
+        [type]="'text'"
+        [placeholder]="'Search...'"
+        [control]="control"
+        [allowedCharsPattern]="'[a-zA-Z0-9]'"
+        (keyup.enter)="onSearch($event)"
+      ></fin-man-input>
+    </div>
+
     <ul *ngIf="isOpen" class="custom-dropdown-option-wrapper">
       <li
         *ngFor="let option of options"
