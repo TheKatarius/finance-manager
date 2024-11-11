@@ -6,8 +6,10 @@
 
     <div class="actions-wrapper">
       <fin-man-custom-dropdown
+        [optionStringIds]="portfolioDataIds"
         [options]="portfolioDataNames"
-        [defaultOption]="portfolioData[0].name ?? null"
+        [defaultOption]="portfolioData?.[0]?.name ?? null"
+        (onChangeString)="handlePortfolioChange($event)"
       ></fin-man-custom-dropdown>
 
       <fin-man-custom-dropdown
@@ -28,7 +30,14 @@
         <div class="icon-wrapper">
           <em class="icon add-icon"></em>
         </div>
-        <div class="add-button">Add</div>
+        <div class="add-button">Add Asset</div>
+      </div>
+
+      <div class="add-button-wrapper" (click)="openTransactionModal.emit()">
+        <div class="icon-wrapper">
+          <em class="icon add-icon"></em>
+        </div>
+        <div class="add-button">Add Transaction</div>
       </div>
     </div>
   </div>
@@ -81,61 +90,93 @@
         <div>{{ assetHeaders[3][10] }}</div>
       </div>
     </ng-container>
-    <ng-container *ngIf="selectedAssetType === 4">
-      <div class="header-cell">{{ assetHeaders[4][0] }}</div>
-      <div class="header-cell">{{ assetHeaders[4][1] }}</div>
-      <div class="header-cell">{{ assetHeaders[4][2] }}</div>
-      <div class="header-cell">{{ assetHeaders[4][3] }}</div>
-      <div class="header-cell">{{ assetHeaders[4][4] }}</div>
-      <div class="header-cell">{{ assetHeaders[4][5] }}</div>
-      <div class="header-cell">{{ assetHeaders[4][6] }}</div>
-      <div class="header-cell">{{ assetHeaders[4][7] }}</div>
-      <div class="header-cell">{{ assetHeaders[4][8] }}</div>
-      <div class="header-cell double-header">
-        <div>{{ assetHeaders[4][9] }}</div>
-        <div>{{ assetHeaders[4][10] }}</div>
+  </div>
+
+  <ng-container *ngIf="selectedAssetType == 1">
+    <div *ngFor="let asset of stockAssetData" class="asset-item">
+      <div class="column">{{ asset.Name }}</div>
+      <div class="column">{{ asset.Ticker }}</div>
+      <div class="column" [ngClass]="{ positive: asset.DividendYield > 0 }">
+        {{ asset.DividendYield + '%' }}
       </div>
-    </ng-container>
-  </div>
+      <div class="column">{{ asset.TotalQuantity }}</div>
+      <div class="column">{{ asset.AveragePurchasePrice + asset.Currency }}</div>
+      <div class="column">{{ asset.TotalInvested + asset.Currency }}</div>
+      <div class="column">{{ asset.CurrentValue + asset.Currency }}</div>
+      <div
+        class="column"
+        [ngClass]="{
+          positive: asset.UnrealizedGainLoss > 0,
+          negative: asset.UnrealizedGainLoss < 0
+        }"
+      >
+        {{
+          asset.UnrealizedGainLoss +
+            asset.Currency +
+            ' / ' +
+            (asset.AveragePurchasePrice && asset.CurrentValue
+              ? ((asset.CurrentValue / asset.AveragePurchasePrice - 1) * 100).toFixed(2)
+              : 0) +
+            '%'
+        }}
+      </div>
+      <div class="column">{{ asset.ExchangeShort }}</div>
+      <div class="double-column">
+        <div class="column column-date">{{ asset.CreatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
+        <div class="column column-date">{{ asset.UpdatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
+      </div>
 
-  <div *ngFor="let asset of assetData" class="asset-item">
-    <div class="column column-name">{{ asset.name }}</div>
-    <div class="column column-ticker">{{ asset.ticker }}</div>
-    <div class="column column-dividend-yield" [ngClass]="{ positive: asset.dividendYield > 0 }">
-      {{ asset.dividendYield + '%' }}
+      <!-- TODO: Add hover effect -->
+      <div>
+        <fin-man-kebab-menu-popover
+          [options]="[CrudOperations.EDIT, CrudOperations.DELETE]"
+          (onChange)="handleOptionSelected($event, asset)"
+        ></fin-man-kebab-menu-popover>
+      </div>
     </div>
-    <div class="column column-accumulation">{{ asset.accumulation ? 'Tak' : 'Nie' }}</div>
-    <div class="column column-total-invested">{{ asset.totalInvested }}</div>
-    <div class="column column-average-purchase-price">{{ asset.averagePurchasePrice }}</div>
-    <div class="column column-total-invested">{{ asset.totalInvested }}</div>
-    <div class="column column-current-value">
-      {{ asset.currentValue }}
-    </div>
-    <div
-      class="column column-gain-loss"
-      [ngClass]="{
-        positive: asset.unrealizedGainLoss > 0,
-        negative: asset.unrealizedGainLoss < 0
-      }"
-    >
-      {{
-        asset.unrealizedGainLoss +
-          ' / ' +
-          ((asset.currentValue / asset.averagePurchasePrice - 1) * 100).toFixed(2) +
-          '%'
-      }}
-    </div>
-    <div class="double-column">
-      <div class="column column-date">{{ asset.createdAt | date: 'yyyy-MM-dd HH:mm' }}</div>
-      <div class="column column-date">{{ asset.updatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
-    </div>
+  </ng-container>
 
-    <!-- TODO: Add hover effect -->
-    <div>
-      <fin-man-kebab-menu-popover
-        [options]="[CrudOperations.EDIT, CrudOperations.DELETE]"
-        (onChange)="handleOptionSelected($event, asset)"
-      ></fin-man-kebab-menu-popover>
+  <ng-container *ngIf="selectedAssetType == 3">
+    <div *ngFor="let asset of etfAssetData" class="asset-item">
+      <div class="column">{{ asset.Name }}</div>
+      <div class="column">{{ asset.Ticker }}</div>
+      <div class="column">
+        {{ asset.Accumulation ? 'Yes' : 'No' }}
+      </div>
+      <div class="column">{{ asset.TotalQuantity }}</div>
+      <div class="column">{{ asset.AveragePurchasePrice + asset.Currency }}</div>
+      <div class="column">{{ asset.TotalInvested + asset.Currency }}</div>
+      <div class="column">{{ asset.CurrentValue + asset.Currency }}</div>
+      <div
+        class="column"
+        [ngClass]="{
+          positive: asset.UnrealizedGainLoss > 0,
+          negative: asset.UnrealizedGainLoss < 0
+        }"
+      >
+        {{
+          asset.UnrealizedGainLoss +
+            asset.Currency +
+            ' / ' +
+            (asset.AveragePurchasePrice && asset.CurrentValue
+              ? ((asset.CurrentValue / asset.AveragePurchasePrice - 1) * 100).toFixed(2)
+              : 0) +
+            '%'
+        }}
+      </div>
+      <div class="column">{{ asset.ExchangeShort }}</div>
+      <div class="double-column">
+        <div class="column column-date">{{ asset.CreatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
+        <div class="column column-date">{{ asset.UpdatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
+      </div>
+
+      <!-- TODO: Add hover effect -->
+      <div>
+        <fin-man-kebab-menu-popover
+          [options]="[CrudOperations.EDIT, CrudOperations.DELETE]"
+          (onChange)="handleOptionSelected($event, asset)"
+        ></fin-man-kebab-menu-popover>
+      </div>
     </div>
-  </div>
+  </ng-container>
 </div>

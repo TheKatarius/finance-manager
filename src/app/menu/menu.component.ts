@@ -22,15 +22,11 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   private authService = inject(AuthService);
 
-  private notificationService = inject(NotificationService);
-
   // All available section in className format
   sectionClassNames!: string[];
 
   // Dashboard is default active section
   activeSection!: string;
-
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.sectionClassNames = menuSectionClassNames((...code: string[]) =>
@@ -48,13 +44,6 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   logoutUser(): void {
     this.authService.logout();
-
-    this.router.navigate(['/login']).then(() =>
-      this.notificationService.addNotification({
-        type: 'success',
-        message: 'User logged out successfully',
-      }),
-    );
   }
 
   onSectionClick(sectionName: string): void {

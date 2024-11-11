@@ -22,7 +22,7 @@
       <h3 *ngIf="!isLeftActive">Sign in to your account</h3>
     </header>
 
-    <form [formGroup]="registerFormGroup">
+    <form class="form" [formGroup]="registerFormGroup">
       <fin-man-input
         *ngIf="isLeftActive"
         [label]="'Username'"
@@ -73,6 +73,12 @@
         [allowedCharsPattern]="'[a-zA-Z0-9!@#$%^&*()]'"
         (input)="confirmPasswordValidator(this.registerFormGroup)"
       ></fin-man-input>
+
+      <div class="verification-label" *ngIf="!isLeftActive">
+        <a [routerLink]="['/', 'login', 'authorization']" class="verify-link"
+          >Click here if you wanna activate your account?</a
+        >
+      </div>
     </form>
 
     <button class="register-button" (click)="isLeftActive ? registerUser() : loginUser()">

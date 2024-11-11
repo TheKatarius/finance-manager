@@ -10,37 +10,40 @@ export class InvestmentPortfolioFormGroupService {
   createInvestmentPortfolioAsset(asset?: Asset): FormGroup<AssetFormControls> {
     return this.formBuilder.group({
       // Podstawowe informacje
-      portfolioId: asset?.portfolioId ?? '',
-      name: asset?.name ?? '',
-      ticker: asset?.ticker ?? '',
-      assetTypeId: asset?.assetTypeId ?? 1,
+      PortfolioID: asset?.PortfolioID ?? '',
+      Name: asset?.Name ?? '',
+      Ticker: asset?.Ticker ?? '',
+      AssetTypeID: asset?.AssetTypeID ?? 1,
 
       // Finansowe szczegóły
-      couponRate: asset?.couponRate ?? 0,
-      maturityDate: asset?.maturityDate ? this.formatDate(asset.maturityDate) : '',
+      CouponRate: asset?.CouponRate ?? 0,
+      MaturityDate: asset?.MaturityDate ? this.formatDate(asset.MaturityDate) : '',
 
-      faceValue: asset?.faceValue ?? 0,
-      dividendYield: asset?.dividendYield ?? 0,
-      accumulation: asset?.accumulation ?? false,
+      FaceValue: asset?.FaceValue ?? 0,
+      DividendYield: asset?.DividendYield ?? 0,
+      Accumulation: asset?.Accumulation ?? false,
 
       // Ilościowe szczegóły (domyślnie wyłączone, ponieważ są kalkulowane)
-      totalQuantity: { value: asset?.totalQuantity ?? 0, disabled: true },
-      averagePurchasePrice: { value: asset?.averagePurchasePrice ?? 0, disabled: true },
+      TotalQuantity: { value: asset?.TotalQuantity ?? 0, disabled: true },
+      AveragePurchasePrice: { value: asset?.AveragePurchasePrice ?? 0, disabled: true },
 
-      totalInvested: { value: asset?.totalInvested ?? 0, disabled: true },
-      currentValue: asset?.currentValue ?? 0,
-      unrealizedGainLoss: { value: asset?.unrealizedGainLoss ?? 0, disabled: true },
+      TotalInvested: { value: asset?.TotalInvested ?? 0, disabled: true },
+      CurrentValue: asset?.CurrentValue ?? 0,
+      UnrealizedGainLoss: { value: asset?.UnrealizedGainLoss ?? 0, disabled: true },
 
       // Walutowe i giełdowe szczegóły
-      currency: asset?.currency ?? '',
-      exchange: asset?.exchange ?? '',
+      Currency: asset?.Currency ?? '',
+      Exchange: asset?.Exchange ?? '',
+      ExchangeShort: asset?.ExchangeShort ?? '',
 
       // Dodatkowe szczegóły (domyślnie wyłączone)
-      interestAccrued: { value: asset?.interestAccrued ?? 0, disabled: true },
+      InterestAccrued: { value: asset?.InterestAccrued ?? 0, disabled: true },
 
-      createdAt: asset?.createdAt ? this.formatDate(asset.createdAt) : '',
-      updatedAt: {
-        value: asset?.updatedAt ? this.formatDate(asset.updatedAt) : '',
+      CreatedAt: asset?.CreatedAt
+        ? this.formatDate(asset.CreatedAt)
+        : new Date().toISOString().split('T')[0],
+      UpdatedAt: {
+        value: asset?.UpdatedAt ? this.formatDate(asset.UpdatedAt) : '',
         disabled: true,
       },
     });

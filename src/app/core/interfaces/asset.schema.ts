@@ -31,26 +31,79 @@ export interface AssetTypeResponse {
 }
 
 export interface Asset {
-  id: string;
-  portfolioId: string; // Typ portfela
-  name: string; // Nazwa assetu wpisywana ręcznie (np. dla obligacji) lub po wybraniu assetu w dropdown
-  ticker: string; // Nazwa skrócona assetu
-  assetTypeId: number; // Rodzaj assetu
-  couponRate: number; // Stopa kuponowa (obligacje)
-  maturityDate: Date | null; // Data wygaśnięcia - wykupu obligacji
-  faceValue: number; // Wartość którą zwraca emitent po upływie maturity date - przeważnie jest to kwota zakupu obligacji
-  dividendYield: number;
-  accumulation: boolean;
-  totalQuantity: number;
-  averagePurchasePrice: number;
-  totalInvested: number;
-  currentValue: number;
-  unrealizedGainLoss: number;
-  currency: string;
-  exchange: string;
-  interestAccrued: number;
-  createdAt: Date;
-  updatedAt: Date;
+  ID: string;
+  PortfolioID: string; // Typ portfela
+  Name: string; // Nazwa assetu wpisywana ręcznie (np. dla obligacji) lub po wybraniu assetu w dropdown
+  Ticker: string; // Nazwa skrócona assetu
+  AssetTypeID: number; // Rodzaj assetu
+  CouponRate: number; // Stopa kuponowa (obligacje)
+  MaturityDate: Date | null; // Data wygaśnięcia - wykupu obligacji
+  FaceValue: number; // Wartość którą zwraca emitent po upływie maturity date - przeważnie jest to kwota zakupu obligacji
+  DividendYield: number;
+  Accumulation: boolean;
+  TotalQuantity: number;
+  AveragePurchasePrice: number;
+  TotalInvested: number;
+  CurrentValue: number;
+  UnrealizedGainLoss: number;
+  Currency: string;
+  Exchange: string;
+  ExchangeShort: string;
+  InterestAccrued: number;
+  CreatedAt: Date;
+  UpdatedAt: Date;
+}
+
+export interface AssetStockTable {
+  ID: string;
+  Name: string;
+  Ticker: string;
+  DividendYield: number;
+  TotalQuantity: number;
+  AveragePurchasePrice: number;
+  TotalInvested: number;
+  CurrentValue: number;
+  UnrealizedGainLoss: number;
+  ExchangeShort: string;
+  Currency: string;
+  CreatedAt: Date;
+  UpdatedAt: Date;
+}
+
+export interface AssetEtfTable {
+  ID: string;
+  Name: string;
+  Ticker: string;
+  Accumulation: boolean;
+  TotalQuantity: number;
+  AveragePurchasePrice: number;
+  TotalInvested: number;
+  CurrentValue: number;
+  UnrealizedGainLoss: number;
+  ExchangeShort: string;
+  Currency: string;
+  CreatedAt: Date;
+  UpdatedAt: Date;
+}
+
+export interface CreateAssetRequest {
+  Name: string; // Nazwa assetu wpisywana ręcznie (np. dla obligacji) lub po wybraniu assetu w dropdown
+  Ticker: string; // Nazwa skrócona assetu
+  AssetTypeID: number; // Rodzaj assetu
+  CouponRate: number; // Stopa kuponowa (obligacje)
+  MaturityDate: Date | null; // Data wygaśnięcia - wykupu obligacji
+  FaceValue: number; // Wartość którą zwraca emitent po upływie maturity date - przeważnie jest to kwota zakupu obligacji
+  DividendYield: number;
+  Accumulation: boolean;
+  Currency: string;
+  Exchange: string;
+  ExchangeShort: string;
+}
+
+export interface AssetResponse {
+  data: Asset[];
+  message: string;
+  status: string;
 }
 
 export interface VerifiedTicker {
@@ -58,6 +111,7 @@ export interface VerifiedTicker {
   AssetTypeID: number;
   Currency: string;
   Exchange: string;
+  ExchangeShort: string;
   Name: string;
   Price: number;
   Symbol: string;
@@ -70,23 +124,61 @@ export interface VerifiedTickerResponse {
 }
 
 export interface AssetFormControls {
-  portfolioId: FormControl<string | null>;
-  name: FormControl<string | null>;
-  ticker: FormControl<string | null>;
-  assetTypeId: FormControl<number | null>;
-  couponRate: FormControl<number | null>;
-  maturityDate: FormControl<string | null>;
-  faceValue: FormControl<number | null>;
-  dividendYield: FormControl<number | null>;
-  accumulation: FormControl<boolean | null>;
-  totalQuantity: FormControl<number | null>;
-  averagePurchasePrice: FormControl<number | null>;
-  totalInvested: FormControl<number | null>;
-  currentValue: FormControl<number | null>;
-  unrealizedGainLoss: FormControl<number | null>;
-  currency: FormControl<string | null>;
-  exchange: FormControl<string | null>;
-  interestAccrued: FormControl<number | null>;
-  createdAt: FormControl<string | null>;
-  updatedAt: FormControl<string | null>;
+  PortfolioID: FormControl<string | null>;
+  Name: FormControl<string | null>;
+  Ticker: FormControl<string | null>;
+  AssetTypeID: FormControl<number | null>;
+  CouponRate: FormControl<number | null>;
+  MaturityDate: FormControl<string | null>;
+  FaceValue: FormControl<number | null>;
+  DividendYield: FormControl<number | null>;
+  Accumulation: FormControl<boolean | null>;
+  TotalQuantity: FormControl<number | null>;
+  AveragePurchasePrice: FormControl<number | null>;
+  TotalInvested: FormControl<number | null>;
+  CurrentValue: FormControl<number | null>;
+  UnrealizedGainLoss: FormControl<number | null>;
+  Currency: FormControl<string | null>;
+  Exchange: FormControl<string | null>;
+  ExchangeShort: FormControl<string | null>;
+  InterestAccrued: FormControl<number | null>;
+  CreatedAt: FormControl<string | null>;
+  UpdatedAt: FormControl<string | null>;
+}
+
+export interface AssetTransactionType {
+  ID: number;
+  Name: string;
+}
+
+export interface AssetTransaction {
+  ID?: string;
+  TransactionTypeID: number;
+  PortfolioID: string;
+  AssetID: string;
+  Quantity: number;
+  Price: number;
+  CreatedAt: Date;
+}
+
+export interface AssetTransactionCreateRequest {
+  TransactionTypeID: number;
+  Quantity: number;
+  Price: number;
+  CreatedAt: Date;
+}
+
+export interface AssetTransactionResponse {
+  data: AssetTransaction[];
+  message: string;
+  status: string;
+}
+
+export interface AssetTransactionFormControls {
+  PortfolioID: FormControl<string | null>;
+  AssetID: FormControl<string | null>;
+  TransactionTypeID: FormControl<number | null>;
+  Quantity: FormControl<number | null>;
+  Price: FormControl<number | null>;
+  CreatedAt: FormControl<Date | null>;
 }

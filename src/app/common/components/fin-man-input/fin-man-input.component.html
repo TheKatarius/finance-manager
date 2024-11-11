@@ -2,6 +2,7 @@
   <label *ngIf="label" class="input-label" [for]="controlId">{{ label }}</label>
   <!-- || null bcs required when is false it treats it as true -->
   <input
+    autocomplete="off"
     class="input"
     [ngClass]="{
       'input-error': isError,
@@ -11,7 +12,6 @@
     [id]="controlId"
     [type]="type"
     [formControl]="control"
-    [attr.autocomplete]="componentClassName === FinManInputTypes.DEFAULT ? 'on' : 'off'"
     [attr.placeholder]="placeholder"
     [attr.required]="required || null"
     [attr.disabled]="disabled || null"

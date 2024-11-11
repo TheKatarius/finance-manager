@@ -8,12 +8,14 @@ import { InvestmentPortfolioModalPortfolioComponent } from '@app/investment-port
 import { InvestmentPortfolioRoutingModule } from '@app/investment-portfolio/investment-portfolio-routing.module';
 import { InvestmentPortfolioComponent } from '@app/investment-portfolio/investment-portfolio.component';
 import { CommonModule } from '@common/common.module';
+import { InvestmentPortfolioModalTransactions } from './investment-portfolio-modal-transaction/investment-portfolio-modal-transaction.component';
 
 @NgModule({
   declarations: [
     InvestmentPortfolioComponent,
     InvestmentPortfolioModalPortfolioComponent,
     InvestmentPortfolioModalComponent,
+    InvestmentPortfolioModalTransactions,
   ],
   imports: [
     RouterOutlet,

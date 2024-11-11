@@ -10,9 +10,11 @@
     <fin-man-dynamic-investment-panel
       [portfolioData]="portfolioData"
       [assetTypesData]="assetTypesData"
+      [assetData]="assetData"
       (openModal)="openModal()"
       (openPortfolioModal)="openPortfolioModal()"
-      (editAsset)="openModal()"
+      (openTransactionModal)="openTransactionModal()"
+      (editAsset)="openModal($event)"
       (deleteAsset)="deleteAsset($event)"
     ></fin-man-dynamic-investment-panel>
 
@@ -21,17 +23,27 @@
 </div>
 
 <finance-manager-investment-portfolio-modal-portfolio
+  *ngIf="isPortfolioModalVisible"
   [isVisible]="isPortfolioModalVisible"
   (close)="closePortfolioModal()"
-  (portfolioAdded)="handlePortfolioAdded($event)"
 ></finance-manager-investment-portfolio-modal-portfolio>
 
 <finance-manager-investment-portfolio-modal
+  *ngIf="isModalVisible"
+  [isEdit]="isEdit"
   [portfolioData]="portfolioData"
   [isVisible]="isModalVisible"
   [assetTypesData]="assetTypesData"
-  [assetData]="[]"
+  [assetToUpdate]="selectedAsset"
   (close)="closeModal()"
   (assetAdded)="handleAssetAdded($event)"
   (assetUpdated)="handleAssetUpdated($event)"
 ></finance-manager-investment-portfolio-modal>
+
+<finance-manager-investment-portfolio-modal-transaction
+  *ngIf="isTransactionModalVisible"
+  [portfolioData]="portfolioData"
+  [assetData]="assetData"
+  [isVisible]="isTransactionModalVisible"
+  (close)="closeTransactionModal()"
+></finance-manager-investment-portfolio-modal-transaction>

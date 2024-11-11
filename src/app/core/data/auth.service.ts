@@ -13,19 +13,23 @@ import {
   VerifyEmailRequest,
   VerifyEmailResponse,
 } from '@app/core/interfaces/api-responses.schema';
+import { NotificationService } from '../services/notifications.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  // TODO: Understand JWT with cookies - why is it safer?
   private http = inject(HttpClient);
+
+  private notificationService = inject(NotificationService);
 
   // Klucze używane do przechowywania tokenów w localStorage
   private readonly ACCESS_TOKEN_KEY = 'access_token';
-  private readonly REFRESH_TOKEN_KEY = 'refresh_token';
 
   private loggedIn = new BehaviorSubject<boolean>(this.hasToken());
+
+  constructor(private router: Router) {}
 
   register(request: RegisterRequest): Observable<HttpResponse<RegisterResponse>> {
     return this.http
@@ -58,14 +62,15 @@ export class AuthService {
 
   login(request: LoginRequest): Observable<HttpResponse<LoginResponse>> {
     return this.http
-      .post<LoginResponse>(`${API_URL}/auth/login`, request, { observe: 'response' })
+      .post<LoginResponse>(`${API_URL}/auth/login`, request, {
+        observe: 'response',
+        withCredentials: true,
+      })
       .pipe(
         tap((response: HttpResponse<LoginResponse>) => {
           const tokens = response.body?.data;
           if (tokens) {
-            console.log(tokens);
             this.setAccessToken(tokens.access_token);
-            this.setRefreshToken(tokens.refresh_token);
             this.loggedIn.next(true);
           }
         }),
@@ -79,26 +84,34 @@ export class AuthService {
 
   // Wylogowanie użytkownika
   logout(): void {
-    this.removeAccessToken();
-    this.removeRefreshToken();
-    this.loggedIn.next(false);
+    this.http.post(`${API_URL}/auth/logout`, {}, { withCredentials: true }).subscribe(
+      () => {
+        this.removeAccessToken();
+        this.loggedIn.next(false);
+
+        this.router.navigate(['/login']).then(() =>
+          this.notificationService.addNotification({
+            type: 'success',
+            message: 'User logged out successfully',
+          }),
+        );
+      },
+      (error) => {
+        console.error('Error during logout:', error);
+        this.removeAccessToken();
+        this.loggedIn.next(false);
+      },
+    );
   }
 
   refreshToken(): Observable<boolean> {
-    const refreshToken = this.getRefreshToken();
-    if (!refreshToken) {
-      this.logout();
-      return of(false);
-    }
-
     return this.http
-      .post(`${API_URL}/refresh/token`, { refresh_token: refreshToken }, { observe: 'response' })
+      .put(`${API_URL}/refresh/token`, {}, { observe: 'response', withCredentials: true })
       .pipe(
         tap((response: HttpResponse<any>) => {
           const tokens = response.body?.data;
           if (tokens) {
-            this.setAccessToken(tokens.session_token);
-            this.setRefreshToken(tokens.refresh_token);
+            this.setAccessToken(tokens.access_token);
             this.loggedIn.next(true);
           } else {
             this.logout();
@@ -154,17 +167,5 @@ export class AuthService {
 
   private removeAccessToken(): void {
     localStorage.removeItem(this.ACCESS_TOKEN_KEY);
-  }
-
-  private setRefreshToken(token: string): void {
-    localStorage.setItem(this.REFRESH_TOKEN_KEY, token);
-  }
-
-  private getRefreshToken(): string | null {
-    return localStorage.getItem(this.REFRESH_TOKEN_KEY);
-  }
-
-  private removeRefreshToken(): void {
-    localStorage.removeItem(this.REFRESH_TOKEN_KEY);
   }
 }

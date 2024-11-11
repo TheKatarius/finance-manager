@@ -1,3 +1,5 @@
 - Poprawa tooltip ponieważ wpada pod headers columns
-- Dodać modal do periodic and planned transactions 
+- Dodać modal do periodic and planned transactions
 - co możemy edytować w assetach i transakcjach?
+- sprawdzić licencję i podmienić ikony na te open-source
+- dodać division i coupon amount to asset transaction jak starczy czasu

@@ -1,11 +1,13 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import {
   Asset,
+  AssetResponse,
   AssetTypeResponse,
+  CreateAssetRequest,
   VerifiedTickerResponse,
 } from '@app/core/interfaces/asset.schema';
 
@@ -33,14 +35,18 @@ export class AssetService {
   }
 
   // Tworzenie nowego aktywa
-  createAsset(asset: Asset): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}`, asset).pipe(catchError(this.handleError));
+  createAsset(portfolioId: string, asset: any): Observable<HttpResponse<void>> {
+    return this.http
+      .post<void>(`${this.baseUrl}/portfolios/${portfolioId}/assets`, asset, {
+        observe: 'response',
+      })
+      .pipe(catchError(this.handleError));
   }
 
   // Pobieranie aktywów na podstawie Portfolio ID
-  getAssetsByPortfolioId(portfolioId: string): Observable<Asset[]> {
+  getAssetsByPortfolioId(portfolioId: string): Observable<AssetResponse> {
     return this.http
-      .get<Asset[]>(`${this.baseUrl}/portfolios/${portfolioId}/assets`)
+      .get<AssetResponse>(`${this.baseUrl}/portfolios/${portfolioId}/assets`)
       .pipe(catchError(this.handleError));
   }
 
@@ -57,7 +63,7 @@ export class AssetService {
   // Aktualizacja aktywa
   updateAsset(asset: Asset): Observable<void> {
     return this.http
-      .put<void>(`${this.baseUrl}/${asset.id}`, asset)
+      .put<void>(`${this.baseUrl}/${asset.ID}`, asset)
       .pipe(catchError(this.handleError));
   }
 
@@ -70,15 +76,8 @@ export class AssetService {
 
   // Pomocnicza metoda do obsługi błędów
   private handleError(error: HttpErrorResponse) {
-    let errorMsg = 'An unknown error occurred!';
-    if (error.error instanceof ErrorEvent) {
-      // Błąd po stronie klienta
-      errorMsg = `Error: ${error.error.message}`;
-    } else {
-      // Błąd po stronie serwera
-      errorMsg = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    // Możesz dodać dodatkową logikę logowania błędów tutaj
-    return throwError(errorMsg);
+    console.error('Backend returned code:', error.status);
+    console.error('Response body:', error.error);
+    return throwError(() => error);
   }
 }

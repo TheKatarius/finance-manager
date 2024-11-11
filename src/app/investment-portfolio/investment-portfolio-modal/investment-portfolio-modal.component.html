@@ -1,7 +1,7 @@
 <div class="modal-overlay" *ngIf="isVisible">
   <div class="modal">
     <div class="modal-header">
-      <h2>{{ assetData ? 'Edytuj Aktywo' : 'Dodaj Nowe Aktywo' }}</h2>
+      <h2>{{ isEdit ? 'Edytuj Aktywo' : 'Dodaj Nowe Aktywo' }}</h2>
       <button class="close-button" (click)="closeModal()">&times;</button>
     </div>
 
@@ -14,7 +14,7 @@
             [options]="portfolioDataNames"
             [defaultOption]="portfolioDataNames[0]"
             [placeholder]="'Select Portfolio'"
-            [control]="assetFormGroup.controls.portfolioId"
+            [control]="assetFormGroup.controls.PortfolioID"
           ></fin-man-custom-dropdown>
         </div>
 
@@ -24,44 +24,67 @@
             [optionsIds]="assetTypesDataIds"
             [options]="assetTypesDataTypes"
             [defaultOption]="assetTypesDataTypes[0]"
-            [control]="assetFormGroup.controls.assetTypeId"
+            [control]="assetFormGroup.controls.AssetTypeID"
+            (onChangeSingle)="onAssetTypeChange()"
           ></fin-man-custom-dropdown>
         </div>
 
-        <div class="form-group">
-          <fin-man-input
-            [type]="'text'"
-            [label]="'Name'"
-            [placeholder]="'Enter asset name'"
-            [control]="assetFormGroup.controls.name"
-            [minlength]="3"
-            [maxlength]="50"
-            [allowedCharsPattern]="VALIDATION.ALLOWED_CHARS_PATTERNS.BASIC_NAME_INPUT"
-          ></fin-man-input>
+        <div class="horizontal-form-groups">
+          <div class="form-group">
+            <fin-man-input
+              [type]="'text'"
+              [label]="'Name'"
+              [placeholder]="'Enter asset name'"
+              [control]="assetFormGroup.controls.Name"
+              [required]="true"
+              [minlength]="3"
+              [maxlength]="50"
+              [allowedCharsPattern]="VALIDATION.ALLOWED_CHARS_PATTERNS.BASIC_NAME_INPUT"
+            ></fin-man-input>
+          </div>
+
+          <div *ngIf="assetFormGroup.controls.AssetTypeID.value === 2" class="form-group">
+            <fin-man-input
+              [type]="'text'"
+              [label]="'Ticker'"
+              [placeholder]="'Enter ticker name'"
+              [control]="assetFormGroup.controls.Ticker"
+              [required]="true"
+              [minlength]="3"
+              [maxlength]="50"
+              [allowedCharsPattern]="VALIDATION.ALLOWED_CHARS_PATTERNS.BASIC_NAME_INPUT"
+            ></fin-man-input>
+          </div>
         </div>
 
-        <div
-          *ngIf="
-            assetFormGroup.controls.assetTypeId.value === 1 ||
-            assetFormGroup.controls.assetTypeId.value === 4
-          "
-          class="form-group"
-        >
-          <fin-man-custom-dropdown
-            [isSearchable]="true"
-            [label]="'Ticker'"
-            [options]="tickerAssets"
-            [control]="assetFormGroup.controls.ticker"
-            (onSearchValue)="onSearchChange($event)"
-            (onChangeSingle)="onTickerChange($event)"
-          ></fin-man-custom-dropdown>
+        <div class="horizontal-form-groups">
+          <div *ngIf="assetFormGroup.controls.AssetTypeID.value !== 2" class="form-group">
+            <fin-man-custom-dropdown
+              [isSearchable]="true"
+              [label]="'Ticker'"
+              [options]="tickerAssets"
+              [control]="assetFormGroup.controls.Ticker"
+              (onSearchValue)="onSearchChange($event)"
+              (onChangeSingle)="onTickerChange($event)"
+            ></fin-man-custom-dropdown>
+          </div>
+
+          <div *ngIf="assetFormGroup.controls.AssetTypeID.value !== 2" class="form-group">
+            <fin-man-input
+              [placeholder]="'Enter ticker to show exchange'"
+              [label]="'Exchange'"
+              [control]="assetFormGroup.controls.Exchange"
+              [disabled]="true"
+              [readonly]="true"
+            ></fin-man-input>
+          </div>
         </div>
 
-        <div *ngIf="assetFormGroup.controls.assetTypeId.value === 1" class="form-group">
+        <div *ngIf="assetFormGroup.controls.AssetTypeID.value === 1" class="form-group">
           <fin-man-input
             [type]="'number'"
             [label]="'Dividend Yield'"
-            [control]="assetFormGroup.controls.dividendYield"
+            [control]="assetFormGroup.controls.DividendYield"
             [min]="0"
             [max]="1000000000"
             [required]="true"
@@ -69,61 +92,69 @@
           ></fin-man-input>
         </div>
 
-        <div *ngIf="assetFormGroup.controls.assetTypeId.value === 2" class="form-group">
-          <fin-man-input
-            [type]="'number'"
-            [label]="'Coupon Rate'"
-            [control]="assetFormGroup.controls.couponRate"
-          ></fin-man-input>
+        <div class="horizontal-form-groups">
+          <div *ngIf="assetFormGroup.controls.AssetTypeID.value === 2" class="form-group">
+            <fin-man-input
+              [type]="'number'"
+              [label]="'Coupon Rate'"
+              [control]="assetFormGroup.controls.CouponRate"
+              [allowedCharsPattern]="'[0-9.]'"
+            ></fin-man-input>
+          </div>
+
+          <div *ngIf="assetFormGroup.controls.AssetTypeID.value === 2" class="form-group">
+            <fin-man-input
+              [type]="'number'"
+              [label]="'Face Value'"
+              [control]="assetFormGroup.controls.FaceValue"
+              [allowedCharsPattern]="'[0-9.]'"
+            ></fin-man-input>
+          </div>
         </div>
 
-        <div *ngIf="assetFormGroup.controls.assetTypeId.value === 2" class="form-group">
+        <div *ngIf="assetFormGroup.controls.AssetTypeID.value === 2" class="form-group">
           <fin-man-input
             [type]="'date'"
             [label]="'Maturity Date'"
-            [control]="assetFormGroup.controls.maturityDate"
+            [control]="assetFormGroup.controls.MaturityDate"
+            [required]="true"
           ></fin-man-input>
         </div>
 
-        <div *ngIf="assetFormGroup.controls.assetTypeId.value === 2" class="form-group">
-          <fin-man-input
-            [type]="'number'"
-            [label]="'Face Value'"
-            [control]="assetFormGroup.controls.faceValue"
-          ></fin-man-input>
-        </div>
-
-        <div *ngIf="assetFormGroup.controls.assetTypeId.value === 3" class="form-group">
+        <div *ngIf="assetFormGroup.controls.AssetTypeID.value === 3" class="form-group">
           <fin-man-custom-dropdown
             [label]="'Accumulation'"
             [options]="['Yes', 'No']"
-            [control]="assetFormGroup.controls.accumulation"
+            [defaultOption]="'No'"
+            [control]="assetFormGroup.controls.Accumulation"
           ></fin-man-custom-dropdown>
         </div>
 
-        <div class="form-group">
-          <fin-man-input
-            [type]="'number'"
-            [label]="'Current Value'"
-            [control]="assetFormGroup.controls.dividendYield"
-            [min]="0"
-            [max]="1000000000"
-            [required]="true"
-            [allowedCharsPattern]="'[0-9.]'"
-          ></fin-man-input>
-        </div>
+        <div class="horizontal-form-groups">
+          <div *ngIf="assetFormGroup.controls.AssetTypeID.value !== 2" class="form-group">
+            <fin-man-input
+              [type]="'number'"
+              [label]="'Current Value'"
+              [control]="assetFormGroup.controls.CurrentValue"
+              [disabled]="true"
+              [readonly]="true"
+            ></fin-man-input>
+          </div>
 
-        <div class="form-group">
-          <fin-man-input
-            [type]="'date'"
-            [label]="'Created At'"
-            [control]="assetFormGroup.controls.createdAt"
-          ></fin-man-input>
+          <div class="form-group">
+            <fin-man-custom-dropdown
+              [options]="currencies"
+              [label]="'Currency'"
+              [placeholder]="'Enter currency'"
+              [control]="assetFormGroup.controls.Currency"
+              [defaultOption]="defaultCurrency"
+            ></fin-man-custom-dropdown>
+          </div>
         </div>
 
         <div class="add-button-modal-wrapper">
           <div class="add-button" (click)="onSubmit()">
-            {{ assetData ? 'Edytuj Aktywo' : 'Dodaj Nowe Aktywo' }}
+            {{ isEdit ? 'Edytuj Aktywo' : 'Dodaj Nowe Aktywo' }}
           </div>
         </div>
       </form>

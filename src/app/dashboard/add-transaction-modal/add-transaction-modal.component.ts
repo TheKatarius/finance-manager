@@ -12,7 +12,7 @@ import {
   ExtendedTransactionFormControls,
   PaymentSource,
 } from '@app/core/interfaces/transaction.schema';
-import { CurrenciesMocks } from '@app/core/mocks/currencies.mocks';
+import { CurrenciesMocks } from '@app/core/constants/currencies.const';
 import { PaymentTypes } from '@app/core/mocks/payment-types.mocks';
 import { ExpenseCategoriesMockData, IncomeSourcesMockData } from '@app/core/mocks/pie-charts.mocks';
 import { MergeCodeNamePipe } from '@app/core/pipes/merge-code-name.pipe';

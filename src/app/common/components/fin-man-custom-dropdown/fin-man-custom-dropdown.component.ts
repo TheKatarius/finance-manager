@@ -38,6 +38,7 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
 
   @Output() onChangeSingle = new EventEmitter<T>();
   @Output() onChangeNumber = new EventEmitter<number>();
+  @Output() onChangeString = new EventEmitter<string>();
   @Output() onChangeMulti = new EventEmitter<T[]>();
   @Output() onSearchValue = new EventEmitter<string>();
 
@@ -119,6 +120,7 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
     } else if (this.optionStringIds.length) {
       const id = this.options.findIndex((opt) => opt === option);
       this.control?.setValue(this.optionStringIds[id]);
+      this.onChangeString.emit(this.optionStringIds[id]);
     } else {
       this.control?.setValue(option);
     }

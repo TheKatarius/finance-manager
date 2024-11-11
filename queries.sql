@@ -1,0 +1,1 @@
+DELETE FROM assets WHERE id ='205bd80e-6d79-4b1e-80b5-664b9a9e24f7'
