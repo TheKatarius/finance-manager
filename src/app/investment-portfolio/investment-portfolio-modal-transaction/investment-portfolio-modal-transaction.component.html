@@ -8,7 +8,8 @@
 
     <div class="modal-body">
       <form [formGroup]="transactionFormGroup">
-        <!-- <fin-man-custom-dropdown
+        <fin-man-custom-dropdown
+          [label]="'Portfolio'"
           [optionStringIds]="portfolioDataIds"
           [options]="portfolioDataNames"
           [defaultOption]="portfolioData?.[0]?.name ?? null"
@@ -16,21 +17,34 @@
         ></fin-man-custom-dropdown>
 
         <fin-man-custom-dropdown
-          [optionsIds]="assetTypeIds"
-          [options]="assetTypeNames"
-          [defaultOption]="assetTypeNames[0]"
-          (onChangeNumber)="handleAssetTypeChange($event)"
-        ></fin-man-custom-dropdown> -->
+          [label]="'Asset'"
+          [optionStringIds]="assetDataIds"
+          [options]="assetDataNames"
+          [defaultOption]="assetDataNames?.[0] ?? null"
+          (onChangeString)="handleAssetChange($event)"
+        ></fin-man-custom-dropdown>
 
         <div class="form-group">
           <fin-man-custom-dropdown
-            [options]="transactionTypes"
-            [control]="transactionFormGroup.controls.TransactionTypeID"
-            [placeholder]="'Select transaction type'"
+            [optionsIds]="transactionTypesIds"
+            [options]="transactionTypesNames"
             [label]="'Transaction Type'"
+            [defaultOption]="transactionTypesNames?.[0] ?? null"
+            [control]="transactionFormGroup.controls.TransactionTypeID"
             (onChangeSingle)="onTransactionTypeChange()"
-            [isSearchable]="true"
           ></fin-man-custom-dropdown>
+        </div>
+
+        <div class="form-group">
+          <fin-man-input
+            [type]="'number'"
+            [label]="'Current Value of Asset'"
+            [control]="transactionFormGroup.controls.CurrentValue"
+            [required]="true"
+            [readonly]="true"
+            [disabled]="true"
+          >
+          </fin-man-input>
         </div>
 
         <div class="form-group">
@@ -41,6 +55,7 @@
             [control]="transactionFormGroup.controls.Price"
             [min]="0.01"
             [required]="true"
+            [allowedCharsPattern]="'[0-9.]'"
           >
           </fin-man-input>
         </div>
@@ -51,19 +66,20 @@
             [label]="'Quantity'"
             [placeholder]="'Enter quantity'"
             [control]="transactionFormGroup.controls.Quantity"
-            [min]="1"
+            [min]="0.01"
             [required]="true"
+            [allowedCharsPattern]="'[0-9.]'"
           >
           </fin-man-input>
         </div>
 
         <div class="form-group">
-          <input
-            type="date"
-            id="transactionDate"
-            [formControl]="transactionFormGroup.controls.CreatedAt"
-            class="form-control"
-          />
+          <fin-man-input
+            [type]="'date'"
+            [label]="'Created At'"
+            [control]="transactionFormGroup.controls.TransactionDate"
+            [required]="true"
+          ></fin-man-input>
         </div>
 
         <div class="add-button-modal-wrapper">

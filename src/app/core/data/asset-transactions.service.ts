@@ -6,6 +6,7 @@ import {
   AssetTransactionCreateRequest,
   AssetTransactionResponse,
   AssetTransactionType,
+  AssetTransactionTypeResponse,
 } from '../interfaces/asset.schema';
 
 @Injectable({
@@ -16,21 +17,20 @@ export class AssetTransactionsService {
 
   constructor(private http: HttpClient) {}
 
-  getTransactionTypes(): Observable<HttpResponse<AssetTransactionType[]>> {
+  getTransactionTypes(): Observable<AssetTransactionTypeResponse> {
     return this.http
-      .get<AssetTransactionType[]>(`${this.API_URL}/transaction-types`, { observe: 'response' })
+      .get<AssetTransactionTypeResponse>(`${this.API_URL}/transaction_types`)
       .pipe(catchError(this.handleError));
   }
 
   // Pobieranie listy transakcji
-  getTransactions(
+  getTransactionsForAsset(
     portfolioID: string,
     assetID: string,
-  ): Observable<HttpResponse<AssetTransactionResponse>> {
+  ): Observable<AssetTransactionResponse> {
     return this.http
       .get<AssetTransactionResponse>(
         `${this.API_URL}/portfolios/${portfolioID}/assets/${assetID}/transactions`,
-        { observe: 'response' },
       )
       .pipe(catchError(this.handleError));
   }

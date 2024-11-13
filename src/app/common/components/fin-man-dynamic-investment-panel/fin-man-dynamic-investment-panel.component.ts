@@ -3,19 +3,25 @@ import { FormControl } from '@angular/forms';
 
 import {
   ASSET_HEADERS,
+  mapAssetToBondTable,
   mapAssetToEtfTable,
   mapAssetToStockTable,
 } from '@app/core/constants/asset-types-columns.const';
+import { AssetTransactionsService } from '@app/core/data/asset-transactions.service';
 import { AssetService } from '@app/core/data/assets.service';
 import {
   Asset,
+  AssetBondTable,
   AssetEtfTable,
   AssetStockTable,
+  AssetTransaction,
+  AssetTransactionSnakeCase,
   AssetType,
   Portfolio,
 } from '@app/core/interfaces/asset.schema';
 import { CategoryKind } from '@app/core/interfaces/common-enums.schema';
 import { CrudOperations } from '@app/core/interfaces/crud-operations-enum.schema';
+import { Transaction } from '@app/core/interfaces/transaction.schema';
 
 @Component({
   selector: 'fin-man-dynamic-investment-panel',
@@ -38,9 +44,11 @@ export class FinManDynamicInvestmentPanelComponent implements OnInit, OnChanges 
   readonly assetHeaders = ASSET_HEADERS;
 
   private assetService = inject(AssetService);
+  private assetTransactionsService = inject(AssetTransactionsService);
 
   searchControl = new FormControl('');
 
+  portfolioId: string = '';
   portfolioDataIds: string[] = [];
   portfolioDataNames: string[] = [];
 
@@ -49,9 +57,17 @@ export class FinManDynamicInvestmentPanelComponent implements OnInit, OnChanges 
   selectedAssetType: number = 1;
 
   stockAssetData: AssetStockTable[] = [];
+  bondAssetData: AssetBondTable[] = [];
   etfAssetData: AssetEtfTable[] = [];
 
+  // Keep track of expanded assets by their IDs
+  expandedAssetIds: string[] = [];
+
+  // Store transactions for each asset
+  assetTransactions: { [assetId: string]: AssetTransactionSnakeCase[] } = {};
+
   ngOnInit(): void {
+    this.portfolioId = this.portfolioData[0]?.id ?? '';
     this.portfolioDataIds = this.portfolioData?.map((portfolio) => portfolio?.id) ?? [];
     this.portfolioDataNames = this.portfolioData?.map((portfolio) => portfolio?.name) ?? [];
 
@@ -67,11 +83,12 @@ export class FinManDynamicInvestmentPanelComponent implements OnInit, OnChanges 
 
   get getPanelTitle(): string {
     const selectedAssetName = this.assetTypeNames[this.selectedAssetType - 1];
-    return 'Purchased ' + selectedAssetName;
+    return 'Purchased ' + selectedAssetName + 's';
   }
 
   handlePortfolioChange(portfolioId: string): void {
     console.log('Portfolio changed: ', portfolioId);
+    this.portfolioId = portfolioId;
     this.assetService.getAssetsByPortfolioId(portfolioId).subscribe((assets) => {
       this.assetData = assets.data;
       this.setFilteredAssetData();
@@ -82,7 +99,10 @@ export class FinManDynamicInvestmentPanelComponent implements OnInit, OnChanges 
     this.selectedAssetType = assetType;
   }
 
-  handleOptionSelected(option: CrudOperations, asset: AssetStockTable | AssetEtfTable): void {
+  handleOptionSelected(
+    option: CrudOperations,
+    asset: AssetStockTable | AssetBondTable | AssetEtfTable,
+  ): void {
     const foundAsset = this.assetData.find((a) => a.ID === asset.ID);
 
     if (option === CrudOperations.EDIT) {
@@ -92,13 +112,53 @@ export class FinManDynamicInvestmentPanelComponent implements OnInit, OnChanges 
     }
   }
 
+  // Method to toggle the expanded state of an asset
+  toggleAsset(asset: AssetStockTable | AssetBondTable | AssetEtfTable): void {
+    console.log('Toggling asset:', asset);
+
+    const index = this.expandedAssetIds.indexOf(asset.ID);
+    if (index > -1) {
+      this.expandedAssetIds.splice(index, 1);
+    } else {
+      this.expandedAssetIds.push(asset.ID);
+      console.log('Fetching transactions for asset:', asset);
+
+      if (!this.assetTransactions[asset.ID]) {
+        this.fetchTransactionsForAsset(asset);
+      }
+    }
+  }
+
+  // Check if an asset is expanded
+  isAssetExpanded(asset: AssetStockTable | AssetBondTable | AssetEtfTable): boolean {
+    return this.expandedAssetIds.includes(asset.ID);
+  }
+
+  // Fetch transactions for a specific asset
+  fetchTransactionsForAsset(asset: AssetStockTable | AssetBondTable | AssetEtfTable): void {
+    this.assetTransactionsService
+      .getTransactionsForAsset(this.portfolioId, asset.ID)
+      .subscribe((response) => {
+        this.assetTransactions[asset.ID] = response.data; // Adjust based on your API response structure
+        console.log('Transactions for asset:', this.assetTransactions[asset.ID]);
+      });
+  }
+
   private setFilteredAssetData(): void {
     this.stockAssetData = this.assetData
       .map((asset) => mapAssetToStockTable(asset))
       .filter((asset) => asset !== null) as AssetStockTable[];
 
+    this.bondAssetData = this.assetData
+      .map((asset) => mapAssetToBondTable(asset))
+      .filter((asset) => asset !== null) as AssetBondTable[];
+
     this.etfAssetData = this.assetData
       .map((asset) => mapAssetToEtfTable(asset))
       .filter((asset) => asset !== null) as AssetEtfTable[];
+  }
+
+  log(data: any): void {
+    console.log(data);
   }
 }

@@ -56,14 +56,16 @@ export class AssetService {
   }
 
   // Usuwanie aktywa
-  deleteAsset(assetId: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${assetId}`).pipe(catchError(this.handleError));
+  deleteAsset(portfolioId: string, assetId: string): Observable<void> {
+    return this.http
+      .delete<void>(`${this.baseUrl}/portfolios/${portfolioId}/assets/${assetId}`)
+      .pipe(catchError(this.handleError));
   }
 
   // Aktualizacja aktywa
-  updateAsset(asset: Asset): Observable<void> {
+  updateAsset(portfolioId: string, assetId: string, asset: Asset): Observable<void> {
     return this.http
-      .put<void>(`${this.baseUrl}/${asset.ID}`, asset)
+      .put<void>(`${this.baseUrl}/portfolios/${portfolioId}/assets/${assetId}`, asset)
       .pipe(catchError(this.handleError));
   }
 

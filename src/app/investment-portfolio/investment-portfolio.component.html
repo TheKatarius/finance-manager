@@ -3,7 +3,7 @@
 
   <div class="investment-portfolio-content-container">
     <div class="title-container">
-      <span class="title">Investment Potfolio</span>
+      <span class="title">Investment Portfolio</span>
       <span class="subtitle">All your investments in one place</span>
     </div>
 
@@ -18,13 +18,17 @@
       (deleteAsset)="deleteAsset($event)"
     ></fin-man-dynamic-investment-panel>
 
-    <fin-man-transaction-panel [transactionData]="[]"></fin-man-transaction-panel>
+    <fin-man-portfolio-panel
+      [portfolios]="portfolioData"
+      (openPortfolioModal)="openPortfolioModal($event)"
+    ></fin-man-portfolio-panel>
   </div>
 </div>
 
 <finance-manager-investment-portfolio-modal-portfolio
   *ngIf="isPortfolioModalVisible"
   [isVisible]="isPortfolioModalVisible"
+  [selectedPortfolio]="selectedPortfolio"
   (close)="closePortfolioModal()"
 ></finance-manager-investment-portfolio-modal-portfolio>
 

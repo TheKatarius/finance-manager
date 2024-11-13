@@ -8,6 +8,6 @@
     [placeholder]="'Search transactions...'"
     [componentClassName]="FinManInputTypes.SEARCH"
     [maxlength]="VALIDATION.SEARCH.MAX_LENGTH"
-    [pattern]="'^[a-zA-Z0-9._-]+$'"
+    [allowedCharsPattern]="VALIDATION.ALLOWED_CHARS_PATTERNS.BASIC_NAME_INPUT"
   ></fin-man-input>
 </div>

@@ -17,7 +17,9 @@ export class InvestmentPortfolioFormGroupService {
 
       // Finansowe szczegóły
       CouponRate: asset?.CouponRate ?? 0,
-      MaturityDate: asset?.MaturityDate ? this.formatDate(asset.MaturityDate) : '',
+      MaturityDate: asset?.MaturityDate
+        ? this.formatDate(asset.MaturityDate)
+        : new Date().toISOString().split('T')[0],
 
       FaceValue: asset?.FaceValue ?? 0,
       DividendYield: asset?.DividendYield ?? 0,
@@ -49,11 +51,6 @@ export class InvestmentPortfolioFormGroupService {
     });
   }
 
-  /**
-   * Formatuje obiekt Date do formatu YYYY-MM-DD, kompatybilnego z HTML5 input type="date"
-   * @param date Obiekt Date
-   * @returns Sformatowana data jako string
-   */
   private formatDate(date: Date): string {
     const d = new Date(date);
     const month = ('0' + (d.getMonth() + 1)).slice(-2);

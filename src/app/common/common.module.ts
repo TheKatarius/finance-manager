@@ -1,4 +1,4 @@
-import { DatePipe, NgClass, NgForOf, NgIf, NgStyle } from '@angular/common';
+import { DatePipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -27,6 +27,7 @@ import { FinManSmallChartComponent } from '@common/components/fin-man-small-char
 import { FinManPeriodTransactionRecordComponent } from '@common/components/fin-man-transaction-panel/fin-man-period-transaction-record.component.ts/fin-man-period-transaction-record.component';
 import { FinManTransactionPanelComponent } from '@common/components/fin-man-transaction-panel/fin-man-transaction-panel.component';
 import { FinManTransactionRecordComponent } from '@common/components/fin-man-transaction-panel/fin-man-transaction-record/fin-man-transaction-record.component';
+import { FinManPortfolioPanelComponent } from '@common/components/fin-man-portfolio-panel/fin-man-portfolio-panel.component';
 
 const COMMON_COMPONENTS = [
   FinManBasicInfoPanelComponent,
@@ -49,6 +50,7 @@ const COMMON_COMPONENTS = [
   FinManCircleProgressBarComponent,
   FinManImportTransactionsComponent,
   FinManDynamicInvestmentPanelComponent,
+  FinManPortfolioPanelComponent,
 ];
 
 @NgModule({
@@ -65,6 +67,7 @@ const COMMON_COMPONENTS = [
     DatePipe,
     NgStyle,
     PipeModules,
+    NgTemplateOutlet,
   ],
   exports: [...COMMON_COMPONENTS],
 })

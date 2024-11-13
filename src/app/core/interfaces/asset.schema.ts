@@ -8,6 +8,20 @@ export interface Portfolio {
   updatedAt: Date;
 }
 
+export interface PortfolioSnakeCase {
+  id: string;
+  name: string; // Nazwa portfela
+  description?: string; // Opis portfela (opcjonalny)
+  created_at: Date;
+  updated_at: Date;
+}
+
+export interface PortfolioUpdateRequest {
+  name: string; // Nazwa portfela
+  description?: string; // Opis portfela (opcjonalny)
+  updatedAt?: Date;
+}
+
 export interface PortfolioResponse {
   data: Portfolio[];
   message: string;
@@ -37,7 +51,7 @@ export interface Asset {
   Ticker: string; // Nazwa skrócona assetu
   AssetTypeID: number; // Rodzaj assetu
   CouponRate: number; // Stopa kuponowa (obligacje)
-  MaturityDate: Date | null; // Data wygaśnięcia - wykupu obligacji
+  MaturityDate: Date; // Data wygaśnięcia - wykupu obligacji
   FaceValue: number; // Wartość którą zwraca emitent po upływie maturity date - przeważnie jest to kwota zakupu obligacji
   DividendYield: number;
   Accumulation: boolean;
@@ -63,6 +77,25 @@ export interface AssetStockTable {
   AveragePurchasePrice: number;
   TotalInvested: number;
   CurrentValue: number;
+  UnrealizedGainLoss: number;
+  ExchangeShort: string;
+  Currency: string;
+  CreatedAt: Date;
+  UpdatedAt: Date;
+}
+
+export interface AssetBondTable {
+  ID: string;
+  Name: string;
+  Ticker: string;
+  CouponRate: number;
+  MaturityDate: Date;
+  FaceValue: number;
+  TotalQuantity: number;
+  AveragePurchasePrice: number;
+  TotalInvested: number;
+  CurrentValue: number;
+  InterestAccrued: number;
   UnrealizedGainLoss: number;
   ExchangeShort: string;
   Currency: string;
@@ -147,8 +180,14 @@ export interface AssetFormControls {
 }
 
 export interface AssetTransactionType {
-  ID: number;
-  Name: string;
+  id: number;
+  type: string;
+}
+
+export interface AssetTransactionTypeResponse {
+  data: AssetTransactionType[];
+  message?: string;
+  status: string;
 }
 
 export interface AssetTransaction {
@@ -156,20 +195,32 @@ export interface AssetTransaction {
   TransactionTypeID: number;
   PortfolioID: string;
   AssetID: string;
+  CurrentValue: number;
   Quantity: number;
   Price: number;
-  CreatedAt: Date;
+  TransactionDate: string;
+}
+
+export interface AssetTransactionSnakeCase {
+  id?: string;
+  transaction_type_id: number;
+  portfolio_id: string;
+  asset_id: string;
+  current_value: number;
+  quantity: number;
+  price: number;
+  transaction_date: string;
 }
 
 export interface AssetTransactionCreateRequest {
   TransactionTypeID: number;
   Quantity: number;
   Price: number;
-  CreatedAt: Date;
+  TransactionDate: Date;
 }
 
 export interface AssetTransactionResponse {
-  data: AssetTransaction[];
+  data: AssetTransactionSnakeCase[];
   message: string;
   status: string;
 }
@@ -178,7 +229,8 @@ export interface AssetTransactionFormControls {
   PortfolioID: FormControl<string | null>;
   AssetID: FormControl<string | null>;
   TransactionTypeID: FormControl<number | null>;
+  CurrentValue: FormControl<number | null>;
   Quantity: FormControl<number | null>;
   Price: FormControl<number | null>;
-  CreatedAt: FormControl<Date | null>;
+  TransactionDate: FormControl<string | null>;
 }

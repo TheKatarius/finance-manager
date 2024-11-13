@@ -63,16 +63,22 @@
     <ng-container *ngIf="selectedAssetType === 2">
       <div class="header-cell">{{ assetHeaders[2][0] }}</div>
       <div class="header-cell">{{ assetHeaders[2][1] }}</div>
-      <div class="header-cell">{{ assetHeaders[2][2] }}</div>
-      <div class="header-cell">{{ assetHeaders[2][3] }}</div>
+      <div class="double-header">
+        <div class="header-cell">{{ assetHeaders[2][2] }}</div>
+        <div class="header-cell">{{ assetHeaders[2][3] }}</div>
+      </div>
       <div class="header-cell">{{ assetHeaders[2][4] }}</div>
       <div class="header-cell">{{ assetHeaders[2][5] }}</div>
-      <div class="header-cell">{{ assetHeaders[2][6] }}</div>
-      <div class="header-cell">{{ assetHeaders[2][7] }}</div>
+      <div class="double-header">
+        <div class="header-cell">{{ assetHeaders[2][6] }}</div>
+        <div class="header-cell">{{ assetHeaders[2][7] }}</div>
+      </div>
       <div class="header-cell">{{ assetHeaders[2][8] }}</div>
-      <div class="header-cell double-header">
-        <div>{{ assetHeaders[2][9] }}</div>
-        <div>{{ assetHeaders[2][10] }}</div>
+      <div class="header-cell">{{ assetHeaders[2][9] }}</div>
+      <div class="header-cell">{{ assetHeaders[2][10] }}</div>
+      <div class="double-header">
+        <div class="header-cell">{{ assetHeaders[2][11] }}</div>
+        <div class="header-cell">{{ assetHeaders[2][12] }}</div>
       </div>
     </ng-container>
     <ng-container *ngIf="selectedAssetType === 3">
@@ -92,91 +98,200 @@
     </ng-container>
   </div>
 
-  <ng-container *ngIf="selectedAssetType == 1">
-    <div *ngFor="let asset of stockAssetData" class="asset-item">
-      <div class="column">{{ asset.Name }}</div>
-      <div class="column">{{ asset.Ticker }}</div>
-      <div class="column" [ngClass]="{ positive: asset.DividendYield > 0 }">
-        {{ asset.DividendYield + '%' }}
-      </div>
-      <div class="column">{{ asset.TotalQuantity }}</div>
-      <div class="column">{{ asset.AveragePurchasePrice + asset.Currency }}</div>
-      <div class="column">{{ asset.TotalInvested + asset.Currency }}</div>
-      <div class="column">{{ asset.CurrentValue + asset.Currency }}</div>
+  <ng-container *ngIf="selectedAssetType === 1">
+    <div class="assets-container">
       <div
-        class="column"
-        [ngClass]="{
-          positive: asset.UnrealizedGainLoss > 0,
-          negative: asset.UnrealizedGainLoss < 0
-        }"
+        *ngFor="let asset of stockAssetData"
+        class="asset-item"
+        [ngClass]="{ 'asset-item-clicked': isAssetExpanded(asset) }"
+        (click)="toggleAsset(asset)"
       >
-        {{
-          asset.UnrealizedGainLoss +
-            asset.Currency +
-            ' / ' +
-            (asset.AveragePurchasePrice && asset.CurrentValue
-              ? ((asset.CurrentValue / asset.AveragePurchasePrice - 1) * 100).toFixed(2)
-              : 0) +
-            '%'
-        }}
-      </div>
-      <div class="column">{{ asset.ExchangeShort }}</div>
-      <div class="double-column">
-        <div class="column column-date">{{ asset.CreatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
-        <div class="column column-date">{{ asset.UpdatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
-      </div>
+        <div class="column">{{ asset.Name }}</div>
+        <div class="column">{{ asset.Ticker }}</div>
+        <div class="column" [ngClass]="{ positive: asset.DividendYield > 0 }">
+          {{ asset.DividendYield + '%' }}
+        </div>
+        <div class="column">{{ asset.TotalQuantity }}</div>
+        <div class="column">{{ asset.AveragePurchasePrice + asset.Currency }}</div>
+        <div class="column">{{ asset.TotalInvested + asset.Currency }}</div>
+        <div class="column">{{ asset.CurrentValue + asset.Currency }}</div>
+        <div
+          class="column"
+          [ngClass]="{
+            positive: asset.UnrealizedGainLoss > 0,
+            negative: asset.UnrealizedGainLoss < 0
+          }"
+        >
+          {{
+            asset.UnrealizedGainLoss +
+              asset.Currency +
+              ' / ' +
+              (asset.AveragePurchasePrice && asset.CurrentValue
+                ? ((asset.CurrentValue / asset.AveragePurchasePrice - 1) * 100).toFixed(2)
+                : 0) +
+              '%'
+          }}
+        </div>
+        <div class="column">{{ asset.ExchangeShort }}</div>
+        <div class="double-column">
+          <div class="column column-date">{{ asset.CreatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
+          <div class="column column-date">{{ asset.UpdatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
+        </div>
 
-      <!-- TODO: Add hover effect -->
-      <div>
-        <fin-man-kebab-menu-popover
-          [options]="[CrudOperations.EDIT, CrudOperations.DELETE]"
-          (onChange)="handleOptionSelected($event, asset)"
-        ></fin-man-kebab-menu-popover>
+        <!-- TODO: Add hover effect -->
+        <div>
+          <fin-man-kebab-menu-popover
+            [options]="[CrudOperations.DELETE]"
+            (onChange)="handleOptionSelected($event, asset)"
+            (click)="$event.stopPropagation()"
+          ></fin-man-kebab-menu-popover>
+        </div>
+
+        <div [ngTemplateOutlet]="subtable" [ngTemplateOutletContext]="{ asset: asset }"></div>
       </div>
     </div>
   </ng-container>
 
-  <ng-container *ngIf="selectedAssetType == 3">
-    <div *ngFor="let asset of etfAssetData" class="asset-item">
-      <div class="column">{{ asset.Name }}</div>
-      <div class="column">{{ asset.Ticker }}</div>
-      <div class="column">
-        {{ asset.Accumulation ? 'Yes' : 'No' }}
-      </div>
-      <div class="column">{{ asset.TotalQuantity }}</div>
-      <div class="column">{{ asset.AveragePurchasePrice + asset.Currency }}</div>
-      <div class="column">{{ asset.TotalInvested + asset.Currency }}</div>
-      <div class="column">{{ asset.CurrentValue + asset.Currency }}</div>
+  <ng-container *ngIf="selectedAssetType === 2">
+    <div class="assets-container">
       <div
-        class="column"
-        [ngClass]="{
-          positive: asset.UnrealizedGainLoss > 0,
-          negative: asset.UnrealizedGainLoss < 0
-        }"
+        *ngFor="let asset of bondAssetData"
+        class="asset-item"
+        [ngClass]="{ 'asset-item-clicked': isAssetExpanded(asset) }"
+        (click)="toggleAsset(asset)"
       >
-        {{
-          asset.UnrealizedGainLoss +
-            asset.Currency +
-            ' / ' +
-            (asset.AveragePurchasePrice && asset.CurrentValue
-              ? ((asset.CurrentValue / asset.AveragePurchasePrice - 1) * 100).toFixed(2)
-              : 0) +
-            '%'
-        }}
-      </div>
-      <div class="column">{{ asset.ExchangeShort }}</div>
-      <div class="double-column">
-        <div class="column column-date">{{ asset.CreatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
-        <div class="column column-date">{{ asset.UpdatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
-      </div>
+        <div class="column">{{ asset.Name }}</div>
+        <div class="column">{{ asset.Ticker }}</div>
+        <div class="double-column">
+          <div class="column">{{ asset.CouponRate + '%' }}</div>
+          <div class="column">{{ asset.FaceValue + asset.Currency }}</div>
+        </div>
+        <div class="column">{{ asset.MaturityDate | date: 'dd-MM-yyyy' }}</div>
+        <div class="column">{{ asset.AveragePurchasePrice + asset.Currency }}</div>
+        <div class="double-column">
+          <div class="column">{{ asset.TotalQuantity }}</div>
+          <div class="column">{{ asset.TotalInvested + asset.Currency }}</div>
+        </div>
+        <div class="column">{{ asset.CurrentValue + asset.Currency }}</div>
+        <div class="column">{{ asset.InterestAccrued + asset.Currency }}</div>
+        <div
+          class="column"
+          [ngClass]="{
+            positive: asset.UnrealizedGainLoss > 0,
+            negative: asset.UnrealizedGainLoss < 0
+          }"
+        >
+          {{
+            asset.UnrealizedGainLoss +
+              asset.Currency +
+              ' / ' +
+              (asset.AveragePurchasePrice && asset.CurrentValue
+                ? ((asset.CurrentValue / asset.AveragePurchasePrice - 1) * 100).toFixed(2)
+                : 0) +
+              '%'
+          }}
+        </div>
+        <div class="double-column">
+          <div class="column column-date">{{ asset.CreatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
+          <div class="column column-date">{{ asset.UpdatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
+        </div>
 
-      <!-- TODO: Add hover effect -->
-      <div>
-        <fin-man-kebab-menu-popover
-          [options]="[CrudOperations.EDIT, CrudOperations.DELETE]"
-          (onChange)="handleOptionSelected($event, asset)"
-        ></fin-man-kebab-menu-popover>
+        <!-- TODO: Add hover effect -->
+        <div>
+          <fin-man-kebab-menu-popover
+            [options]="[CrudOperations.DELETE]"
+            (onChange)="handleOptionSelected($event, asset)"
+          ></fin-man-kebab-menu-popover>
+        </div>
+
+        <div [ngTemplateOutlet]="subtable" [ngTemplateOutletContext]="{ asset: asset }"></div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="selectedAssetType === 3">
+    <div class="assets-container">
+      <div
+        *ngFor="let asset of etfAssetData"
+        class="asset-item"
+        [ngClass]="{ 'asset-item-clicked': isAssetExpanded(asset) }"
+        (click)="toggleAsset(asset)"
+      >
+        <div class="column">{{ asset.Name }}</div>
+        <div class="column">{{ asset.Ticker }}</div>
+        <div class="column">
+          {{ asset.Accumulation ? 'Yes' : 'No' }}
+        </div>
+        <div class="column">{{ asset.TotalQuantity }}</div>
+        <div class="column">{{ asset.AveragePurchasePrice + asset.Currency }}</div>
+        <div class="column">{{ asset.TotalInvested + asset.Currency }}</div>
+        <div class="column">{{ asset.CurrentValue + asset.Currency }}</div>
+        <div
+          class="column"
+          [ngClass]="{
+            positive: asset.UnrealizedGainLoss > 0,
+            negative: asset.UnrealizedGainLoss < 0
+          }"
+        >
+          {{
+            asset.UnrealizedGainLoss +
+              asset.Currency +
+              ' / ' +
+              (asset.AveragePurchasePrice && asset.CurrentValue
+                ? ((asset.CurrentValue / asset.AveragePurchasePrice - 1) * 100).toFixed(2)
+                : 0) +
+              '%'
+          }}
+        </div>
+        <div class="column">{{ asset.ExchangeShort }}</div>
+        <div class="double-column">
+          <div class="column column-date">{{ asset.CreatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
+          <div class="column column-date">{{ asset.UpdatedAt | date: 'yyyy-MM-dd HH:mm' }}</div>
+        </div>
+
+        <!-- TODO: Add hover effect -->
+        <div>
+          <fin-man-kebab-menu-popover
+            [options]="[CrudOperations.DELETE]"
+            (onChange)="handleOptionSelected($event, asset)"
+          ></fin-man-kebab-menu-popover>
+        </div>
+
+        <div [ngTemplateOutlet]="subtable" [ngTemplateOutletContext]="{ asset: asset }"></div>
       </div>
     </div>
   </ng-container>
 </div>
+
+<ng-template #subtable let-asset="asset">
+  <!-- Transactions Subtable -->
+  <div
+    *ngIf="isAssetExpanded(asset)"
+    class="transactions-subtable"
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Transactions Header -->
+    <div class="assets-table-header">
+      <div class="header-cell">Transaction Type</div>
+      <div class="header-cell">Transaction Date</div>
+      <div class="header-cell">Price</div>
+      <div class="header-cell">Quantity</div>
+    </div>
+
+    <ng-container *ngIf="assetTransactions[asset.ID] && assetTransactions[asset.ID].length > 0">
+      <!-- Transactions Rows -->
+      <div class="transaction-container">
+        <div class="transaction-item" *ngFor="let transaction of assetTransactions[asset.ID]">
+          <div class="transaction-column">
+            {{ transaction.transaction_type_id === 1 ? 'BUY' : 'SELL' }}
+          </div>
+          <div class="transaction-column">
+            {{ transaction.transaction_date | date: 'yyyy-MM-dd' }}
+          </div>
+          <div class="transaction-column">{{ transaction.price }}</div>
+          <div class="transaction-column">{{ transaction.quantity }}</div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>

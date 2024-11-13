@@ -12,9 +12,10 @@ export class InvestmentPortfolioModalTransactionService {
       PortfolioID: new FormControl(null),
       AssetID: new FormControl(null),
       TransactionTypeID: new FormControl(null),
+      CurrentValue: new FormControl(null),
       Price: new FormControl(null),
       Quantity: new FormControl(null),
-      CreatedAt: new FormControl(new Date()),
+      TransactionDate: new FormControl(new Date().toISOString().split('T')[0]),
     });
   }
 }

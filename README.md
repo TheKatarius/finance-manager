@@ -3,3 +3,4 @@
 - co możemy edytować w assetach i transakcjach?
 - sprawdzić licencję i podmienić ikony na te open-source
 - dodać division i coupon amount to asset transaction jak starczy czasu
+- do poprawy kebabMenu bo nie wychodzi w ostatnim wierszu poza tabelę

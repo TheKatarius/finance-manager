@@ -36,8 +36,8 @@ export class FinManKebabMenuPopoverComponent {
   }
 
   selectOption(option: CrudOperations): void {
-    this.selected = option;
     this.isOpen = false;
+    this.selected = option;
     this.onChange.emit(option);
   }
 }

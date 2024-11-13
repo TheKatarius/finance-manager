@@ -38,10 +38,12 @@
     border-bottom: 2px solid colors.$text-main;
     border-radius: dimensions.$border-radius-small dimensions.$border-radius-small 0 0;
     height: 40px;
+    width: 100%;
     padding: dimensions.$padding-xxs dimensions.$padding-md;
 
     display: grid;
     grid-template-columns: dimensions.$asset-table-widths;
+    align-items: center;
     gap: 5px;
 
     .header-cell {
@@ -67,22 +69,84 @@
     }
   }
 
-  .asset-item {
-    @include mixins.transaction-items;
-    padding: dimensions.$padding-xxs dimensions.$padding-md;
+  .assets-container {
+    overflow-x: hidden;
+    overflow-y: auto;
 
-    display: grid;
-    grid-template-columns: dimensions.$asset-table-widths;
+    @include mixins.scrollbar;
 
-    .double-column {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: flex-start;
+    .asset-item {
+      @include mixins.transaction-items;
+      height: auto;
+      padding: dimensions.$padding-xxs dimensions.$padding-md;
+
+      display: grid;
+      grid-template-columns: dimensions.$asset-table-widths;
+
+      &-clicked {
+        border: 2px solid colors.$text-main;
+      }
+
+      .double-column {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .column-date {
+        color: colors.$text-secondary;
+      }
     }
+  }
+}
 
-    .column-date {
-      color: colors.$text-secondary;
+.transactions-subtable {
+  height: 200px;
+  width: 1450px;
+  transform: translate(-198px);
+  background-color: colors.$background-panel;
+  border-radius: dimensions.$border-radius-medium;
+  padding: dimensions.$padding-xs dimensions.$padding-md;
+
+  .assets-table-header {
+    display: grid;
+    grid-template-columns: dimensions.$asset-transaction-widths;
+
+    .header-cell {
+      font-size: typography.$font-size-sm;
+      font-weight: typography.$font-weight-bold;
+      color: colors.$text-secondary; // Lekkie przyciemnienie tekstu
+      cursor: pointer;
+      text-transform: uppercase;
+
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        color: colors.$text-secondary-hover; // Podświetlenie kolumny po najechaniu myszką
+      }
+    }
+  }
+
+  .transaction-container {
+    height: 150px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    @include mixins.scrollbar;
+
+    .transaction-item {
+      @include mixins.transaction-items;
+      height: 40px;
+      padding: dimensions.$padding-xxs dimensions.$padding-md;
+
+      display: grid;
+      grid-template-columns: dimensions.$asset-transaction-widths;
+      gap: 6px;
+
+      .column-date {
+        color: colors.$text-secondary;
+      }
     }
   }
 }

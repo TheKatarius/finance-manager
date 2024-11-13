@@ -2,7 +2,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 
-import { Portfolio, PortfolioResponse } from '@app/core/interfaces/asset.schema';
+import {
+  Portfolio,
+  PortfolioResponse,
+  PortfolioUpdateRequest,
+} from '@app/core/interfaces/asset.schema';
 
 @Injectable({
   providedIn: 'root',
@@ -25,10 +29,10 @@ export class PortfolioService {
   }
 
   // Aktualizacja istniejącego portfela
-  updatePortfolio(portfolio: Portfolio): Observable<Portfolio> {
+  updatePortfolio(portfolioId: string, portfolio: PortfolioUpdateRequest): Observable<void> {
     portfolio.updatedAt = new Date();
     return this.http
-      .put<Portfolio>(`${this.apiUrl}/${portfolio.id}`, portfolio)
+      .put<void>(`${this.apiUrl}/${portfolioId}`, portfolio)
       .pipe(catchError(this.handleError));
   }
 

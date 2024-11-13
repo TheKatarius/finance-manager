@@ -1,0 +1,38 @@
+<div class="portfolio-panel-container">
+  <div class="header-wrapper">
+    <h4 class="portfolio-header">Portfolio List</h4>
+
+    <div class="actions-wrapper">
+      <div class="add-button-wrapper" (click)="openPortfolioModal.emit()">
+        <div class="icon-wrapper">
+          <em class="icon add-icon"></em>
+        </div>
+        <div class="add-button">Add Portfolio</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="assets-table-header">
+    <div class="header-cell">Name</div>
+    <div class="header-cell">Description</div>
+    <div class="header-cell">Created At</div>
+    <div class="header-cell">Updated At</div>
+  </div>
+
+  <div class="portfolios-container">
+    <div *ngFor="let portfolio of portofoliosSnakeCase" class="portfolio-item">
+      <div class="column">{{ portfolio.name }}</div>
+      <div class="column">{{ portfolio.description || '–' }}</div>
+      <div class="column">{{ portfolio.created_at | date: 'yyyy-MM-dd HH:mm' }}</div>
+      <div class="column">{{ portfolio.updated_at | date: 'yyyy-MM-dd HH:mm' }}</div>
+
+      <!-- Menu Kebab -->
+      <div (click)="$event.stopPropagation()">
+        <fin-man-kebab-menu-popover
+          [options]="[CrudOperations.EDIT, CrudOperations.DELETE]"
+          (onChange)="handleOptionSelected($event, portfolio)"
+        ></fin-man-kebab-menu-popover>
+      </div>
+    </div>
+  </div>
+</div>

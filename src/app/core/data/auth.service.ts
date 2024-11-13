@@ -15,14 +15,15 @@ import {
 } from '@app/core/interfaces/api-responses.schema';
 import { NotificationService } from '../services/notifications.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
-
   private notificationService = inject(NotificationService);
+  private cookieService = inject(CookieService); // Dodaj ten wstrzyknięcie
 
   // Klucze używane do przechowywania tokenów w localStorage
   private readonly ACCESS_TOKEN_KEY = 'access_token';

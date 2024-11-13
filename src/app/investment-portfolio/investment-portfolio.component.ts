@@ -3,7 +3,13 @@ import { forkJoin } from 'rxjs';
 
 import { AssetService } from '@app/core/data/assets.service';
 import { PortfolioService } from '@app/core/data/portfolios.service';
-import { Asset, AssetType, CreateAssetRequest, Portfolio } from '@app/core/interfaces/asset.schema';
+import {
+  Asset,
+  AssetType,
+  CreateAssetRequest,
+  Portfolio,
+  PortfolioSnakeCase,
+} from '@app/core/interfaces/asset.schema';
 import { NotificationService } from '@app/core/services/notifications.service';
 import { InvestmentPortfolioService } from './investment-portfolio.service';
 
@@ -26,6 +32,7 @@ export class InvestmentPortfolioComponent implements OnInit {
 
   portfolioData: Portfolio[] = [];
   portfolioId: string = '';
+  selectedPortfolio: PortfolioSnakeCase | null = null;
 
   assetTypesData: AssetType[] = [];
   selectedAssetTypeId: string | null = null;
@@ -89,8 +96,9 @@ export class InvestmentPortfolioComponent implements OnInit {
   }
 
   // Otwórz modal do tworzenia lub edycji aktywu
-  openPortfolioModal(asset?: Asset): void {
+  openPortfolioModal(portfolio?: PortfolioSnakeCase): void {
     this.isPortfolioModalVisible = true;
+    this.selectedPortfolio = portfolio || null;
   }
 
   // Zamknij modal
@@ -163,8 +171,8 @@ export class InvestmentPortfolioComponent implements OnInit {
       case 2:
         return {
           ...baseProperties,
-          coupon_rate: asset.CouponRate,
-          face_value: asset.FaceValue,
+          coupon_rate: Number(asset.CouponRate),
+          face_value: Number(asset.FaceValue),
           maturity_date: asset.MaturityDate,
         };
       // ETFs
@@ -181,6 +189,13 @@ export class InvestmentPortfolioComponent implements OnInit {
 
   // Usunięcie aktywu
   deleteAsset(asset: Asset): void {
-    this.assetService.deleteAsset(asset.ID).subscribe();
+    this.assetService.deleteAsset(this.portfolioId, asset.ID).subscribe(() => {
+      this.notificationService.addNotification({
+        type: 'success',
+        message: 'Asset deleted successfully',
+      });
+
+      this.investmentPortfolioService.reloadInvestmentPortfolioPage();
+    });
   }
 }

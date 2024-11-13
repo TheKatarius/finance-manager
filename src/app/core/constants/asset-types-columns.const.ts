@@ -1,4 +1,4 @@
-import { Asset, AssetEtfTable, AssetStockTable } from '../interfaces/asset.schema';
+import { Asset, AssetBondTable, AssetEtfTable, AssetStockTable } from '../interfaces/asset.schema';
 
 export const ASSET_HEADERS: Record<number, string[]> = {
   1: [
@@ -16,15 +16,16 @@ export const ASSET_HEADERS: Record<number, string[]> = {
   ],
   2: [
     'Asset Name',
+    'Ticker',
     'Coupon Rate',
-    'Maturity Date',
     'Face Value',
+    'Maturity Date',
+    'Average Purchase Price',
     'Total Quantity',
     'Total Invested',
     'Current Value',
-    'Unrealized Gain/Loss',
-    'Exchange',
     'Interest Accrued',
+    'Unrealized Gain/Loss',
     'Created At',
     'Updated At',
   ],
@@ -55,6 +56,31 @@ export function mapAssetToStockTable(asset: Asset): AssetStockTable | null {
       AveragePurchasePrice: asset.AveragePurchasePrice,
       TotalInvested: asset.TotalInvested,
       CurrentValue: asset.CurrentValue,
+      UnrealizedGainLoss: asset.UnrealizedGainLoss,
+      ExchangeShort: asset.Exchange,
+      Currency: asset.Currency,
+      CreatedAt: asset.CreatedAt,
+      UpdatedAt: asset.UpdatedAt,
+    };
+  }
+  return null; // Jeśli typ aktywa nie jest "stock", zwracamy null
+}
+
+export function mapAssetToBondTable(asset: Asset): AssetBondTable | null {
+  if (asset.AssetTypeID === 2) {
+    // Sprawdzamy czy typ to "stock"
+    return {
+      ID: asset.ID,
+      Name: asset.Name,
+      Ticker: asset.Ticker,
+      CouponRate: asset.CouponRate,
+      MaturityDate: asset.MaturityDate,
+      FaceValue: asset.FaceValue,
+      TotalQuantity: asset.TotalQuantity,
+      AveragePurchasePrice: asset.AveragePurchasePrice,
+      TotalInvested: asset.TotalInvested,
+      CurrentValue: asset.CurrentValue,
+      InterestAccrued: asset.InterestAccrued,
       UnrealizedGainLoss: asset.UnrealizedGainLoss,
       ExchangeShort: asset.Exchange,
       Currency: asset.Currency,

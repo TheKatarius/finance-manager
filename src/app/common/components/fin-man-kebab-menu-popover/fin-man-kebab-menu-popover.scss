@@ -16,7 +16,7 @@
     position: absolute;
     top: 0;
     left: -85px;
-    z-index: 1000;
+    z-index: 10000;
 
     &:first-child {
       border-radius: dimensions.$border-radius-small;
