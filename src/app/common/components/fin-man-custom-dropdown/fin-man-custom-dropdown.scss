@@ -34,6 +34,10 @@
 
       position: relative;
 
+      &-thin-dropdown {
+        height: 30px;
+      }
+
       &-clicked {
         border-radius: dimensions.$border-radius-small dimensions.$border-radius-small 0 0;
         outline: 2px solid colors.$accent-blue;

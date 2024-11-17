@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { VALIDATION } from '@app/core/constants/validators.const';
@@ -9,9 +9,9 @@ import {
   PortfolioSnakeCase,
   PortfolioUpdateRequest,
 } from '@app/core/interfaces/asset.schema';
-import { InvestmentPortfolioModalPortfolioService } from '@app/investment-portfolio/investment-portfolio-modal-portfolio/investment-portfolio-modal-portfolio.service';
-import { InvestmentPortfolioService } from '../investment-portfolio.service';
+import { ReloadPageService } from '@app/core/services/dashboard.service';
 import { NotificationService } from '@app/core/services/notifications.service';
+import { InvestmentPortfolioModalPortfolioService } from '@app/investment-portfolio/investment-portfolio-modal-portfolio/investment-portfolio-modal-portfolio.service';
 
 @Component({
   selector: 'finance-manager-investment-portfolio-modal-portfolio',
@@ -33,7 +33,7 @@ export class InvestmentPortfolioModalPortfolioComponent implements OnInit {
   constructor(
     private formGroupService: InvestmentPortfolioModalPortfolioService,
     private portfolioService: PortfolioService,
-    private investmentPortfolioService: InvestmentPortfolioService,
+    private reloadPageService: ReloadPageService,
     private notificationService: NotificationService,
   ) {}
 
@@ -65,7 +65,7 @@ export class InvestmentPortfolioModalPortfolioComponent implements OnInit {
             message: 'Portfolio created successfully',
           });
           this.closeModal();
-          this.investmentPortfolioService.reloadInvestmentPortfolioPage();
+          this.reloadPageService.reloadPage('/investment-portfolio');
         },
         error: (err) => {
           console.error(err);
@@ -89,7 +89,7 @@ export class InvestmentPortfolioModalPortfolioComponent implements OnInit {
             message: 'Portfolio updated successfully',
           });
           this.closeModal();
-          this.investmentPortfolioService.reloadInvestmentPortfolioPage();
+          this.reloadPageService.reloadPage('/investment-portfolio');
         },
         error: (err) => {
           console.error(err);

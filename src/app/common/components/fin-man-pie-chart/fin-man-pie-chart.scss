@@ -7,17 +7,13 @@
   border-radius: dimensions.$border-radius-medium;
   color: colors.$text-main;
   height: auto;
-  width: 800px;
+  width: 100%;
   padding: dimensions.$padding-large;
 
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  &-small {
-    width: 500px;
-  }
 
   .title {
     color: colors.$accent-blue;
@@ -41,10 +37,5 @@
   .pie-chart {
     width: 700px;
     height: 500px;
-
-    &-small {
-      width: 500px;
-      height: 300px;
-    }
   }
 }

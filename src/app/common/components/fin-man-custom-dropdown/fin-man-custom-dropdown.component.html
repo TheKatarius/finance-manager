@@ -6,7 +6,8 @@
       class="custom-dropdown-select"
       [ngClass]="{
         'custom-dropdown-select-clicked': isOpen && !disabled,
-        'custom-dropdown-select-disabled': disabled
+        'custom-dropdown-select-disabled': disabled,
+        'custom-dropdown-select-thin-dropdown': thinDropdown
       }"
       [ngStyle]="{ 'background-color': backgroundStyleColor }"
       (click)="toggleDropdown()"
@@ -21,10 +22,10 @@
       </ng-container>
       <ng-template #singleSelectDisplay>
         <span *ngIf="selected; else defaultOrPlaceholder">
-          {{ getDisplayValue(selected) }}
+          {{ innerLabel + getDisplayValue(selected) }}
         </span>
         <ng-template #defaultOrPlaceholder>
-          {{ defaultOption || defaultOptionNumber || placeholder }}
+          {{ innerLabel + defaultOption || defaultOptionNumber || placeholder }}
         </ng-template>
       </ng-template>
       <div>

@@ -15,6 +15,7 @@
       <fin-man-custom-dropdown
         [options]="[BankList.ING]"
         [defaultOption]="selectedBank"
+        [thinDropdown]="true"
         (onChangeSingle)="changeSelectedBank($event)"
       ></fin-man-custom-dropdown>
 

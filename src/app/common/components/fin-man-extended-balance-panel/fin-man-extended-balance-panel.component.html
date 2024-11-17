@@ -5,9 +5,11 @@
   <div class="balance-wrapper">
     <div class="balance-section">
       <fin-man-custom-dropdown
-        [options]="incomeAccounts"
-        [defaultOption]="selectedIncomeAccount"
+        [optionsIds]="incomeCategoryIds"
+        [options]="incomeCategoryNames"
+        [defaultOption]="incomeCategoryNames[0]"
         [disabled]="checkboxValues[0].value"
+        (onChangeNumber)="updateBalance($event, 'income')"
       ></fin-man-custom-dropdown>
 
       <div class="checkbox-balance-wrapper">
@@ -17,23 +19,20 @@
 
       <p class="header header-income">Income</p>
       <div class="balance-values-wrapper">
-        <span class="balance">Balance: {{ incomeBalance }}</span>
-        <span [ngStyle]="getPercentDifferenceStyle(percentDifference)">{{
-          displayPercentDifference(percentDifference)
-        }}</span>
-      </div>
-
-      <div class="small-chart-container">
-        <fin-man-small-chart [chartColor]="COLORS.accentGreen"></fin-man-small-chart>
+        <span class="balance"
+          >Total: {{ checkboxValues[0].value ? totalIncome : incomeBalance }}</span
+        >
       </div>
     </div>
 
     <!-- Sekcja wydatków -->
     <div class="balance-section">
       <fin-man-custom-dropdown
-        [options]="expenseAccounts"
-        [defaultOption]="selectedExpenseAccount"
+        [optionsIds]="expenseCategoryIds"
+        [options]="expenseCategoryNames"
+        [defaultOption]="expenseCategoryNames[0]"
         [disabled]="checkboxValues[1].value"
+        (onChangeNumber)="updateBalance($event, 'expense')"
       ></fin-man-custom-dropdown>
 
       <div class="checkbox-balance-wrapper">
@@ -43,40 +42,27 @@
 
       <p class="header header-expense">Expenses</p>
       <div class="balance-values-wrapper">
-        <span class="balance">Balance: {{ expenseBalance }}</span>
-        <span [ngStyle]="getPercentDifferenceStyle(percentDifference)">{{
-          displayPercentDifference(percentDifference)
-        }}</span>
-      </div>
-
-      <div class="small-chart-container">
-        <fin-man-small-chart [chartColor]="COLORS.accentRed"></fin-man-small-chart>
+        <span class="balance"
+          >Total: {{ checkboxValues[1].value ? totalExpense : expenseBalance }}</span
+        >
       </div>
     </div>
 
     <!-- Sekcja oszczędności -->
     <div class="balance-section">
       <fin-man-custom-dropdown
-        [options]="savingsAccounts"
-        [defaultOption]="selectedSavingsAccount"
-        [disabled]="checkboxValues[2].value"
+        [placeholder]="'Total Savings'"
+        [disabled]="true"
       ></fin-man-custom-dropdown>
 
       <div class="checkbox-balance-wrapper">
-        <input type="checkbox" (change)="toggleCheckbox(2)" />
+        <input disabled checked type="checkbox" (change)="toggleCheckbox(2)" />
         Total Savings
       </div>
 
       <p class="header header-savings">Savings</p>
       <div class="balance-values-wrapper">
-        <span class="balance">Balance: {{ savingsBalance }}</span>
-        <span [ngStyle]="getPercentDifferenceStyle(percentDifference)">{{
-          displayPercentDifference(percentDifference)
-        }}</span>
-      </div>
-
-      <div class="small-chart-container">
-        <fin-man-small-chart [chartColor]="COLORS.accentBlue"></fin-man-small-chart>
+        <span class="balance">Total: {{ totalSavings }}</span>
       </div>
     </div>
   </div>

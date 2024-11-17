@@ -1,10 +1,16 @@
 import { ChartData, ChartOptions } from 'chart.js';
 
 import {
-  categoryData,
+  ExpenseCategoryBudgeting,
+  ExpenseCategorySpent,
+  ExtendedExpenseCategoryBudgeting,
+  ExtendedExpenseCategorySpent,
+} from '@app/core/interfaces/budgeting.schema';
+import {
+  categoryBudgetData,
+  categorySpentData,
   generateColors,
 } from '@common/components/fin-man-pie-chart/fin-man-pie-chart.utils';
-import { ExpenseCategoryBudgeting } from '@app/core/interfaces/budgeting.schema';
 
 export const PIE_CHART_TYPE = 'pie' as const;
 export type PieChartTypeLiteral = typeof PIE_CHART_TYPE;
@@ -13,13 +19,31 @@ export const CHART_DATA = (
   categories: ExpenseCategoryBudgeting[],
   firstHue: number = 0,
 ): ChartData<PieChartTypeLiteral> => {
-  const categoriesData = categoryData(categories);
+  const categoriesData = categoryBudgetData(categories);
 
   return {
-    labels: categoriesData.map((cat) => cat.category),
+    labels: categoriesData.map((cat: ExtendedExpenseCategoryBudgeting) => cat.category),
     datasets: [
       {
-        data: categoriesData.map((cat) => cat.budgetPercent),
+        data: categoriesData.map((cat: ExtendedExpenseCategoryBudgeting) => cat.budgetPercent),
+        backgroundColor: generateColors(categoriesData.length, firstHue),
+        borderWidth: 0,
+      },
+    ],
+  };
+};
+
+export const CHART_SPENT_DATA = (
+  categories: ExpenseCategorySpent[],
+  firstHue: number = 0,
+): ChartData<PieChartTypeLiteral> => {
+  const categoriesData = categorySpentData(categories);
+
+  return {
+    labels: categoriesData.map((cat: ExtendedExpenseCategorySpent) => cat.category),
+    datasets: [
+      {
+        data: categoriesData.map((cat: ExtendedExpenseCategorySpent) => cat.spentPercent),
         backgroundColor: generateColors(categoriesData.length, firstHue),
         borderWidth: 0,
       },
@@ -59,7 +83,7 @@ export const CHART_OPTIONS: ChartOptions<PieChartTypeLiteral> = {
       anchor: 'end', // Anchor the label outside
       clamp: true, // Make sure it fits inside the canvas
       font: {
-        size: 10,
+        size: 14,
         weight: 'bold',
       },
     },

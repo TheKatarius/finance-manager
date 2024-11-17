@@ -1,10 +1,12 @@
-import { ExpenseCategoryNames } from '@app/core/interfaces/category-names.schema';
 import {
   ExpenseCategoryBudgeting,
+  ExpenseCategorySpent,
   ExtendedExpenseCategoryBudgeting,
+  ExtendedExpenseCategorySpent,
 } from '@app/core/interfaces/budgeting.schema';
+import { ExpenseCategoryNames } from '@app/core/interfaces/category-names.schema';
 
-export function categoryData(
+export function categoryBudgetData(
   categories: ExpenseCategoryBudgeting[],
 ): ExtendedExpenseCategoryBudgeting[] {
   const totalBudget = categories.reduce((sum, cat) => sum + cat.budget, 0);
@@ -42,7 +44,7 @@ export function categoryData(
         return acc;
       },
       {
-        category: ExpenseCategoryNames.Other,
+        category: ExpenseCategoryNames.Other2,
         budget: 0,
         spent: 0,
         budgetPercent: 0,
@@ -53,6 +55,55 @@ export function categoryData(
   displayedExtendedCategories.push(mergedOtherExtendedCategory);
 
   return displayedExtendedCategories;
+}
+
+export function categorySpentData(
+  categories: ExpenseCategorySpent[],
+): ExtendedExpenseCategorySpent[] {
+  console.log('categories: ', categories);
+
+  // Obliczenie całkowitych wydatków
+  const totalSpent = categories.reduce((sum, cat) => sum + cat.spent, 0);
+
+  // Mapowanie kategorii do nowej struktury zawierającej tylko nazwę i wydatki
+  const extendedCategories: ExtendedExpenseCategorySpent[] = categories
+    .map((cat) => ({
+      ...cat,
+      spentPercent: (cat.spent / totalSpent) * 100,
+    }))
+    .map((cat) => ({
+      ...cat,
+      spentPercent: Math.round(cat.spentPercent * 100) / 100,
+    }));
+
+  // Filtrowanie kategorii, które stanowią co najmniej 3% całkowitych wydatków
+  const displayedCategories = extendedCategories.filter(
+    (cat) => (cat.spent / totalSpent) * 100 >= 3,
+  );
+
+  // Redukcja pozostałych kategorii do jednej kategorii "Inne"
+  const mergedOtherCategory = extendedCategories
+    .filter(
+      (cat) => !displayedCategories.some((displayedCat) => displayedCat.category === cat.category),
+    )
+    .reduce(
+      (acc, cat) => {
+        acc.spent += cat.spent;
+        acc.spentPercent = Math.round((acc.spent / totalSpent) * 100 * 100) / 100;
+
+        return acc;
+      },
+      {
+        category: ExpenseCategoryNames.Other2,
+        spent: 0,
+        spentPercent: 0,
+      },
+    );
+
+  // Dodanie kategorii "Inne" do wyświetlanych kategorii, jeśli ma jakiekolwiek wydatki
+  displayedCategories.push(mergedOtherCategory);
+
+  return displayedCategories;
 }
 
 export function generateColors(count: number, firstHue: number = 0): string[] {

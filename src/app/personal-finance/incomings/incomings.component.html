@@ -1,47 +1,50 @@
 <main class="expense-container">
   <router-outlet name="menu"></router-outlet>
 
-  <div class="expense-content-container">
+  <div *ngIf="!isLoading" class="expense-content-container">
     <div class="title-container">
       <span class="title">Incomings</span>
       <span class="subtitle">Watch your incomings and your growth</span>
     </div>
 
     <div class="content-wrapper">
-      <div class="one-side-positioning">
-        <fin-man-extended-balance-panel></fin-man-extended-balance-panel>
+      <fin-man-extended-balance-panel
+        *ngIf="incomeCategoryIds.length && personalTransactions.length"
+        [incomeCategoryIds]="incomeCategoryIds"
+        [incomeCategoryNames]="incomeCategoryNames"
+        [expenseCategoryIds]="expenseCategoryIds"
+        [expenseCategoryNames]="expenseCategoryNames"
+        [personalTransactions]="allTransactions"
+      ></fin-man-extended-balance-panel>
 
-        <fin-man-transaction-panel
-          [extendedPanel]="true"
-          [transactionData]="transactionData"
-          [categoryKind]="CategoryKind.Income"
-          [panelTitle]="'Incomings'"
-          (openModal)="openModal()"
-        ></fin-man-transaction-panel>
-      </div>
+      <fin-man-transaction-panel
+        [categoryNames]="expenseCategoryNames.concat(incomeCategoryNames)"
+        [extendedPanel]="true"
+        [transactionData]="personalTransactions"
+        [panelTitle]="'Incomings'"
+        (openModal)="openModal()"
+      ></fin-man-transaction-panel>
 
-      <div class="one-side-positioning">
-        <fin-man-pie-chart
-          [title]="'Incomings Distribution'"
-          [subtitle]="'Share of the categories in total incomings'"
-          [firstHue]="25"
-          [smallChart]="true"
-        ></fin-man-pie-chart>
-
-        <fin-man-transaction-panel
-          [extendedPanel]="true"
-          [periodTransactions]="true"
-          [periodTransactionsData]="periodTransactionsData"
-          [categoryKind]="CategoryKind.Income"
-          [panelTitle]="'Periodic and Planned Incomings'"
-        ></fin-man-transaction-panel>
-      </div>
+      <fin-man-pie-chart
+        [title]="'Incomings Distribution'"
+        [subtitle]="'Share of the categories in total incomings'"
+        [firstHue]="26.5"
+        [smallChart]="true"
+        [categories]="incomeCategories"
+        [personalData]="personalTransactions"
+      ></fin-man-pie-chart>
     </div>
   </div>
 </main>
 
 <finance-manager-add-transaction-modal
+  *ngIf="
+    isModalVisible && expenseCategories.length && incomeCategories.length && paymentMethods.length
+  "
   [isVisible]="isModalVisible"
+  [expenseCategories]="expenseCategories"
+  [incomeCategories]="incomeCategories"
+  [paymentMethods]="paymentMethods"
+  [path]="'/personal-finance/incomings'"
   (close)="closeModal()"
-  (transactionAdded)="handleTransactionAdded($event)"
 ></finance-manager-add-transaction-modal>

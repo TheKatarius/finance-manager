@@ -1,30 +1,28 @@
 <div *ngFor="let transaction of transactions" class="transaction-item">
   <div class="transaction-icon">
-    <em class="icon" [ngClass]="(transaction.category | pascalToKebabCase) + '-icon'"></em>
+    <em
+      class="icon"
+      [ngClass]="
+        (categoryNames[transaction.predefined_category_id - 1] | pascalToKebabCase) + '-icon'
+      "
+    ></em>
   </div>
 
   <div class="transaction-details" [ngClass]="{ 'transaction-details-basic': !extendedRecord }">
-    <span class="transaction-name">{{ transaction.name }}</span>
-
-    <span class="transaction-date"
-      >{{ transaction.date | date: 'dd-MM-yyyy' }}
-      {{ extendedRecord ? transaction.time : '' }}</span
-    >
-
-    <span *ngIf="extendedRecord"> {{ transaction.category | kebabToTitle }}</span>
-
-    <span *ngIf="extendedRecord"> {{ transaction.paymentSource }}</span>
+    <span class="transaction-name">{{ transaction.description }}</span>
+    <span class="transaction-date">{{ transaction.date | date: 'dd-MM-yyyy' }} </span>
+    <span *ngIf="extendedRecord"> {{ getCategoryName(transaction) }}</span>
+    <span *ngIf="extendedRecord"> {{ getPaymentMethodName(transaction) }}</span>
 
     <span
       [ngClass]="{
         'transaction-amount': !extendedRecord,
-        'transaction-amount-positive': transaction.amount > 0,
-        'transaction-amount-negative': transaction.amount < 0
+        'transaction-amount-positive': transaction.type === 'income',
+        'transaction-amount-negative': transaction.type === 'expense'
       }"
-      >{{ transaction.amount + transaction.currencyIsoCode }}
+      >{{ (transaction.type === 'income' ? '' : '-') + transaction.amount + 'PLN' }}
     </span>
 
-    <!-- TODO: Add hover effect -->
     <div *ngIf="extendedRecord">
       <fin-man-kebab-menu-popover
         [options]="[CrudOperations.EDIT, CrudOperations.DELETE]"

@@ -9,8 +9,17 @@ export interface ExpenseCategoryBudgeting {
   spent: number;
 }
 
+export interface ExpenseCategorySpent {
+  category: string;
+  spent: number;
+}
+
 export interface ExtendedExpenseCategoryBudgeting extends ExpenseCategoryBudgeting {
   budgetPercent: number;
+  spentPercent: number;
+}
+
+export interface ExtendedExpenseCategorySpent extends ExpenseCategorySpent {
   spentPercent: number;
 }
 

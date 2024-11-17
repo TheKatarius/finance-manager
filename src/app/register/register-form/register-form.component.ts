@@ -21,15 +21,11 @@ import { RegisterFormGroupService } from '@app/register/register-form/register-f
 })
 export class RegisterFormComponent implements OnInit {
   readonly VALIDATION = VALIDATION;
-
   readonly confirmPasswordValidator = confirmPasswordValidator;
 
   private registerFormGroupService = inject(RegisterFormGroupService);
-
   private authService = inject(AuthService);
-
   private notificationService = inject(NotificationService);
-
   private returnUrl: string = '/dashboard'; // Domyślny adres po logowaniu
 
   registerFormGroup!: RegisterFormGroup;

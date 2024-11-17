@@ -1,6 +1,7 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+import { CurrenciesMocks } from '@app/core/constants/currencies.const';
 import { VALIDATION } from '@app/core/constants/validators.const';
 import { AssetService } from '@app/core/data/assets.service';
 import {
@@ -12,14 +13,12 @@ import {
   VerifiedTickerResponse,
 } from '@app/core/interfaces/asset.schema';
 import { CodeValueItem } from '@app/core/interfaces/code-value.schema';
-import { CurrenciesMocks } from '@app/core/constants/currencies.const';
 import { MergeCodeNamePipe } from '@app/core/pipes/merge-code-name.pipe';
+import { ReloadPageService } from '@app/core/services/dashboard.service';
 import { NotificationService } from '@app/core/services/notifications.service';
 import { validateFormGroup } from '@app/core/validators/validate-form-group.utils';
 import { InvestmentPortfolioFormGroupService } from '@app/investment-portfolio/investment-portfolio-modal/investment-portfolio-modal.service';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
-import { InvestmentPortfolioService } from '../investment-portfolio.service';
 
 @Component({
   selector: 'finance-manager-investment-portfolio-modal',
@@ -47,7 +46,7 @@ export class InvestmentPortfolioModalComponent implements OnInit {
   private investmentPortfolioFormGroupService = inject(InvestmentPortfolioFormGroupService);
   private mergeCodeNamePipe = inject(MergeCodeNamePipe);
   private notificationService = inject(NotificationService);
-  private investmentPortfolioService = inject(InvestmentPortfolioService);
+  private reloadPageService = inject(ReloadPageService);
 
   private searchInstrumentsSubscription = new Subscription();
 

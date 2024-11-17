@@ -14,7 +14,7 @@
             [placeholder]="'Enter transaction name'"
             [control]="extendedTransactionFormGroup.controls.name"
             [minlength]="3"
-            [maxlength]="50"
+            [maxlength]="40"
             [required]="true"
             [allowedCharsPattern]="VALIDATION.ALLOWED_CHARS_PATTERNS.BASIC_NAME_INPUT"
           ></fin-man-input>
@@ -23,73 +23,56 @@
         <div class="horizontal-form-groups">
           <div class="form-group">
             <fin-man-custom-dropdown
+              [optionStringIds]="['income', 'expense']"
               [options]="[CategoryKind.Income, CategoryKind.Expense]"
               [defaultOption]="CategoryKind.Expense"
               [label]="'Category Kind'"
+              [control]="extendedTransactionFormGroup.controls.type"
               (onChangeSingle)="changeCategoryKind($event)"
             ></fin-man-custom-dropdown>
           </div>
 
           <div class="form-group">
             <fin-man-custom-dropdown
-              [options]="categories"
+              [optionsIds]="categoryIds"
+              [options]="categoryNames"
+              [defaultOption]="categoryNames[0]"
               [placeholder]="'Select Category'"
               [label]="'Category Name'"
-              [control]="extendedTransactionFormGroup.controls.category"
-            ></fin-man-custom-dropdown>
-          </div>
-        </div>
-
-        <div class="horizontal-form-groups">
-          <div class="form-group">
-            <fin-man-input
-              [label]="'Amount'"
-              [type]="'number'"
-              [control]="extendedTransactionFormGroup.controls.amount"
-              [min]="0"
-              [max]="1000000000"
-              [required]="true"
-              [allowedCharsPattern]="'[0-9.]'"
-            ></fin-man-input>
-          </div>
-
-          <div class="form-group">
-            <fin-man-custom-dropdown
-              [options]="currencies"
-              [label]="'Currency'"
-              [placeholder]="'Enter currency'"
-              [control]="extendedTransactionFormGroup.controls.currencyIsoCode"
-              [defaultOption]="defaultCurrency"
+              [control]="extendedTransactionFormGroup.controls.predefined_category_id"
             ></fin-man-custom-dropdown>
           </div>
         </div>
 
         <div class="form-group">
-          <fin-man-custom-dropdown
-            [options]="paymentSources"
-            [label]="'Payment Source'"
-            [placeholder]="'Select payment source'"
-            [control]="extendedTransactionFormGroup.controls.paymentType"
-            [defaultOption]="paymentSources[0]"
-          ></fin-man-custom-dropdown>
+          <fin-man-input
+            [label]="'Amount'"
+            [type]="'number'"
+            [control]="extendedTransactionFormGroup.controls.amount"
+            [min]="0.01"
+            [max]="10000000"
+            [required]="true"
+            [allowedCharsPattern]="'[0-9.]'"
+          ></fin-man-input>
         </div>
 
         <div class="horizontal-form-groups">
+          <div class="form-group">
+            <fin-man-custom-dropdown
+              [optionsIds]="paymentMethodsIds"
+              [options]="paymentMethodsNames"
+              [defaultOption]="paymentMethodsNames[0]"
+              [label]="'Payment Methods'"
+              [placeholder]="'Select payment method'"
+              [control]="extendedTransactionFormGroup.controls.payment_method_id"
+            ></fin-man-custom-dropdown>
+          </div>
+
           <div class="form-group">
             <fin-man-input
               [label]="'Date'"
               [type]="'date'"
               [control]="extendedTransactionFormGroup.controls.date"
-              [required]="true"
-              [allowedCharsPattern]="'[0-9]'"
-            ></fin-man-input>
-          </div>
-
-          <div class="form-group">
-            <fin-man-input
-              [label]="'Time'"
-              [type]="'time'"
-              [control]="extendedTransactionFormGroup.controls.time"
               [required]="true"
               [allowedCharsPattern]="'[0-9]'"
             ></fin-man-input>

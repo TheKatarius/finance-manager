@@ -1,11 +1,21 @@
-import { Component, ElementRef, HostListener, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  inject,
+  OnInit,
+  Output,
+} from '@angular/core';
 import * as Papa from 'papaparse';
 
 import { ING_COLUMN_NAMES } from '@app/core/constants/bank-import-column-names.const';
 import { COLORS } from '@app/core/constants/colors.const';
 import { BankList } from '@app/core/interfaces/bank-list.schema';
-import { PaymentSource, Transaction } from '@app/core/interfaces/transaction.schema';
-import { ExpenseCategoryNames } from '@app/core/interfaces/category-names.schema';
+import {
+  PersonalTransaction,
+  PersonalTransactionRequest,
+} from '@app/core/interfaces/personal-transactions.schema';
 
 @Component({
   selector: 'fin-man-import-transactions',
@@ -13,18 +23,17 @@ import { ExpenseCategoryNames } from '@app/core/interfaces/category-names.schema
   styleUrls: ['./fin-man-import-transactions.scss'],
 })
 export class FinManImportTransactionsComponent implements OnInit {
-  readonly BankList = BankList;
+  @Output() emitImportedTransactions = new EventEmitter<PersonalTransactionRequest[]>();
 
+  readonly BankList = BankList;
   readonly COLORS = COLORS;
 
   private elementRef = inject(ElementRef);
 
   csvData: any[] = [];
 
-  transactions: Transaction[] = [];
-
+  transactions: PersonalTransaction[] = [];
   importTransactionsClicked: boolean = false;
-
   selectedBank: BankList = BankList.ING;
 
   columnNames: string[] = [];
@@ -114,37 +123,47 @@ export class FinManImportTransactionsComponent implements OnInit {
       }
     }
 
-    const transactions: Transaction[] = [];
+    let transactions: PersonalTransactionRequest[] = [];
     for (let i = headerRowIndex + 1; i < this.csvData.length; i++) {
       const row = this.csvData[i];
 
-      const transaction: Transaction = {
-        name: row[columnRows[this.columnNames[1]]],
-        date: row[columnRows[this.columnNames[0]]],
-        amount: row[columnRows[this.columnNames[3]]] || row[columnRows[this.columnNames[5]]],
-        currencyIsoCode:
-          row[columnRows[this.columnNames[4]]] || row[columnRows[this.columnNames[5]] + 1],
-        category: ExpenseCategoryNames.Other,
-        paymentSource: PaymentSource.BANK_ACCOUNT,
-        currencyFullName: '',
-        description: row[columnRows[this.columnNames[2]]],
-        time: '00:00',
+      const type =
+        row[columnRows[this.columnNames[3]]]?.[0] === '-' ||
+        row[columnRows[this.columnNames[5]]]?.[0] === '-'
+          ? 'expense'
+          : 'income';
+
+      const transaction: PersonalTransactionRequest = {
+        name: row[columnRows[this.columnNames[1]]]?.slice(0, 40),
+        type,
+        date: row[columnRows[this.columnNames[0]]]
+          ? new Date(row[columnRows[this.columnNames[0]]])
+          : new Date(),
+        amount: (
+          row[columnRows[this.columnNames[3]]] || row[columnRows[this.columnNames[5]]]
+        )?.replace('-', ''),
+        payment_method_id: 1,
+        predefined_category_id: type === 'expense' ? 25 : 31,
+        description: row[columnRows[this.columnNames[2]]]?.slice(0, 100),
       };
 
       transactions.push(transaction);
     }
 
     for (let i = 0; i < transactions.length; i++) {
-      if (
-        !transactions[i].name ||
-        !transactions[i].date ||
-        !transactions[i].amount ||
-        !transactions[i].currencyIsoCode
-      ) {
+      if (!transactions[i].name || !transactions[i].date || !transactions[i].amount) {
         transactions.splice(i, 1);
       }
     }
 
-    console.log(transactions);
+    transactions = transactions.map((transaction) => ({
+      ...transaction,
+      amount: Number((transaction.amount as unknown as string)?.replace(',', '.')),
+    }));
+
+    console.log('csvTransactions: ', transactions);
+    this.emitImportedTransactions.emit(transactions);
+
+    this.displayPopOver();
   }
 }

@@ -1,12 +1,11 @@
 // src/app/fin-man-portfolio-panel/fin-man-portfolio-panel.component.ts
 
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { PortfolioService } from '@app/core/data/portfolios.service';
 import { Portfolio, PortfolioSnakeCase } from '@app/core/interfaces/asset.schema';
 import { CrudOperations } from '@app/core/interfaces/crud-operations-enum.schema';
+import { ReloadPageService } from '@app/core/services/dashboard.service';
 import { NotificationService } from '@app/core/services/notifications.service';
-import { InvestmentPortfolioService } from '@app/investment-portfolio/investment-portfolio.service';
 
 @Component({
   selector: 'fin-man-portfolio-panel',
@@ -22,7 +21,7 @@ export class FinManPortfolioPanelComponent {
 
   private portfolioService = inject(PortfolioService);
   private notificationService = inject(NotificationService);
-  private investmentPortfolioService = inject(InvestmentPortfolioService);
+  private reloadPageService = inject(ReloadPageService);
 
   portofoliosSnakeCase: PortfolioSnakeCase[] = [];
 
@@ -60,7 +59,7 @@ export class FinManPortfolioPanelComponent {
           type: 'success',
           message: 'Portfolio deleted successfully',
         });
-        this.investmentPortfolioService.reloadInvestmentPortfolioPage();
+        this.reloadPageService.reloadPage('/investment-portfolio');
       },
       error: () => {
         this.notificationService.addNotification({

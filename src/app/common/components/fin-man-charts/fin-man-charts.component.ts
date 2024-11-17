@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   inject,
   Input,
@@ -13,10 +14,7 @@ import { BaseChartDirective } from 'ng2-charts';
 
 import { COLORS } from '@app/core/constants/colors.const';
 import { MONTHS_ORDER } from '@app/core/constants/data.const';
-import {
-  LineChartDataset,
-  YearlyPersonalTransactionsData,
-} from '@app/core/interfaces/chart.schema';
+import { LineChartDataset, YearlyPersonalTransactions } from '@app/core/interfaces/chart.schema';
 import { calculateAverage } from '@app/core/utils/calculate-average.utils';
 import { ChartsColorType } from '@common/components/fin-man-charts/fin-man-charts-color-types.schema';
 import {
@@ -35,11 +33,13 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
   @ViewChild(BaseChartDirective) chart!: BaseChartDirective;
 
   @Input() dataSets: LineChartDataset[] = [];
-  @Input() chartData: YearlyPersonalTransactionsData[] = [];
+  @Input() chartData: Record<string, YearlyPersonalTransactions> = {};
 
   readonly COLORS = COLORS;
 
   private customDropdownService = inject(CustomDropdownService);
+
+  convertedChartData: YearlyPersonalTransactions[] = [];
 
   borderColors!: string[];
   chartColorType?: ChartsColorType;
@@ -60,11 +60,17 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
   selectedYear: number | null = null;
   selectedMonths: string[] = [];
 
-  constructor() {
+  incomeData: number[] = [];
+  expenseData: number[] = [];
+  savingsData: number[] = [];
+
+  constructor(private cdr: ChangeDetectorRef) {
     Chart.register(...registerables, annotationPlugin);
   }
 
   ngOnInit(): void {
+    this.convertedChartData = Object.values(this.chartData);
+
     // Inicjalizja ile i jakie wykresy będą obsługiwane
     this.chartTypes = this.dataSets.map((dataSet) => dataSet.label ?? '');
 
@@ -76,23 +82,23 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnChanges(): void {
-    if (this.chartData && this.chartData.length > 0) {
+    if (this.convertedChartData && this.convertedChartData.length > 0) {
       this.initializeData();
     }
   }
 
   ngAfterViewInit(): void {
-    if (this.chartData && this.chartData.length > 0) {
+    if (this.convertedChartData && this.convertedChartData.length > 0) {
       this.initializeData();
     }
   }
 
   private initializeData(): void {
-    // Inicjalizacja dostępnych lat
-    this.availableYears = this.chartData.map((y) => y.year);
+    console.log('this.chartData: ', Object.values(this.chartData));
+
+    this.availableYears = this.convertedChartData.map((yearData) => yearData.Year);
 
     if (this.availableYears.length > 0) {
-      // Default selected year
       this.onYearChange(this.availableYears[0]);
     }
   }
@@ -103,17 +109,18 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
       this.customDropdownService.emitClearSelectedSubject();
 
       this.selectedYear = year;
+      this.cdr.detectChanges();
       this.selectedMonths = []; // Resetowanie wybranego miesiąca
 
       // pobierz dane dla konkretnego roku
-      const yearChartData = this.chartData.find((y) => y.year === year);
-      this.selectedMonths = [];
-      if (yearChartData) {
+      const yearData = this.convertedChartData.find((data) => data.Year === year);
+      if (yearData) {
         // Pobierz miesiące dla konkretnego roku
-        this.availableMonths = yearChartData.months.map((m) => m.month);
+        this.availableMonths = this.sortMonths(Object.keys(yearData.Months));
+        this.cdr.detectChanges();
+
         if (this.availableMonths.length > 0) {
           // Domyślnie puste, tak że po zmianie roku
-
           this.onMonthChange([]);
         } else {
           this.clearChartData();
@@ -129,10 +136,8 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
   onMonthChange(month: string[]): void {
     this.selectedMonths = month;
 
-    // Ustawienie posortowanych miesięcy jako etykiet na osi X
-    this.lineChartData.labels = this.sortMonths(this.selectedMonths);
-
     if (this.selectedYear) {
+      this.generateLabelsWithWeeks();
       this.updateChart();
     }
   }
@@ -140,26 +145,35 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
   // Aktualizacja danych wykresu
   private updateChart(): void {
     // Pobierz dane dla wybranego roku
-    const yearData = this.chartData.find((y) => y.year === this.selectedYear);
+    const yearData = this.convertedChartData.find((data) => data.Year === this.selectedYear);
     if (yearData) {
       // Resetowanie danych w zestawach
       this.lineChartData.datasets.forEach((dataset) => {
         dataset.data = [];
       });
+      console.log(this.lineChartData);
 
       for (const month of this.selectedMonths) {
         this.lineChartData.datasets.forEach((dataset) => {
-          const foundMonth = yearData.months.find((m) => m.month === month);
+          const foundMonth = yearData.Months?.[month];
+
+          console.log('dataset: ', dataset.label);
 
           switch (dataset.label) {
             case 'Expenses':
-              dataset.data.push(foundMonth?.expense ?? 0);
+              for (const week of foundMonth?.Weeks ?? []) {
+                dataset.data.push(Number(week.ExpenseTotal.toFixed(2)) ?? 0);
+              }
               break;
             case 'Income':
-              dataset.data.push(foundMonth?.incomings ?? 0);
+              for (const week of foundMonth?.Weeks ?? []) {
+                console.log('week: ', week);
+
+                dataset.data.push(Number(week.IncomeTotal.toFixed(2)) ?? 0);
+              }
               break;
             case 'Savings':
-              dataset.data.push(foundMonth?.savings ?? 0);
+              dataset.data.push(foundMonth?.IncomeTotal ?? 0);
               break;
           }
         });
@@ -222,9 +236,11 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
 
   private calculateDifference(data: number[]): number {
     if (data && data.length > 1) {
-      const firstValue = data[0] ?? 0;
-      const lastValue = data[data.length - 1] ?? 0;
-      return lastValue - firstValue;
+      const firstHalfValue = data.map((value, index) => (index < data.length / 2 ? value : 0));
+      const secondHalfValue = data.map((value, index) => (index >= data.length / 2 ? value : 0));
+      return Number(
+        (calculateAverage(firstHalfValue) - calculateAverage(secondHalfValue)).toFixed(2),
+      );
     }
 
     return 0;
@@ -233,11 +249,15 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
   // Policz różnice między pierwsza i ostatnią wartością na wykresie w procentach
   private calculatePercentageDifference(data: number[]): number {
     if (data && data.length > 1) {
-      const firstValue = data[0] ?? 0;
-      const lastValue = data[data.length - 1] ?? 0;
+      const firstHalfValue = calculateAverage(
+        data.map((value, index) => (index < data.length / 2 ? value : 0)),
+      );
+      const secondHalfValue = calculateAverage(
+        data.map((value, index) => (index >= data.length / 2 ? value : 0)),
+      );
 
-      if (firstValue && lastValue) {
-        return Math.round(((lastValue - firstValue) / firstValue) * 1000) / 10;
+      if (firstHalfValue && secondHalfValue) {
+        return Math.round(((secondHalfValue - firstHalfValue) / firstHalfValue) * 1000) / 10;
       }
 
       return 0;
@@ -392,5 +412,23 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
       const indexB = MONTHS_ORDER.indexOf(b);
       return indexA - indexB;
     });
+  }
+
+  private generateLabelsWithWeeks(): void {
+    const labels: string[] = [];
+    const yearData = this.convertedChartData.find((data) => data.Year === this.selectedYear);
+
+    if (yearData) {
+      this.selectedMonths.forEach((month) => {
+        const monthData = yearData.Months[month];
+        if (monthData && monthData.Weeks) {
+          monthData.Weeks.forEach((week, index) => {
+            labels.push(`${month} - Week ${index + 1}`);
+          });
+        }
+      });
+    }
+
+    this.lineChartData.labels = labels;
   }
 }

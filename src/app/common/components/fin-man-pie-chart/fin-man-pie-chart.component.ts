@@ -3,14 +3,14 @@ import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { BaseChartDirective } from 'ng2-charts';
 
-import { ExpenseCategoriesMockData } from '@app/core/mocks/pie-charts.mocks';
+import { ExpenseCategorySpent } from '@app/core/interfaces/budgeting.schema';
+import { Category, PersonalTransaction } from '@app/core/interfaces/personal-transactions.schema';
 import {
-  CHART_DATA,
   CHART_OPTIONS,
+  CHART_SPENT_DATA,
   PIE_CHART_TYPE,
   PieChartTypeLiteral,
 } from '@common/components/fin-man-pie-chart/fin-man-pie-chart-configuration';
-import { ExpenseCategoryBudgeting } from '@app/core/interfaces/budgeting.schema';
 
 @Component({
   selector: 'fin-man-pie-chart',
@@ -24,8 +24,10 @@ export class FinManPieChartComponent implements OnInit {
   @Input() title: string = '';
   @Input() subtitle: string = '';
   @Input() firstHue: number = 0;
+  @Input() categories: Category[] = [];
+  @Input() personalData: PersonalTransaction[] = [];
 
-  categories: ExpenseCategoryBudgeting[] = ExpenseCategoriesMockData;
+  mergedData: ExpenseCategorySpent[] = [];
 
   pieChartType: PieChartTypeLiteral = PIE_CHART_TYPE;
 
@@ -38,6 +40,20 @@ export class FinManPieChartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.chartData = CHART_DATA(this.categories, this.firstHue);
+    console.log('this.categories', this.categories);
+    console.log('this.personalData', this.personalData);
+
+    for (const categoryObj of this.categories) {
+      const spent = this.personalData
+        .filter((transaction) => transaction.predefined_category_id === categoryObj.id)
+        .reduce((acc, curr) => acc + curr.amount, 0);
+
+      this.mergedData.push({
+        category: categoryObj.name,
+        spent,
+      });
+    }
+
+    this.chartData = CHART_SPENT_DATA(this.mergedData, this.firstHue);
   }
 }

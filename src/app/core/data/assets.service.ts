@@ -7,7 +7,6 @@ import {
   Asset,
   AssetResponse,
   AssetTypeResponse,
-  CreateAssetRequest,
   VerifiedTickerResponse,
 } from '@app/core/interfaces/asset.schema';
 

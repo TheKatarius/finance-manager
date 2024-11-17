@@ -14,8 +14,8 @@ import {
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { CustomDropdownService } from '@common/components/fin-man-custom-dropdown/fin-man-custom-dropdown.service';
 import { VALIDATION } from '@app/core/constants/validators.const';
+import { CustomDropdownService } from '@common/components/fin-man-custom-dropdown/fin-man-custom-dropdown.service';
 
 @Component({
   selector: 'fin-man-custom-dropdown',
@@ -35,6 +35,8 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
   @Input() disabled: boolean = false;
   @Input() isMultiSelect: boolean = false;
   @Input() isSearchable: boolean = false;
+  @Input() thinDropdown: boolean = false;
+  @Input() innerLabel: string = '';
 
   @Output() onChangeSingle = new EventEmitter<T>();
   @Output() onChangeNumber = new EventEmitter<number>();
@@ -114,6 +116,8 @@ export class FinManCustomDropdownComponent<T> implements OnInit, OnChanges, OnDe
     }
 
     if (this.optionsIds.length) {
+      console.log('this.optionsIds: ', this.optionsIds);
+
       const id = this.options.findIndex((opt) => opt === option);
       this.control?.setValue(this.optionsIds[id]);
       this.onChangeNumber.emit(this.optionsIds[id]);

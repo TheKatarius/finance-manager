@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { VALIDATION } from '@app/core/constants/validators.const';
-import { InvestmentPortfolioModalTransactionService } from './investment-portfolio-modal-transaction.service';
+import { AssetTransactionsService } from '@app/core/data/asset-transactions.service';
+import { AssetService } from '@app/core/data/assets.service';
 import {
   Asset,
   AssetTransaction,
@@ -9,11 +10,10 @@ import {
   AssetTransactionType,
   Portfolio,
 } from '@app/core/interfaces/asset.schema';
-import { AssetTransactionsService } from '@app/core/data/asset-transactions.service';
+import { ReloadPageService } from '@app/core/services/dashboard.service';
 import { NotificationService } from '@app/core/services/notifications.service';
 import { validateFormGroup } from '@app/core/validators/validate-form-group.utils';
-import { InvestmentPortfolioService } from '../investment-portfolio.service';
-import { AssetService } from '@app/core/data/assets.service';
+import { InvestmentPortfolioModalTransactionService } from './investment-portfolio-modal-transaction.service';
 
 @Component({
   selector: 'finance-manager-investment-portfolio-modal-transaction',
@@ -40,7 +40,7 @@ export class InvestmentPortfolioModalTransactions {
     private formGroupService: InvestmentPortfolioModalTransactionService,
     private assetTransactionsService: AssetTransactionsService,
     private notificationService: NotificationService,
-    private investmentPortfolioService: InvestmentPortfolioService,
+    private reloadPageService: ReloadPageService,
     private assetService: AssetService,
   ) {}
 
@@ -88,7 +88,7 @@ export class InvestmentPortfolioModalTransactions {
               message: 'Transaction created successfully',
             });
             this.closeModal();
-            this.investmentPortfolioService.reloadInvestmentPortfolioPage();
+            this.reloadPageService.reloadPage('/investment-portfolio');
           },
           error: (err) => {
             console.error(err);

@@ -17,6 +17,10 @@
       grid-template-columns: 50% 25% 25%;
     }
 
+    .transaction-name {
+      word-break: break-all;
+    }
+
     .transaction-date {
       color: colors.$text-secondary;
     }

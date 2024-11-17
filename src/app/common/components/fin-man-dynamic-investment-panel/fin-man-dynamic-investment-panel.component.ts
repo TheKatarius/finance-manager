@@ -14,14 +14,12 @@ import {
   AssetBondTable,
   AssetEtfTable,
   AssetStockTable,
-  AssetTransaction,
   AssetTransactionSnakeCase,
   AssetType,
   Portfolio,
 } from '@app/core/interfaces/asset.schema';
 import { CategoryKind } from '@app/core/interfaces/common-enums.schema';
 import { CrudOperations } from '@app/core/interfaces/crud-operations-enum.schema';
-import { Transaction } from '@app/core/interfaces/transaction.schema';
 
 @Component({
   selector: 'fin-man-dynamic-investment-panel',

@@ -21,12 +21,5 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 20px;
     }
-
-    .chart-transactions-container {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 20px;
-      width: 100%;
-    }
   }
 }

@@ -14,6 +14,7 @@ export enum ExpenseCategoryNames {
   Investments = 'Investments',
   Obligations = 'Obligations',
   Other = 'Other',
+  Other2 = 'Rest of the categories',
   Pets = 'Pets',
   Rent = 'Rent',
   Savings = 'Savings',

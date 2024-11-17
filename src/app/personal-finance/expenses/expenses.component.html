@@ -1,44 +1,49 @@
 <main class="expense-container">
   <router-outlet name="menu"></router-outlet>
 
-  <div class="expense-content-container">
+  <div *ngIf="!isLoading" class="expense-content-container">
     <div class="title-container">
       <span class="title">Expenses</span>
       <span class="subtitle">Track your expenses as you wish</span>
     </div>
 
     <div class="content-wrapper">
-      <div class="one-side-positioning">
-        <fin-man-extended-balance-panel></fin-man-extended-balance-panel>
+      <fin-man-extended-balance-panel
+        *ngIf="incomeCategoryIds.length && personalTransactions.length"
+        [incomeCategoryIds]="incomeCategoryIds"
+        [incomeCategoryNames]="incomeCategoryNames"
+        [expenseCategoryIds]="expenseCategoryIds"
+        [expenseCategoryNames]="expenseCategoryNames"
+        [personalTransactions]="allTransactions"
+      ></fin-man-extended-balance-panel>
 
-        <fin-man-transaction-panel
-          [extendedPanel]="true"
-          [transactionData]="transactionData"
-          [panelTitle]="'Expenses'"
-          (openModal)="openModal()"
-        ></fin-man-transaction-panel>
-      </div>
+      <fin-man-transaction-panel
+        [categoryNames]="expenseCategoryNames"
+        [extendedPanel]="true"
+        [transactionData]="personalTransactions"
+        [panelTitle]="'Expenses'"
+        (openModal)="openModal()"
+      ></fin-man-transaction-panel>
 
-      <div class="one-side-positioning">
-        <fin-man-pie-chart
-          [title]="'Expenses Distribution'"
-          [subtitle]="'Share of the categories in total expenses'"
-          [smallChart]="true"
-        ></fin-man-pie-chart>
-
-        <fin-man-transaction-panel
-          [extendedPanel]="true"
-          [periodTransactions]="true"
-          [periodTransactionsData]="periodTransactionsData"
-          [panelTitle]="'Periodic and Planned Expenses'"
-        ></fin-man-transaction-panel>
-      </div>
+      <fin-man-pie-chart
+        [title]="'Expenses Distribution'"
+        [subtitle]="'Share of the categories in total expenses'"
+        [smallChart]="true"
+        [categories]="expenseCategories"
+        [personalData]="personalTransactions"
+      ></fin-man-pie-chart>
     </div>
   </div>
 </main>
 
 <finance-manager-add-transaction-modal
+  *ngIf="
+    isModalVisible && expenseCategories.length && incomeCategories.length && paymentMethods.length
+  "
   [isVisible]="isModalVisible"
+  [expenseCategories]="expenseCategories"
+  [incomeCategories]="incomeCategories"
+  [paymentMethods]="paymentMethods"
+  [path]="'/personal-finance/expenses'"
   (close)="closeModal()"
-  (transactionAdded)="handleTransactionAdded($event)"
 ></finance-manager-add-transaction-modal>

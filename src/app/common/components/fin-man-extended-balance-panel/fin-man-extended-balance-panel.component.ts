@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { COLORS } from '@app/core/constants/colors.const';
+import { PersonalTransaction } from '@app/core/interfaces/personal-transactions.schema';
 
 @Component({
   selector: 'fin-man-extended-balance-panel',
@@ -8,28 +9,23 @@ import { COLORS } from '@app/core/constants/colors.const';
   styleUrls: ['./fin-man-extended-balance-panel.scss'],
 })
 export class FinManExtendedBalancePanelComponent implements OnInit {
+  @Input() personalTransactions: PersonalTransaction[] = [];
+  @Input() incomeCategoryIds: number[] = [];
+  @Input() incomeCategoryNames: string[] = [];
+  @Input() expenseCategoryIds: number[] = [];
+  @Input() expenseCategoryNames: string[] = [];
+
   readonly COLORS = COLORS;
 
-  // Mockowane dane kont
-  incomeAccounts: string[] = ['Salary Account', 'Freelance Income', 'Rental Income'];
-  expenseAccounts: string[] = ['Food Expenses', 'Transport Expenses', 'Entertainment'];
-  savingsAccounts: string[] = ['Emergency Fund', 'Retirement Savings', 'Investment Account'];
+  totalIncome: number = 0;
+  totalExpense: number = 0;
+  totalSavings: number = 0;
 
-  totalIncome: number = 10000;
-  totalExpense: number = 12521;
-  totalSavings: number = 52103;
-
-  selectedIncomeAccount!: string;
-  selectedExpenseAccount!: string;
-  selectedSavingsAccount!: string;
-
-  // TODO: Add calculating this number
-  percentDifference: number = 25;
+  selectedIncomeAccount!: number;
+  selectedExpenseAccount!: number;
 
   incomeBalance: number = 0;
   expenseBalance: number = 0;
-  savingsBalance: number = 0;
-  totalBalance: number = 0;
 
   checkboxValues: { id: number; value: boolean }[] = [
     { id: 0, value: false },
@@ -38,79 +34,72 @@ export class FinManExtendedBalancePanelComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.loadAccounts();
+    this.loadData();
   }
 
   // Funkcja inicjalizująca dane i wybierająca domyślne konta
-  loadAccounts(): void {
-    // Ustawienie domyślnie wybranego konta dla przychodów, wydatków i oszczędności
-    this.selectedIncomeAccount = this.incomeAccounts[0];
-    this.selectedExpenseAccount = this.expenseAccounts[0];
-    this.selectedSavingsAccount = this.savingsAccounts[0];
+  loadData(): void {
+    this.totalIncome = Number(
+      this.personalTransactions
+        .reduce(
+          (acc, transaction) => (transaction.type === 'income' ? acc + transaction.amount : acc),
+          0,
+        )
+        .toFixed(2),
+    );
+
+    this.totalExpense = Number(
+      this.personalTransactions
+        .reduce(
+          (acc, transaction) => (transaction.type === 'expense' ? acc + transaction.amount : acc),
+          0,
+        )
+        .toFixed(2),
+    );
+
+    this.totalSavings = this.personalTransactions.reduce(
+      (acc, transaction) =>
+        transaction.predefined_category_id === 18 ? acc + transaction.amount : acc,
+      0,
+    );
 
     // Aktualizacja bilansów na podstawie domyślnych kont
-    this.updateBalance('income');
-    this.updateBalance('expense');
-    this.updateBalance('savings');
+    this.updateBalance(this.incomeCategoryIds[0], 'income');
+    this.updateBalance(this.expenseCategoryIds[0], 'expense');
   }
 
   // Funkcja do aktualizacji bilansu na podstawie wybranego konta
-  updateBalance(category: string): void {
-    switch (category) {
+  updateBalance(categoryId: number, type: string): void {
+    if (type === 'income') {
+      this.selectedIncomeAccount = categoryId;
+    } else if (type === 'expense') {
+      this.selectedExpenseAccount = categoryId;
+    }
+
+    switch (type) {
       case 'income':
         // Pobieranie salda dla wybranego konta przychodów
-        this.incomeBalance = this.mockGetBalance(this.selectedIncomeAccount);
+        this.incomeBalance = this.personalTransactions.reduce(
+          (acc, transaction) =>
+            transaction.type === 'income' &&
+            transaction.predefined_category_id === this.selectedIncomeAccount
+              ? acc + transaction.amount
+              : acc,
+          0,
+        );
         break;
       case 'expense':
         // Pobieranie salda dla wybranego konta wydatków
-        this.expenseBalance = this.mockGetBalance(this.selectedExpenseAccount);
-        break;
-      case 'savings':
-        // Pobieranie salda dla wybranego konta oszczędności
-        this.savingsBalance = this.mockGetBalance(this.selectedSavingsAccount);
+        this.expenseBalance = this.personalTransactions.reduce(
+          (acc, transaction) =>
+            transaction.type === 'expense' &&
+            transaction.predefined_category_id === this.selectedExpenseAccount
+              ? acc + transaction.amount
+              : acc,
+          0,
+        );
         break;
     }
-    this.updateTotalBalance(); // Aktualizacja łącznego bilansu
-  }
-
-  // Funkcja do aktualizacji łącznego bilansu
-  updateTotalBalance(): void {
-    this.totalBalance = this.incomeBalance - this.expenseBalance + this.savingsBalance;
-  }
-
-  // Mockowana funkcja zwracająca saldo konta na podstawie jego nazwy
-  mockGetBalance(accountName: string): number {
-    const mockBalances: Record<string, number> = {
-      'Salary Account': 5000,
-      'Freelance Income': 2000,
-      'Rental Income': 1500,
-      'Food Expenses': 300,
-      'Transport Expenses': 150,
-      Entertainment: 200,
-      'Emergency Fund': 10000,
-      'Retirement Savings': 15000,
-      'Investment Account': 12000,
-    };
-    return mockBalances[accountName] || 0; // Zwraca saldo lub 0, jeśli konto nie jest w mocku
-  }
-
-  getPercentDifferenceStyle(percentDifference: number): Record<string, string> {
-    return percentDifference > 0
-      ? { color: COLORS.accentGreen }
-      : percentDifference === 0
-      ? { color: COLORS.textMain }
-      : { color: COLORS.accentRed };
-  }
-
-  displayPercentDifference(percentDifference: number): string {
-    let char: string = '';
-    if (percentDifference > 0) {
-      char = '+';
-    } else if (percentDifference < 0) {
-      char = '-';
-    }
-
-    return char + percentDifference + '%';
   }
 
   toggleCheckbox(id: number): void {

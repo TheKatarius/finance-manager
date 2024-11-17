@@ -9,9 +9,9 @@ import { ExpensesComponent } from '@app/personal-finance/expenses/expenses.compo
 import { IncomingsComponent } from '@app/personal-finance/incomings/incomings.component';
 import { PersonalFinanceRoutingModule } from '@app/personal-finance/personal-finance-routing.module';
 import { PersonalFinanceComponent } from '@app/personal-finance/personal-finance.component';
+import { AddSavingModalComponent } from '@app/personal-finance/savings/add-saving-modal/add-saving-modal.component';
 import { SavingsComponent } from '@app/personal-finance/savings/savings.component';
 import { CommonModule } from '@common/common.module';
-import { AddSavingModalComponent } from '@app/personal-finance/savings/add-saving-modal/add-saving-modal.component';
 
 const EXPORTED_COMPONENTS = [
   PersonalFinanceComponent,

@@ -10,8 +10,8 @@ import {
   Portfolio,
   PortfolioSnakeCase,
 } from '@app/core/interfaces/asset.schema';
+import { ReloadPageService } from '@app/core/services/dashboard.service';
 import { NotificationService } from '@app/core/services/notifications.service';
-import { InvestmentPortfolioService } from './investment-portfolio.service';
 
 @Component({
   selector: 'finance-manager-investment-portfolio',
@@ -22,7 +22,7 @@ export class InvestmentPortfolioComponent implements OnInit {
   private assetService = inject(AssetService);
   private portfolioService = inject(PortfolioService);
   private notificationService = inject(NotificationService);
-  private investmentPortfolioService = inject(InvestmentPortfolioService);
+  private reloadPageService = inject(ReloadPageService);
 
   isLoading: boolean = true;
 
@@ -128,7 +128,7 @@ export class InvestmentPortfolioComponent implements OnInit {
           });
 
           this.closeModal();
-          this.investmentPortfolioService.reloadInvestmentPortfolioPage();
+          this.reloadPageService.reloadPage('/investment-portfolio');
         }
       },
       error: (error) => {
@@ -164,7 +164,7 @@ export class InvestmentPortfolioComponent implements OnInit {
       case 1:
         return {
           ...baseProperties,
-          dividend_yield: asset.DividendYield,
+          dividend_yield: Number(asset.DividendYield),
           exchange: asset.ExchangeShort,
         };
       // Bonds
@@ -195,7 +195,7 @@ export class InvestmentPortfolioComponent implements OnInit {
         message: 'Asset deleted successfully',
       });
 
-      this.investmentPortfolioService.reloadInvestmentPortfolioPage();
+      this.reloadPageService.reloadPage('/investment-portfolio');
     });
   }
 }

@@ -20,14 +20,12 @@ import { FinManImportTransactionsComponent } from '@common/components/fin-man-im
 import { FinManKebabMenuPopoverComponent } from '@common/components/fin-man-kebab-menu-popover/fin-man-kebab-menu-popover.component';
 import { FinManNotificationComponent } from '@common/components/fin-man-notification/fin-man-notification.component';
 import { FinManPieChartComponent } from '@common/components/fin-man-pie-chart/fin-man-pie-chart.component';
+import { FinManPortfolioPanelComponent } from '@common/components/fin-man-portfolio-panel/fin-man-portfolio-panel.component';
 import { FinManProgressBarComponent } from '@common/components/fin-man-progress-bar/fin-man-progress-bar.component';
 import { FinManSavingGoalPanelComponent } from '@common/components/fin-man-saving-goal-panel/fin-man-saving-goal-panel.component';
 import { FinManSearchComponent } from '@common/components/fin-man-search/fin-man-search.component';
-import { FinManSmallChartComponent } from '@common/components/fin-man-small-chart/fin-man-small-chart.component';
-import { FinManPeriodTransactionRecordComponent } from '@common/components/fin-man-transaction-panel/fin-man-period-transaction-record.component.ts/fin-man-period-transaction-record.component';
 import { FinManTransactionPanelComponent } from '@common/components/fin-man-transaction-panel/fin-man-transaction-panel.component';
 import { FinManTransactionRecordComponent } from '@common/components/fin-man-transaction-panel/fin-man-transaction-record/fin-man-transaction-record.component';
-import { FinManPortfolioPanelComponent } from '@common/components/fin-man-portfolio-panel/fin-man-portfolio-panel.component';
 
 const COMMON_COMPONENTS = [
   FinManBasicInfoPanelComponent,
@@ -44,8 +42,6 @@ const COMMON_COMPONENTS = [
   FinManCustomDropdownComponent,
   FinManKebabMenuPopoverComponent,
   FinManExtendedBalancePanelComponent,
-  FinManSmallChartComponent,
-  FinManPeriodTransactionRecordComponent,
   FinManSavingGoalPanelComponent,
   FinManCircleProgressBarComponent,
   FinManImportTransactionsComponent,

@@ -18,13 +18,8 @@
 
     .content-wrapper {
       display: flex;
+      flex-direction: column;
       gap: dimensions.$gap-lg;
-
-      .one-side-positioning {
-        display: flex;
-        flex-direction: column;
-        gap: dimensions.$gap-lg;
-      }
     }
   }
 }

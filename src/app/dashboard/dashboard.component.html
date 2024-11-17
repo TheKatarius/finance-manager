@@ -1,52 +1,30 @@
-<main class="dashboard-container">
+<main *ngIf="!isLoading" class="dashboard-container">
   <router-outlet name="menu"></router-outlet>
 
-  <div class="dashboard-content-container" *ngIf="!isLoading">
+  <div class="dashboard-content-container">
     <div class="title-container">
       <span class="title">Dashboard</span>
       <span class="subtitle">All your finance in one place</span>
     </div>
 
-    <div class="panels-container">
-      <fin-man-basic-info-panel
-        [iconName]="'savings'"
-        [panelName]="'Money Saved'"
-        [panelValue]="'12 534 PLN'"
-      ></fin-man-basic-info-panel>
+    <fin-man-charts [dataSets]="dataSets" [chartData]="chartData"></fin-man-charts>
 
-      <fin-man-basic-info-panel
-        [iconName]="'savings'"
-        [panelName]="'Money Saved'"
-        [panelValue]="'12 534 PLN'"
-      ></fin-man-basic-info-panel>
-
-      <fin-man-basic-info-panel
-        [iconName]="'savings'"
-        [panelName]="'Money Saved'"
-        [panelValue]="'12 534 PLN'"
-      ></fin-man-basic-info-panel>
-
-      <fin-man-basic-info-panel
-        [iconName]="'savings'"
-        [panelName]="'Money Saved'"
-        [panelValue]="'12 534 PLN'"
-      ></fin-man-basic-info-panel>
-    </div>
-
-    <div class="chart-transactions-container">
-      <fin-man-charts [dataSets]="dataSets" [chartData]="chartData"></fin-man-charts>
-
-      <fin-man-transaction-panel
-        [transactionData]="transactionsData"
-        [isImportActive]="true"
-        (openModal)="openModal()"
-      ></fin-man-transaction-panel>
-    </div>
+    <fin-man-transaction-panel
+      [categoryNames]="categoryNames"
+      [transactionData]="userTransactions"
+      [isImportActive]="true"
+      (openModal)="openModal()"
+    ></fin-man-transaction-panel>
   </div>
 </main>
 
 <finance-manager-add-transaction-modal
+  *ngIf="
+    isModalVisible && expenseCategories.length && incomeCategories.length && paymentMethods.length
+  "
   [isVisible]="isModalVisible"
+  [expenseCategories]="expenseCategories"
+  [incomeCategories]="incomeCategories"
+  [paymentMethods]="paymentMethods"
   (close)="closeModal()"
-  (transactionAdded)="handleTransactionAdded($event)"
 ></finance-manager-add-transaction-modal>

@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { BehaviorSubject, catchError, Observable, of, switchMap, tap, throwError } from 'rxjs';
 
+import { Router } from '@angular/router';
 import { API_URL } from '@app/core/constants/config.const';
 import {
   DecodedToken,
@@ -13,9 +14,8 @@ import {
   VerifyEmailRequest,
   VerifyEmailResponse,
 } from '@app/core/interfaces/api-responses.schema';
-import { NotificationService } from '../services/notifications.service';
-import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { NotificationService } from '../services/notifications.service';
 
 @Injectable({
   providedIn: 'root',
