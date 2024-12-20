@@ -1,6 +1,9 @@
-- Poprawa tooltip ponieważ wpada pod headers columns
-- Dodać modal do periodic and planned transactions
-- co możemy edytować w assetach i transakcjach?
-- sprawdzić licencję i podmienić ikony na te open-source
-- dodać division i coupon amount to asset transaction jak starczy czasu
-- do poprawy kebabMenu bo nie wychodzi w ostatnim wierszu poza tabelę
+Aplikacja FinanceManager do zarządzania finansami osobistymi i wspierająca portfele inwestycyjne użytkownika. Do prawidłowego działania wymaga uruchomienia strony backendowej aplikacji z repozytorium: https://github.com/sebuszqo/FinanceManager
+
+Do uruchomienia projektu potrzebne są technologie, takie jak: Node, Npm, Git.
+
+Instalacja strony frontendowej:
+ - git clone https://github.com/TheKatarius/finance-manager.git
+ - cd ./finance-manager
+ - npm i
+ - npm start
