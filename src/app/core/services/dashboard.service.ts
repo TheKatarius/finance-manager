@@ -7,9 +7,19 @@ import { Router } from '@angular/router';
 export class ReloadPageService {
   constructor(private router: Router) {}
 
-  reloadPage(path: string): void {
-    this.router.navigate([path]).then(() => {
-      window.location.reload();
-    });
+  reloadPage(path?: string): void {
+    const currentUrl = this.router.url;
+    console.log(currentUrl);
+
+    this.router
+      .navigateByUrl('/personal-finance', { skipLocationChange: true })
+      .then(() => {
+        this.router.navigate([currentUrl]).then(() => {
+          console.log('Reloaded');
+        });
+      })
+      .catch((err) => {
+        console.error('Navigation failed:', err);
+      });
   }
 }

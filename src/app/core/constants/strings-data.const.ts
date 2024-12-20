@@ -13,8 +13,4 @@ export const StringsDataConst: Record<string, any> = {
     },
   },
   investmentPortfolio: { lowerCaseTitle: 'investment-portfolio' },
-  stockExchange: { lowerCaseTitle: 'stock-exchange' },
-  obligations: { lowerCaseTitle: 'obligations' },
-  reportings: { lowerCaseTitle: 'reportings' },
-  settings: { lowerCaseTitle: 'settings' },
 };

@@ -13,7 +13,7 @@
       <fin-man-custom-dropdown
         [innerLabel]="'Page: '"
         [options]="pageList"
-        [defaultOption]="pageList[0].toString()"
+        [defaultOption]="'1'"
         (onChangeSingle)="changePage($event)"
       ></fin-man-custom-dropdown>
 
@@ -40,7 +40,7 @@
     [ngClass]="{ 'transactions-table-header-incomings': transactionData[0]?.type === 'income' }"
   >
     <div class="header-cell name-col">Transaction Name</div>
-    <div class="header-cell date-col">Date & Time</div>
+    <div class="header-cell date-col">Date</div>
     <div class="header-cell category-col">Category</div>
     <div class="header-cell payment-col">Payment Type</div>
     <div class="header-cell amount-col">Amount</div>

@@ -91,7 +91,7 @@ export class AddTransactionModalComponent implements OnInit {
       const request = {
         amount: Number(transactionData.amount),
         type: transactionData.type,
-        date: new Date(),
+        date: transactionData.date + 'T' + new Date().toISOString().split('T')[1],
         description: transactionData.name,
         predefined_category_id: transactionData.predefined_category_id,
         payment_method_id: transactionData.payment_method_id,

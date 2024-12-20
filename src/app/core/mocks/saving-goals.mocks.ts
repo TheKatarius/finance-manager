@@ -19,7 +19,6 @@ export const SavingGoalsMocks: SavingGoals[] = [
     timeLeft: calculateSecondsBetween('2024-03-01', '2024-09-01'),
     totalAmount: 5000, // 5,000 PLN
     currentAmount: 2000, // 2,000 PLN
-    img: '/img/mock-images/book.jpg',
   },
   {
     uuid: '3',
@@ -29,7 +28,6 @@ export const SavingGoalsMocks: SavingGoals[] = [
     timeLeft: calculateSecondsBetween('2024-04-15', '2024-07-15'),
     totalAmount: 2500, // 2,500 PLN
     currentAmount: 1000, // 1,000 PLN
-    img: '/img/mock-images/iphone.webp',
   },
   {
     uuid: '4',
@@ -39,7 +37,6 @@ export const SavingGoalsMocks: SavingGoals[] = [
     timeLeft: calculateSecondsBetween('2023-06-01', '2024-06-01'),
     totalAmount: 15000, // 15,000 PLN
     currentAmount: 8000, // 8,000 PLN
-    img: '/img/mock-images/jewellery.jpg',
   },
   {
     uuid: '5',
@@ -49,6 +46,5 @@ export const SavingGoalsMocks: SavingGoals[] = [
     timeLeft: calculateSecondsBetween('2024-02-01', '2024-11-30'),
     totalAmount: 20000, // 20,000 PLN
     currentAmount: 12000, // 12,000 PLN
-    img: '/img/mock-images/wislaneTarasy.jpg',
   },
 ];

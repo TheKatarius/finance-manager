@@ -20,116 +20,6 @@
   background-position: center;
 }
 
-.dashboard-icon {
-  &-basic {
-    background-image: url('/img/home-menu/basic/DashboardIcon.svg');
-    transform: translateY(-2px);
-  }
-
-  &-highlighted {
-    background-image: url('/img/home-menu/highlighted/DashboardIcon.svg');
-  }
-}
-
-.personal-finance-icon {
-  &-basic {
-    background-image: url('/img/home-menu/basic/PersonalFinanceIcon.svg');
-  }
-
-  &-highlighted {
-    background-image: url('/img/home-menu/highlighted/PersonalFinanceIcon.svg');
-  }
-}
-
-.investment-portfolio-icon {
-  &-basic {
-    background-image: url('/img/home-menu/basic/InvestmentPortfolioIcon.svg');
-  }
-
-  &-highlighted {
-    background-image: url('/img/home-menu/highlighted/InvestmentPortfolioIcon.svg');
-  }
-}
-
-.stock-exchange-icon {
-  &-basic {
-    background-image: url('/img/home-menu/basic/StockExchangeIcon.svg');
-  }
-
-  &-highlighted {
-    background-image: url('/img/home-menu/highlighted/StockExchangeIcon.svg');
-  }
-}
-
-.obligations-icon {
-  &-basic {
-    background-image: url('/img/home-menu/basic/ObligationsIcon.svg');
-  }
-
-  &-highlighted {
-    background-image: url('/img/home-menu/highlighted/ObligationsIcon.svg');
-  }
-}
-
-.reportings-icon {
-  &-basic {
-    background-image: url('/img/home-menu/basic/ReportingsIcon.svg');
-  }
-
-  &-highlighted {
-    background-image: url('/img/home-menu/highlighted/ReportingsIcon.svg');
-  }
-}
-
-.settings-icon {
-  &-basic {
-    background-image: url('/img/home-menu/basic/SettingsIcon.svg');
-  }
-
-  &-highlighted {
-    background-image: url('/img/home-menu/highlighted/SettingsIcon.svg');
-  }
-}
-
-.vector-icon {
-  &-basic {
-    background-image: url('/img/home-menu/basic/VectorIcon.svg');
-    width: 11px;
-
-    position: absolute;
-    right: 0;
-    top: 27%;
-  }
-
-  &-highlighted {
-    background-image: url('/img/home-menu/highlighted/VectorIcon.svg');
-    width: 17px;
-  }
-}
-
-.sign-out-icon {
-  background-image: url('/img/home-menu/basic/SignOutIcon.svg');
-}
-
-.username-icon {
-  background-image: url('/img/register-login/UsernameIcon.svg');
-}
-
-.email-icon {
-  background-image: url('/img/register-login/EmailIcon.svg');
-}
-
-.password-icon {
-  background-image: url('/img/register-login/PasswordIcon.svg');
-}
-
-.alert-icon {
-  width: 16px;
-  height: 16px;
-  margin-right: 5px;
-  background-image: url('/img/register-login/AlertIcon.svg');
-}
-
 .children-icon {
   background-image: url('/img/categories/expenses/ChildrenIcon.svg');
 }
@@ -138,12 +28,12 @@
   background-image: url('/img/categories/expenses/ClothingIcon.svg');
 }
 
-.eating-out-icon {
-  background-image: url('/img/categories/expenses/EatingOutIcon.svg');
-}
-
 .education-icon {
   background-image: url('/img/categories/expenses/EducationIcon.svg');
+}
+
+.eating-out-icon {
+  background-image: url('/img/categories/expenses/EatingOutIcon.svg');
 }
 
 .electronics-icon {
@@ -254,16 +144,14 @@
   background-image: url('/img/common/AddIcon.svg');
 }
 
-.filter-icon {
-  background-image: url('/img/common/FilterIcon.svg');
+.alert-icon {
+  transform: translateY(-3px);
+  width: 15px;
+  background-image: url('/img/common/AlertIcon.svg');
 }
 
 .search-icon {
   background-image: url('/img/common/SearchIcon.svg');
-}
-
-.sort-icon {
-  background-image: url('/img/common/SortIcon.svg');
 }
 
 .common-vector-icon {
@@ -283,10 +171,6 @@
 
 .import-icon {
   background-image: url('/img/common/ImportIcon.svg');
-}
-
-.savings-panel-icon {
-  background-image: url('/img/panels/SavingsPanelIcon.svg');
 }
 
 .blue-savings-icon {

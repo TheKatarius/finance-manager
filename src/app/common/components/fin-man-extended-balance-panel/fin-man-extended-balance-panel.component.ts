@@ -79,24 +79,32 @@ export class FinManExtendedBalancePanelComponent implements OnInit {
     switch (type) {
       case 'income':
         // Pobieranie salda dla wybranego konta przychodów
-        this.incomeBalance = this.personalTransactions.reduce(
-          (acc, transaction) =>
-            transaction.type === 'income' &&
-            transaction.predefined_category_id === this.selectedIncomeAccount
-              ? acc + transaction.amount
-              : acc,
-          0,
+        this.incomeBalance = Number(
+          this.personalTransactions
+            .reduce(
+              (acc, transaction) =>
+                transaction.type === 'income' &&
+                transaction.predefined_category_id === this.selectedIncomeAccount
+                  ? acc + transaction.amount
+                  : acc,
+              0,
+            )
+            .toFixed(2),
         );
         break;
       case 'expense':
         // Pobieranie salda dla wybranego konta wydatków
-        this.expenseBalance = this.personalTransactions.reduce(
-          (acc, transaction) =>
-            transaction.type === 'expense' &&
-            transaction.predefined_category_id === this.selectedExpenseAccount
-              ? acc + transaction.amount
-              : acc,
-          0,
+        this.expenseBalance = Number(
+          this.personalTransactions
+            .reduce(
+              (acc, transaction) =>
+                transaction.type === 'expense' &&
+                transaction.predefined_category_id === this.selectedExpenseAccount
+                  ? acc + transaction.amount
+                  : acc,
+              0,
+            )
+            .toFixed(2),
         );
         break;
     }

@@ -58,7 +58,6 @@ export class RegisterFormComponent implements OnInit {
 
       this.authService.register(request).subscribe({
         next: (response) => {
-          console.log(response);
           if (response.status >= 200 && response.status < 300) {
             this.router.navigate(['/login/authorization']).then(() => {
               this.notificationService.addNotification({
@@ -74,7 +73,7 @@ export class RegisterFormComponent implements OnInit {
           this.notificationService.addNotification({
             type: 'error',
             status: error.status,
-            message: error.error?.message || 'Failed to register user',
+            message: error?.message || 'Failed to register user',
           });
         },
       });
@@ -110,10 +109,12 @@ export class RegisterFormComponent implements OnInit {
           }
         },
         error: (error) => {
+          console.log(error);
+
           this.notificationService.addNotification({
             type: 'error',
             status: error.status,
-            message: error.error?.message || 'Failed to login user',
+            message: error?.message || 'Failed to login user',
           });
         },
       });

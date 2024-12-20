@@ -127,7 +127,7 @@
               asset.Currency +
               ' / ' +
               (asset.AveragePurchasePrice && asset.CurrentValue
-                ? ((asset.CurrentValue / asset.AveragePurchasePrice - 1) * 100).toFixed(2)
+                ? ((asset.CurrentValue / asset.TotalInvested - 1) * 100).toFixed(2)
                 : 0) +
               '%'
           }}

@@ -64,6 +64,8 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
   expenseData: number[] = [];
   savingsData: number[] = [];
 
+  sortedLabelIndices: number[] = [];
+
   constructor(private cdr: ChangeDetectorRef) {
     Chart.register(...registerables, annotationPlugin);
   }
@@ -142,7 +144,6 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
 
-  // Aktualizacja danych wykresu
   private updateChart(): void {
     // Pobierz dane dla wybranego roku
     const yearData = this.convertedChartData.find((data) => data.Year === this.selectedYear);
@@ -153,31 +154,46 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
       });
       console.log(this.lineChartData);
 
+      // Tymczasowe przechowywanie danych przed sortowaniem
+      const tempData: { [key: string]: number[] } = {};
+
+      // Inicjalizacja tablic dla każdego zestawu danych
+      this.lineChartData.datasets.forEach((dataset) => {
+        tempData[dataset.label ?? ''] = [];
+      });
+
+      // Najpierw zbieramy dane w oryginalnej kolejności
       for (const month of this.selectedMonths) {
+        const foundMonth = yearData.Months?.[month];
+        if (!foundMonth) continue;
+
         this.lineChartData.datasets.forEach((dataset) => {
-          const foundMonth = yearData.Months?.[month];
-
-          console.log('dataset: ', dataset.label);
-
           switch (dataset.label) {
             case 'Expenses':
-              for (const week of foundMonth?.Weeks ?? []) {
-                dataset.data.push(Number(week.ExpenseTotal.toFixed(2)) ?? 0);
-              }
+              foundMonth.Weeks.forEach((week) => {
+                tempData['Expenses'].push(Number(week.ExpenseTotal.toFixed(2)) ?? 0);
+              });
               break;
             case 'Income':
-              for (const week of foundMonth?.Weeks ?? []) {
-                console.log('week: ', week);
-
-                dataset.data.push(Number(week.IncomeTotal.toFixed(2)) ?? 0);
-              }
+              foundMonth.Weeks.forEach((week) => {
+                tempData['Income'].push(Number(week.IncomeTotal.toFixed(2)) ?? 0);
+              });
               break;
             case 'Savings':
-              dataset.data.push(foundMonth?.IncomeTotal ?? 0);
+              foundMonth.Weeks.forEach((week) => {
+                tempData['Savings'].push(foundMonth.IncomeTotal ?? 0);
+              });
               break;
           }
         });
       }
+
+      // Teraz, na podstawie posortowanych indeksów, przypisujemy dane do zestawów
+      this.lineChartData.datasets.forEach((dataset) => {
+        const originalData = tempData[dataset.label ?? ''];
+        const sortedData = this.sortedLabelIndices.map((index) => originalData[index] || 0);
+        dataset.data = sortedData;
+      });
 
       // Aktualizacja obliczeń
       this.updateChartCalculations();
@@ -236,10 +252,17 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
 
   private calculateDifference(data: number[]): number {
     if (data && data.length > 1) {
-      const firstHalfValue = data.map((value, index) => (index < data.length / 2 ? value : 0));
-      const secondHalfValue = data.map((value, index) => (index >= data.length / 2 ? value : 0));
+      const firstHalfValue = data
+        .map((value, index) => (index < data.length / 2 ? value : 0))
+        .filter((value) => value !== 0);
+      const secondHalfValue = data
+        .map((value, index) => (index >= data.length / 2 ? value : 0))
+        .filter((value) => value !== 0);
+      console.log('firstHalfValue: ', firstHalfValue);
+      console.log('secondHalfValue: ', secondHalfValue);
+
       return Number(
-        (calculateAverage(firstHalfValue) - calculateAverage(secondHalfValue)).toFixed(2),
+        (calculateAverage(secondHalfValue) - calculateAverage(firstHalfValue)).toFixed(2),
       );
     }
 
@@ -250,10 +273,14 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
   private calculatePercentageDifference(data: number[]): number {
     if (data && data.length > 1) {
       const firstHalfValue = calculateAverage(
-        data.map((value, index) => (index < data.length / 2 ? value : 0)),
+        data
+          .map((value, index) => (index < data.length / 2 ? value : 0))
+          .filter((value) => value !== 0),
       );
       const secondHalfValue = calculateAverage(
-        data.map((value, index) => (index >= data.length / 2 ? value : 0)),
+        data
+          .map((value, index) => (index >= data.length / 2 ? value : 0))
+          .filter((value) => value !== 0),
       );
 
       if (firstHalfValue && secondHalfValue) {
@@ -414,6 +441,57 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
     });
   }
 
+  private sortChartLabels(labels: string[]): { sortedLabels: string[]; sortIndices: number[] } {
+    // Mapa nazw miesięcy na ich indeksy
+    const monthMap: { [key: string]: number } = {};
+    MONTHS_ORDER.forEach((month, index) => {
+      monthMap[month.toLowerCase()] = index + 1; // Indeksy zaczynają się od 1
+    });
+
+    // Funkcja pomocnicza do parsowania etykiety
+    const parseLabel = (label: string): { monthNumber: number; weekNumber: number } => {
+      // Zakładamy, że format jest "Month - week X" lub "Month - tydzień X" w zależności od języka
+      const regex = /^(.+?)\s*-\s*week\s*(\d+)$/i; // Dla angielskiego
+      // Dla polskiego użyj:
+      // const regex = /^(.+?)\s*-\s*tydzień\s*(\d+)$/i;
+
+      const match = label.match(regex);
+      if (!match || match.length !== 3) {
+        // Jeśli format jest nieprawidłowy, przypisz minimalne wartości
+        return { monthNumber: 0, weekNumber: 0 };
+      }
+
+      const monthName = match[1].trim().toLowerCase();
+      const weekNumber = parseInt(match[2], 10) || 0;
+
+      const monthNumber = monthMap[monthName] || 0;
+
+      return { monthNumber, weekNumber };
+    };
+
+    // Tworzymy tablicę z etykietami i ich odpowiednimi wartościami
+    const labeledData = labels.map((label, index) => ({
+      label,
+      monthNumber: parseLabel(label).monthNumber,
+      weekNumber: parseLabel(label).weekNumber,
+      originalIndex: index,
+    }));
+
+    // Sortowanie etykiet
+    labeledData.sort((a, b) => {
+      if (a.monthNumber !== b.monthNumber) {
+        return a.monthNumber - b.monthNumber;
+      }
+      return a.weekNumber - b.weekNumber;
+    });
+
+    // Wyodrębnij posortowane etykiety i indeksy sortowania
+    const sortedLabels = labeledData.map((item) => item.label);
+    const sortIndices = labeledData.map((item) => item.originalIndex);
+
+    return { sortedLabels, sortIndices };
+  }
+
   private generateLabelsWithWeeks(): void {
     const labels: string[] = [];
     const yearData = this.convertedChartData.find((data) => data.Year === this.selectedYear);
@@ -429,6 +507,11 @@ export class FinManChartsComponent implements OnInit, OnChanges, AfterViewInit {
       });
     }
 
-    this.lineChartData.labels = labels;
+    const { sortedLabels, sortIndices } = this.sortChartLabels(labels);
+
+    this.lineChartData.labels = sortedLabels;
+
+    // Przechowujemy indeksy sortowania do późniejszej reorganizacji danych
+    this.sortedLabelIndices = sortIndices;
   }
 }
